@@ -15,24 +15,24 @@ export default function Sidebar(props: Props) {
             active: route().current("perfiles.*"),
         },
         {
-            name: "Generador de campañas",
+            name: "Generador de segmentos",
             description:
                 "Diseña tu segmento de clientes en base a variables externas e internas.",
-            url: route("dashboard"),
-            active: route().current("a.*"),
+            url: route("segmentos.index"),
+            active: route().current("segmentos.*"),
         },
         {
             name: "Programación de campañas",
             description: "Programa una comunicación a tus clientes",
-            url: route("dashboard"),
+            url: route("programacion.index"),
             active: route().current("programacion.*"),
         },
         {
             name: "Resultados de campañas",
             description:
                 "Revisa los principales indicadores de las campañas realizadas.",
-            url: route("dashboard"),
-            active: route().current("c.*"),
+            url: route("resultados.index"),
+            active: route().current("resultados.*"),
         },
     ];
 

@@ -35,7 +35,7 @@
 
 @layer components {
     .title {
-        @apply text-3xl font-semibold text-azul-marino mb-4 text-center;
+        @apply text-3xl font-bold text-azul-marino mb-4 text-center;
     }
 
     /* BUTTONS */
@@ -71,6 +71,11 @@
 
     .input-group-icon {
         @apply w-[42px] h-[42px] grid place-items-center bg-[#d5e5fe] text-celeste-claro;
+    }
+
+    .input {
+        @apply border-gris-azulado focus:outline-none
+        focus:border-celeste-claro focus:ring-0;
     }
 
     .input-group .input {

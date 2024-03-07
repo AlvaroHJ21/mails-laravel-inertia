@@ -8,10 +8,14 @@ import { User } from "@/types";
 import Sidebar from "@/Components/Sidebar";
 import Navbar from "@/Components/Navbar";
 
-export default function Authenticated({
-    user,
-    children,
-}: PropsWithChildren<{ user: User; header?: ReactNode }>) {
+type Props = {
+    user: User;
+    children: ReactNode;
+};
+
+export default function Authenticated(props: Props) {
+    const { user, children } = props;
+
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
     return (
@@ -24,7 +28,7 @@ export default function Authenticated({
                         setSidebarCollapsed={setSidebarCollapsed}
                         sidebarCollapsed={sidebarCollapsed}
                     />
-                    <main className="container py-4">{children}</main>
+                    <main className="container py-8">{children}</main>
                 </div>
             </div>
         </div>

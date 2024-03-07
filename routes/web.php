@@ -18,12 +18,13 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->route('perfiles.index');
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    //     'laravelVersion' => Application::VERSION,
+    //     'phpVersion' => PHP_VERSION,
+    // ]);
 });
 
 Route::get('/dashboard', function () {
@@ -41,6 +42,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/perfiles/generate', [PerfilController::class, 'generate'])->name('perfiles.generate');
     Route::get('/perfiles/{perfil}/download', [PerfilController::class, 'download'])->name('perfiles.download');
     Route::delete('/perfiles/{perfil}/destroy', [PerfilController::class, 'destroy'])->name('perfiles.destroy');
+
+    Route::get('/segmentos', function () {
+        return Inertia::render('Segmentos/Index');
+    })->name('segmentos.index');
+    Route::get('/programacion', function () {
+        return Inertia::render('Programacion/Index');
+    })->name('programacion.index');
+    Route::get('/resultados', function () {
+        return Inertia::render('Resultados/Index');
+    })->name('resultados.index');
 });
 
 require __DIR__ . '/auth.php';

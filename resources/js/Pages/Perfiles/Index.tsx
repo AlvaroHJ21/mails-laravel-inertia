@@ -40,7 +40,7 @@ export default function Perfiles(props: PerfilesProps) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Perfiles" />
 
-            <h1 className="title">Perfilamiento</h1>
+            <h1 className="title">Perfilamiento de clientes</h1>
             <Alert
                 text="Nuestro módulo de perfilamiento de clientes permite conocer
                     el perfil demográfico de los clientes, para ello es
