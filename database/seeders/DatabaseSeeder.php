@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'alvaro@gmail.com',
             'password' => bcrypt('12345678')
         ]);
+
+        \App\Models\BigQueryDev::factory(50)->create();
     }
 }

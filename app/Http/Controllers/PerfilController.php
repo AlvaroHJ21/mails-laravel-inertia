@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\PerfilPersonaExport;
 use App\Imports\PerfilamientoImport;
+use App\Models\BigQueryDev;
 use App\Models\Perfil;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Illuminate\Http\Request;
@@ -90,7 +91,8 @@ class PerfilController extends Controller
         try {
             //3. Buscar los DNI's en BigQuery
             $documentosStr = '"' . implode('","', $dniArray) . '"';
-            $personasNube = $this->getPersonsFromBigQuery($documentosStr);
+
+            $personasNube = env("BIGQUERY_ACTIVE") ? $this->getPersonsFromBigQuery($documentosStr) : $this->getPersonsFromBigQueryDev($documentosStr);
 
             DB::beginTransaction();
 
@@ -110,7 +112,6 @@ class PerfilController extends Controller
                     "documento" => $persona['DOCUMENTO'],
                     "fh_nacimiento" => $persona['FH_NACIMIENTO'],
                     "sexo" => $persona['SEXO'],
-                    "estado_civil" => $persona['ESTADO_CIVIL'],
                     "estado_civil" => $persona['ESTADO_CIVIL'],
                     "ubigeo" => $persona["UBIGEO"],
                     "departamento" => $persona["DEPARTAMENTO"],
@@ -174,6 +175,16 @@ class PerfilController extends Controller
         }
 
         return $data;
+    }
+
+    public function getPersonsFromBigQueryDev(String $documentos = "")
+    {
+        $personas = BigQueryDev::select(
+            DB::raw('DOCUMENTO, FH_NACIMIENTO, SEXO, ESTADO_CIVIL, UBIGEO, DEPARTAMENTO, PROVINCIA, DISTRITO')
+        )
+            ->whereRaw('DOCUMENTO IN (' . $documentos . ')')
+            ->get();
+        return $personas;
     }
 
     public function test()
