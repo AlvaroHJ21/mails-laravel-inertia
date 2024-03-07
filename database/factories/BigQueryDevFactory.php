@@ -22,17 +22,17 @@ class BigQueryDevFactory extends Factory
             //fecha de nacimiento en formato YYYY-MM-DD
             "FH_NACIMIENTO" => $this->faker->date(),
             //entre masculino y femenino
-            "SEXO" => $this->faker->randomElement(["Masculino", "Femenino"]),
+            "SEXO" => $this->faker->randomElement(["M", "F"]),
             //entre Casado, Soltero, Viudo, Divorciado
-            "ESTADO_CIVIL" => $this->faker->randomElement(["Casado", "Soltero", "Viudo", "Divorciado"]),
+            "ESTADO_CIVIL" => $this->faker->randomElement(["CASADO", "SOTERO", "VIUDO", "DIVORCIADO"]),
             //numero random de 6 digitos
             "UBIGEO" => $this->faker->randomNumber(6),
             //entre Lima, Arequipa, Cusco, Puno
-            "DEPARTAMENTO" => $this->faker->randomElement(["Lima", "Arequipa", "Cusco", "Puno"]),
+            "DEPARTAMENTO" => $this->faker->randomElement(["LIMA", "AREQUIPA", "CUSCO", "PUNO"]),
             //entre Lima, callao, Huarochiri, Yauyos
-            "PROVINCIA" => $this->faker->randomElement(["Lima", "Callao", "Huarochiri", "Yauyos"]),
+            "PROVINCIA" => $this->faker->randomElement(["LIMA", "CALLAO", "Huarochiri", "YAUYOS"]),
             //entre Lima, Callao, Chosica, San Bartolo
-            "DISTRITO" => $this->faker->randomElement(["Lima", "Callao", "Chosica", "San Bartolo"]),
+            "DISTRITO" => $this->faker->randomElement(["LIMA", "CALLAO", "CHOSICA", "SAN BARTOLO"]),
         ];
     }
 }

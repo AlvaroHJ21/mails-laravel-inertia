@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/perfiles/{perfil}/destroy', [PerfilController::class, 'destroy'])->name('perfiles.destroy');
 
     Route::get('/segmentos', [SegmentoController::class, "index"])->name('segmentos.index');
+    Route::post('/segmentos', [SegmentoController::class, "store"])->name('segmentos.store');
+
     Route::get('/programacion', function () {
         return Inertia::render('Programacion/Index');
     })->name('programacion.index');

@@ -30,7 +30,7 @@ export default function Form(props: Props) {
         const form = event.currentTarget;
         const formData = new FormData(form);
 
-        router.post(route("perfiles.generate"), formData, {
+        router.post(route("segmentos.store"), formData, {
             onStart() {
                 setIsSending(true);
             },
