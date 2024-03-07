@@ -10,20 +10,23 @@ import { useState } from "react";
 import { Head } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
 import Form from "./Form";
+import { Segmento } from "@/types/Segmento";
+import Preview from "./Preview";
 
 enum ModalName {
     Form = "Form",
-    Dashboard = "Dashboard",
+    Preview = "Preview",
 }
 
 type Props = PageProps & {
-    segmentos: any[];
+    segmentos: Segmento[];
 };
 
 export default function SegmentosPage(props: Props) {
     const { auth, segmentos } = props;
 
     const [openModalName, setOpenModalName] = useState("");
+    const [selectedSegmento, setSelectedSegmento] = useState<Segmento>();
 
     function handleDelete(segmento: any) {}
 
@@ -71,9 +74,20 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                     </a>
                                 </td>
                                 <td>
-                                    <div>Filtro 1: Género</div>
-                                    <div>Filtro 2: Edad</div>
-                                    <div>Filtro 3: Estado Civil</div>
+                                    <div className="flex flex-col gap-1">
+                                        {(
+                                            JSON.parse(segmento.filtros) as [
+                                                string
+                                            ]
+                                        ).map((filtro) => (
+                                            <div
+                                                key={filtro}
+                                                className="badge badge-primary"
+                                            >
+                                                {filtro}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </td>
                                 <td>
                                     <button>
@@ -87,11 +101,12 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                 <td>
                                     <div className="flex w-20 gap-1">
                                         <button
-                                            onClick={() =>
+                                            onClick={() => {
                                                 setOpenModalName(
-                                                    ModalName.Dashboard
-                                                )
-                                            }
+                                                    ModalName.Preview
+                                                );
+                                                setSelectedSegmento(segmento);
+                                            }}
                                         >
                                             <img
                                                 src={verSvg}
@@ -137,7 +152,15 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                 onClose={() => setOpenModalName("")}
                 maxWidth="xs"
             >
-                <Form onSended={() => setOpenModalName(ModalName.Dashboard)} />
+                <Form />
+            </Modal>
+
+            <Modal
+                show={openModalName == ModalName.Preview}
+                onClose={() => setOpenModalName("")}
+                maxWidth="xl"
+            >
+                {selectedSegmento && <Preview segmento={selectedSegmento} />}
             </Modal>
         </AuthenticatedLayout>
     );

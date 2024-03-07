@@ -59,6 +59,14 @@
         @apply bg-cielo-alba text-celeste-claro;
     }
 
+    .btn-outline {
+        @apply bg-transparent text-azul-marino border-gray-300;
+    }
+
+    .btn-outline.active {
+        @apply bg-azul-marino text-amarillo;
+    }
+
     .btn-text {
         @apply text-azul-marino bg-transparent;
     }
@@ -211,4 +219,14 @@
     .nav-item-description {
         @apply text-xs max-w-28 m-auto text-white;
     }
+
+    /* BADGES */
+
+    .badge {
+        @apply text-xs font-semibold rounded-md px-2 border;
+    }
+
+    /* .badge-primary {
+        @apply bg-azul-marino text-white;
+    } */
 }
