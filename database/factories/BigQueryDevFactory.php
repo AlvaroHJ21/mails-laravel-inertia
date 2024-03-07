@@ -24,13 +24,13 @@ class BigQueryDevFactory extends Factory
             //entre masculino y femenino
             "SEXO" => $this->faker->randomElement(["M", "F"]),
             //entre Casado, Soltero, Viudo, Divorciado
-            "ESTADO_CIVIL" => $this->faker->randomElement(["CASADO", "SOTERO", "VIUDO", "DIVORCIADO"]),
+            "ESTADO_CIVIL" => $this->faker->randomElement(["CASADO", "SOLTERO", "VIUDO", "DIVORCIADO"]),
             //numero random de 6 digitos
             "UBIGEO" => $this->faker->randomNumber(6),
             //entre Lima, Arequipa, Cusco, Puno
-            "DEPARTAMENTO" => $this->faker->randomElement(["LIMA", "AREQUIPA", "CUSCO", "PUNO"]),
+            "DEPARTAMENTO" => $this->faker->randomElement(["AMAZONAS", "LIMA", "AREQUIPA", "CUSCO", "PUNO"]),
             //entre Lima, callao, Huarochiri, Yauyos
-            "PROVINCIA" => $this->faker->randomElement(["LIMA", "CALLAO", "Huarochiri", "YAUYOS"]),
+            "PROVINCIA" => $this->faker->randomElement(["LIMA", "CALLAO", "HUAROCHIRI", "YAUYOS"]),
             //entre Lima, Callao, Chosica, San Bartolo
             "DISTRITO" => $this->faker->randomElement(["LIMA", "CALLAO", "CHOSICA", "SAN BARTOLO"]),
         ];

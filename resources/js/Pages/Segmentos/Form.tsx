@@ -47,7 +47,7 @@ export default function Form(props: Props) {
     }
 
     return (
-        <div className="flex flex-col items-center text-azul-marino">
+        <div className="flex flex-col items-center py-10 text-azul-marino">
             <h1 className="font-bold title">Sube tu información</h1>
 
             <p className="m-auto mb-3 text-center max-w-80">

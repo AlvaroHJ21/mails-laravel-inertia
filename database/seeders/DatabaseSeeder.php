@@ -26,6 +26,6 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
 
-        \App\Models\BigQueryDev::factory(50)->create();
+        \App\Models\BigQueryDev::factory(200)->create();
     }
 }
