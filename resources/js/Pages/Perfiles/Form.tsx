@@ -84,10 +84,7 @@ export default function Form(props: Props) {
                         </span>
                     </div>
 
-                    <Button
-                        disabled={fileName == "" || isSending}
-                        isLoading={isSending}
-                    >
+                    <Button disabled={fileName == ""} isLoading={isSending}>
                         Generar perfil
                     </Button>
                 </div>

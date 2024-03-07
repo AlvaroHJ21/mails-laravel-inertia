@@ -8,6 +8,7 @@ use App\Models\Perfil;
 use Google\Cloud\BigQuery\BigQueryClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class PerfilController extends Controller
@@ -48,7 +49,7 @@ class PerfilController extends Controller
 
         //2. Extraer array de DNI's
         //2.1 buscar en la primera fila el titulo de la columna dni
-        $dniColumnIdx = array_search('dni', array_map('strtolower', $array[0][0]));
+        $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
         $correoColumnIdx = array_search('correo', array_map('strtolower', $array[0][0]));
         $var1ColumnIdx = array_search('var1', array_map('strtolower', $array[0][0]));
         $var2ColumnIdx = array_search('var2', array_map('strtolower', $array[0][0]));
@@ -56,29 +57,27 @@ class PerfilController extends Controller
 
         //2.2 si no se encuentran los titulos de las columnas se retorna un error
         if (
-            $dniColumnIdx === false
+            $documentoColumnIdx === false
             || $correoColumnIdx === false
             || $var1ColumnIdx === false
             || $var2ColumnIdx === false
             || $var3ColumnIdx === false
         ) {
-            return response()->json([
-                "message" => "El archivo no tiene el formato correcto"
-            ], 400);
+            throw new \Exception("No se encontraron las columnas necesarias");
         }
 
         //2.3 si se encuentra el titulo de la columna dni se extraen los dni's
         $dniArray = [];
         foreach ($array[0] as $key => $row) {
             if ($key == 0) continue;
-            $dniArray[] = $row[$dniColumnIdx];
+            $dniArray[] = $row[$documentoColumnIdx];
         }
 
         //2.4 extraer los datos del excel
-        $inputExcel = [];
+        $personasExcel = [];
         foreach ($array[0] as $key => $row) {
             if ($key == 0) continue;
-            $inputExcel[$row[$dniColumnIdx]] = [
+            $personasExcel[$row[$documentoColumnIdx]] = [
                 "correo" => $row[$correoColumnIdx],
                 "var1" => $row[$var1ColumnIdx],
                 "var2" => $row[$var2ColumnIdx],
@@ -87,39 +86,56 @@ class PerfilController extends Controller
         }
 
         //3. Buscar los DNI's en BigQuery
-        $dnisStr = '"' . implode('","', $dniArray) . '"';
-        $personas = $this->getPersonsFromBigQuery($dnisStr);
+        $documentosStr = '"' . implode('","', $dniArray) . '"';
+        $personasNube = $this->getPersonsFromBigQuery($documentosStr);
 
-        //4. Crear un perfil en la tabla perfil
-        $perfil = Perfil::create([
-            "nombre" => "Perfil " . time(), //TODO: cambiar por un nombre mas descriptivo
-            "user_id" => Auth::user()->id
-        ]);
+        try {
+            DB::beginTransaction();
 
-        //5. Crear las personas en la tabla perfil_personas
-        $personasDelPerfil = [];
-        foreach ($personas as $persona) {
-            $personasDelPerfil[] = [
-                "dni" => $persona['dni'],
-                "nombre" => $persona['nombre'],
-                "apellido" => $persona['apellido'],
-                "fecha_nacimiento" => "1990-01-01", //TODO: cambiar por la fecha de nacimiento real
-                "perfil_id" => $perfil->id,
-                "correo" => $inputExcel[$persona['dni']]['correo'],
-                "var1" => $inputExcel[$persona['dni']]['var1'],
-                "var2" => $inputExcel[$persona['dni']]['var2'],
-                "var3" => $inputExcel[$persona['dni']]['var3'],
-            ];
+            //4. Crear un perfil en la tabla perfil
+            $perfil = Perfil::create([
+                "nombre" => "Perfil " . time(), //TODO: cambiar por un nombre mas descriptivo
+                "user_id" => Auth::user()->id
+            ]);
+
+            //5. Crear las personas en la tabla perfil_personas
+            $personasDelPerfil = [];
+            foreach ($personasNube as $persona) {
+                $personasDelPerfil[] = [
+                    "perfil_id" => $perfil->id,
+
+                    //Información de la nube
+                    "documento" => $persona['DOCUMENTO'],
+                    "fh_nacimiento" => $persona['FH_NACIMIENTO'],
+                    "sexo" => $persona['SEXO'],
+                    "estado_civil" => $persona['ESTADO_CIVIL'],
+                    "estado_civil" => $persona['ESTADO_CIVIL'],
+                    "ubigeo" => $persona["UBIGEO"],
+                    "departamento" => $persona["DEPARTAMENTO"],
+                    "provincia" => $persona["PROVINCIA"],
+                    "distrito" => $persona["DISTRITO"],
+
+                    //Información del excel
+                    "correo" => $personasExcel[$persona['DOCUMENTO']]['correo'],
+                    "var1" => $personasExcel[$persona['DOCUMENTO']]['var1'],
+                    "var2" => $personasExcel[$persona['DOCUMENTO']]['var2'],
+                    "var3" => $personasExcel[$persona['DOCUMENTO']]['var3'],
+                ];
+            }
+
+            $perfil->personas()->createMany($personasDelPerfil);
+
+            $perfil->load('personas');
+
+            DB::commit();
+            return to_route('perfiles.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
-
-        $perfil->personas()->createMany($personasDelPerfil);
-
-        $perfil->load('personas');
-
-        return to_route('perfiles.index');
     }
 
-    public function getPersonsFromBigQuery(String $dnis = "")
+    public function getPersonsFromBigQuery(String $documentos = "")
     {
         $projectId = env('BIGQUERY_PROJECT_ID');
         $datasetId = env('BIGQUERY_DATASET_ID');
@@ -129,10 +145,10 @@ class PerfilController extends Controller
             'projectId' => $projectId,
         ]);
 
-        if ($dnis == "") {
+        if ($documentos == "") {
             $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '`';
         } else {
-            $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '` WHERE dni IN (' . $dnis . ')';
+            $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '` WHERE DOCUMENTO IN (' . $documentos . ')';
         }
 
         // Run the query

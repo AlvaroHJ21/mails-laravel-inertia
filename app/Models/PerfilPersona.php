@@ -10,14 +10,18 @@ class PerfilPersona extends Model
     use HasFactory;
 
     protected $fillable = [
-        "dni",
-        "nombre",
-        "apellido",
-        "fecha_nacimiento",
+        "documento",
+        "fh_nacimiento",
+        "sexo",
+        "estado_civil",
+        "ubigeo",
+        "departamento",
+        "provincia",
+        "distrito",
         "correo",
         "var1",
         "var2",
         "var3",
-        "perfil_id"
+        "perfil_id",
     ];
 }

@@ -117,7 +117,7 @@ export default function Login({
                 {/* <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton> */}
-                <Button className="max-w-full" isLoading={processing}>
+                <Button className="w-full" isLoading={processing}>
                     Ingresar
                 </Button>
             </form>

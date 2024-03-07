@@ -23,7 +23,7 @@ export default function Navbar(props: Props) {
 
             <Dropdown>
                 <Dropdown.Trigger>
-                    <button className="font-normal btn">
+                    <button className="font-normal btn btn-secondary">
                         <i className="fa fa-user"></i>
                         {user.name}
                     </button>

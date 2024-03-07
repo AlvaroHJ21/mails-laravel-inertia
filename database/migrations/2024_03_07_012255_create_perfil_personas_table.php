@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('perfil_personas', function (Blueprint $table) {
             $table->id();
-            $table->string("dni");
-            $table->string("nombre");
-            $table->string("apellido");
-            $table->date("fecha_nacimiento");
+            $table->string("documento");
+            $table->date("fh_nacimiento");
+            $table->string("sexo");
+            $table->string("estado_civil");
+            $table->string("ubigeo");
+            $table->string("departamento");
+            $table->string("provincia");
+            $table->string("distrito");
             $table->string("correo")->nullable();
             $table->string("var1")->nullable();
             $table->string("var2")->nullable();

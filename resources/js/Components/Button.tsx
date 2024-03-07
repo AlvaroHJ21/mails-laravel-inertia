@@ -3,7 +3,7 @@ import { cn } from "@/Utils/cn";
 
 interface ButtonProps {
     variant?: "outline" | "filled" | "text";
-    color?: "amarillo" | "error";
+    color?: "primary" | "secondary";
     size?: "sm" | "md" | "lg";
     wFit?: boolean;
     isLoading?: boolean;
@@ -15,7 +15,7 @@ const Button = (props: Props) => {
     const {
         className,
         variant = "filled",
-        color = "amarillo",
+        color = "primary",
         size = "md",
         wFit = false,
         isLoading = false,
@@ -27,19 +27,10 @@ const Button = (props: Props) => {
     return (
         <button
             className={cn(
-                "flex justify-center w-full max-w-[180px]  gap-2 font-semibold hover:shadow-md rounded-md whitespace-nowrap items-center disabled:opacity-50",
+                "btn",
                 {
-                    "bg-amarillo text-azul-marino":
-                        variant === "filled" && color === "amarillo",
-                    "bg-red-400 text-white":
-                        variant === "filled" && color === "error",
-
-                    "bg-transparent": variant === "text",
-
-                    "text-sm py-1 px-3": size === "sm",
-                    "text-base py-1 px-4": size === "md",
-                    "text-lg py-2 px-4": size === "lg",
-                    "w-fit": wFit,
+                    "btn-primary": color === "primary",
+                    "btn-secondary": color === "secondary",
                 },
                 className
             )}
