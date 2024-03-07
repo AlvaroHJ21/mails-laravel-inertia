@@ -18,10 +18,15 @@ class SegmentoPersona extends Model
         "departamento",
         "provincia",
         "distrito",
+
+        "edad_grupo",
+        "generacion",
+
         "correo",
         "var1",
         "var2",
         "var3",
         "segmento_id",
+
     ];
 }

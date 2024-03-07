@@ -11,7 +11,8 @@ export interface Filter {
 }
 
 export interface SelectedFilter {
-    name: keyof SegmentoPersona;
+    attr: keyof SegmentoPersona;
+    text: string;
     options: {
         text: string;
         value: string | number;

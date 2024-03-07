@@ -18,6 +18,10 @@ export interface SegmentoPersona {
     departamento: string;
     provincia: string;
     distrito: string;
+
+    edad_grupo: string;
+    generacion: string;
+
     correo: string;
     var1: string;
     var2: string;

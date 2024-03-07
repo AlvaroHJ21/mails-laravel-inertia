@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CalculateCategory;
 use App\Helpers\GenerateArrayFromBigQuery;
 use App\Helpers\GenerateArrayFromExcel;
 use App\Models\Segmento;
@@ -55,6 +56,9 @@ class SegmentoController extends Controller
                     "departamento" => $persona["DEPARTAMENTO"],
                     "provincia" => $persona["PROVINCIA"],
                     "distrito" => $persona["DISTRITO"],
+
+                    "edad_grupo" => CalculateCategory::grupoEdad($persona['FH_NACIMIENTO']),
+                    "generacion" => CalculateCategory::generacion($persona['FH_NACIMIENTO']),
 
                     //Información del excel
                     "correo" => $personasExcel[$persona['DOCUMENTO']]['correo'],

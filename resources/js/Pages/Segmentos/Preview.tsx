@@ -16,7 +16,8 @@ export default function Preview(props: Props) {
         let filtered: SelectedFilter[] = [];
 
         filtered = allFilters.map((filter) => ({
-            name: filter.attr,
+            attr: filter.attr,
+            text: filter.text,
             options: filter.options
                 .filter((option) => option.active)
                 .map((option) => ({
@@ -31,7 +32,7 @@ export default function Preview(props: Props) {
         filtered = filtered.map((filter) => ({
             ...filter,
             count: segmento.personas.filter((persona) => {
-                const value = persona[filter.name];
+                const value = persona[filter.attr];
                 return filter.options.some((option) => option.value === value);
             }).length,
         }));
@@ -43,7 +44,7 @@ export default function Preview(props: Props) {
         let filtered = [];
         filtered = segmento.personas.filter((persona) => {
             return activeFilterOptions.every((filter) => {
-                const value = persona[filter.name];
+                const value = persona[filter.attr];
                 return filter.options.some((option) => option.value === value);
             });
         });
@@ -93,12 +94,12 @@ export default function Preview(props: Props) {
     }
 
     return (
-        <div className="px-10">
+        <div className="p-10 bg-gray-100">
             <h1 className="title">Generación de Segmentos</h1>
 
-            <div className="flex">
+            <div className="flex gap-4">
                 {/* Filtros */}
-                <div className="flex-1 p-8 bg-white border">
+                <div className="flex-1 p-8 bg-white rounded-lg">
                     <h2 className="text-xl font-bold" hidden>
                         Filtros
                     </h2>
@@ -149,11 +150,11 @@ export default function Preview(props: Props) {
                         </p>
 
                         {activeFilterOptions.map((filter, filterIdx) => (
-                            <div key={filter.name} className="mb-4">
+                            <div key={filter.text} className="mb-4">
                                 <h3 className="mb-2 text-2xl font-bold text-white">
                                     Filtro {filterIdx + 1}{" "}
                                     <span className="italic text-celeste-claro">
-                                        {filter.name}
+                                        {filter.text}
                                     </span>
                                 </h3>
                                 <div className="flex flex-wrap gap-2 mb-2">

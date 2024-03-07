@@ -2,7 +2,7 @@ import { Filter } from "@/Interfaces/Filter";
 
 export const filters: Filter[] = [
     {
-        attr: "fh_nacimiento",
+        attr: "edad_grupo",
         text: "Edad",
         options: [
             {
@@ -18,11 +18,6 @@ export const filters: Filter[] = [
             {
                 text: "adultos mayores",
                 value: "ADULTO MAYOR",
-                active: false,
-            },
-            {
-                text: "tercera edad",
-                value: "TERCERA EDAD",
                 active: false,
             },
         ],
@@ -71,22 +66,22 @@ export const filters: Filter[] = [
         ],
     },
     {
-        attr: "id",
+        attr: "generacion",
         text: "Generaciones",
         options: [
             {
                 text: "generación x",
-                value: "generación x",
+                value: "GENERACIÓN X",
                 active: false,
             },
             {
                 text: "millennials",
-                value: "millennials",
+                value: "MILLENNIALS",
                 active: false,
             },
             {
-                text: "centennials",
-                value: "centennials",
+                text: "generación z",
+                value: "GENERACIÓN Z",
                 active: false,
             },
         ],
