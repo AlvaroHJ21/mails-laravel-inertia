@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Models\Perfilamiento;
+use App\Models\Perfil;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\ToModel;
 
-class PerfilamientoImport implements ToModel
+class PerfilImport implements ToModel
 {
 
     use Importable;
@@ -18,7 +18,7 @@ class PerfilamientoImport implements ToModel
     public function model(array $row)
     {
 
-        return new Perfilamiento([
+        return new Perfil([
             //
         ]);
     }

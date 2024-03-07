@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\PerfilPersonaExport;
-use App\Imports\PerfilamientoImport;
+use App\Imports\PerfilImport;
 use App\Models\BigQueryDev;
 use App\Models\Perfil;
 use Google\Cloud\BigQuery\BigQueryClient;
@@ -46,7 +46,7 @@ class PerfilController extends Controller
 
         $excel = $request->file('perfilamiento');
 
-        $array = (new PerfilamientoImport)->toArray($excel);
+        $array = (new PerfilImport)->toArray($excel);
 
         //2. Extraer array de DNI's
         //2.1 buscar en la primera fila el titulo de la columna dni
@@ -147,14 +147,14 @@ class PerfilController extends Controller
 
         $projectId = env('BIGQUERY_PROJECT_ID');
         $datasetId = env('BIGQUERY_DATASET_ID');
-        $tableId = 'prueba';
+        $tableId = 'TB_PERFIL';
 
         $bigQuery = new BigQueryClient([
             'projectId' => $projectId,
         ]);
 
         if ($documentos == "") {
-            $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '`';
+            $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '` LIMIT 100';
         } else {
             $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '` WHERE DOCUMENTO IN (' . $documentos . ')';
         }

@@ -65,7 +65,7 @@ export default function Form(props: Props) {
             <form id="form-create" onSubmit={handleSubmit}>
                 <div className="flex flex-col items-center">
                     <p className="m-auto mb-3 text-center max-w-60">
-                        Sube tu archivo para poder generar el perfil.
+                        Sube tu archivo para poder generar los segmentos.
                     </p>
                     <div className="relative mb-8">
                         <label className="font-bold btn btn-secondary">
@@ -74,7 +74,7 @@ export default function Form(props: Props) {
                                 id="file"
                                 type="file"
                                 className="input"
-                                name="perfilamiento"
+                                name="input_excel"
                                 hidden
                                 onChange={handleInputFileChange}
                             />

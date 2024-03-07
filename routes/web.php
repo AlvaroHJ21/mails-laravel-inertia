@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SegmentoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,15 +44,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfiles/{perfil}/download', [PerfilController::class, 'download'])->name('perfiles.download');
     Route::delete('/perfiles/{perfil}/destroy', [PerfilController::class, 'destroy'])->name('perfiles.destroy');
 
-    Route::get('/segmentos', function () {
-        return Inertia::render('Segmentos/Index');
-    })->name('segmentos.index');
+    Route::get('/segmentos', [SegmentoController::class, "index"])->name('segmentos.index');
     Route::get('/programacion', function () {
         return Inertia::render('Programacion/Index');
     })->name('programacion.index');
     Route::get('/resultados', function () {
         return Inertia::render('Resultados/Index');
     })->name('resultados.index');
+
+    // Route::get('/test', [PerfilController::class, 'test'])->name('perfiles.test');
 });
 
 require __DIR__ . '/auth.php';
