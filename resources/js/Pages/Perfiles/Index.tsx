@@ -5,7 +5,7 @@ import Modal from "@/Components/Modal";
 import { PageProps } from "@/types";
 import { Perfil } from "@/types/Perfil";
 
-import Form from "./Form";
+import FormUpload from "./FormUpload";
 import Dashboard from "./Dashboard";
 import { useState } from "react";
 import Alert from "@/Components/Alert";
@@ -144,7 +144,7 @@ export default function Perfiles(props: PerfilesProps) {
                 onClose={() => setOpenModalName("")}
                 maxWidth="xs"
             >
-                <Form onSended={() => setOpenModalName(ModalName.Dashboard)} />
+                <FormUpload onSended={() => setOpenModalName(ModalName.Dashboard)} />
             </Modal>
             <Modal
                 show={openModalName == ModalName.Dashboard}

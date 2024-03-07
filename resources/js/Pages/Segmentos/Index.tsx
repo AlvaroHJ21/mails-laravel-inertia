@@ -9,9 +9,9 @@ import eliminarSvg from "@/svg/eliminar.svg";
 import { useState } from "react";
 import { Head } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
-import Form from "./Form";
+import FormUpload from "./FormUpload";
 import { Segmento } from "@/types/Segmento";
-import Preview from "./Preview";
+import FormView from "./FormView";
 
 enum ModalName {
     Form = "Form",
@@ -152,7 +152,7 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                 onClose={() => setOpenModalName("")}
                 maxWidth="xs"
             >
-                <Form />
+                <FormUpload />
             </Modal>
 
             <Modal
@@ -160,7 +160,7 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                 onClose={() => setOpenModalName("")}
                 maxWidth="xl"
             >
-                {selectedSegmento && <Preview segmento={selectedSegmento} />}
+                {selectedSegmento && <FormView segmento={selectedSegmento} />}
             </Modal>
         </AuthenticatedLayout>
     );

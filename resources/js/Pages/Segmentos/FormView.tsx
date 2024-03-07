@@ -7,7 +7,7 @@ interface Props {
     segmento: Segmento;
 }
 
-export default function Preview(props: Props) {
+export default function FormView(props: Props) {
     const { segmento } = props;
 
     const [allFilters, setAllFilters] = useState(filters);
