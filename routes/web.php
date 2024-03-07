@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    Route::get('/perfiles', [PerfilController::class, 'index'])->name('perfiles.index');
+    Route::get('/perfiles/template/download', [PerfilController::class, 'downloadTemplate'])->name('perfiles.downloadTemplate');
+    Route::post('/perfiles/generate', [PerfilController::class, 'generate'])->name('perfiles.generate');
+    Route::get('/perfiles/{perfil}/download', [PerfilController::class, 'download'])->name('perfiles.download');
+    Route::delete('/perfiles/{perfil}/destroy', [PerfilController::class, 'destroy'])->name('perfiles.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

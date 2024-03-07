@@ -1,3 +1,209 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    a {
+        display: inline-block;
+    }
+
+    body {
+        @apply text-gris-azulado;
+    }
+}
+
+@layer utilities {
+    .container {
+        @apply max-w-screen-2xl m-auto w-[90%];
+    }
+
+    .bg-auth-gradient {
+        /* background: linear-gradient(225deg, #c0fdfe 0%, #c0c9ee 100%); */
+        background-image: url("/resources/img/login-bg.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .bg-main-gradient {
+        background: linear-gradient(225deg, #c0fdfe 0%, #c0c9ee 100%);
+    }
+
+    .collapsed {
+        @apply w-0 px-0 overflow-hidden;
+    }
+}
+
+@layer components {
+    .title {
+        @apply text-3xl font-semibold text-azul-marino mb-4 text-center;
+    }
+
+    /* BUTTONS */
+
+    .btn {
+        @apply flex items-center gap-2 py-1 px-4 font-semibold text-azul-marino rounded-md border border-transparent transition-all w-fit
+        hover:shadow-md hover:cursor-pointer
+        active:border-gray-200 active:shadow-none
+        disabled:bg-gray-200 disabled:text-gray-500 disabled:shadow-none;
+    }
+
+    .btn-sm {
+        @apply py-1 px-2 text-xs;
+    }
+
+    .btn-primary {
+        @apply text-azul-marino bg-amarillo;
+    }
+
+    .btn-secondary {
+        @apply bg-cielo-alba text-celeste-claro;
+    }
+
+    .btn-text {
+        @apply text-azul-marino bg-transparent;
+    }
+
+    /* INPUTS */
+
+    .input-group {
+        @apply flex rounded-md overflow-hidden;
+    }
+
+    .input-group-icon {
+        @apply w-[42px] h-[42px] grid place-items-center bg-[#d5e5fe] text-celeste-claro;
+    }
+
+    .input-group .input {
+        @apply flex-1 rounded-l-none;
+    }
+
+    .field {
+        @apply flex flex-col gap-2 mb-3 text-sm font-semibold;
+    }
+
+    .input {
+        @apply py-2 px-4 outline-none rounded-md border text-base font-normal bg-cielo-alba;
+    }
+
+    .input[type="file"] {
+        @apply text-slate-500 border p-0
+        file:mr-4 file:py-1 file:px-4
+        file:rounded-md file:border-0
+        file:font-semibold
+        file:bg-white file:text-celeste-claro
+        hover:cursor-pointer;
+    }
+
+    /* TABLE */
+
+    .table {
+        @apply w-full table-auto text-sm text-left;
+    }
+
+    .table th {
+        @apply py-3 px-6;
+    }
+
+    .table thead {
+        @apply bg-gray-50 text-gray-600 font-medium border-b;
+    }
+
+    .table tbody {
+        @apply text-gray-600 divide-y;
+    }
+    .table tbody td {
+        @apply px-6 py-2 whitespace-nowrap text-gris-azulado;
+    }
+
+    .table-gradient thead {
+        background: linear-gradient(to right, #4f93fe, #02315d);
+    }
+
+    .table-blue thead {
+        @apply bg-azul-marino text-white;
+    }
+
+    .table-gradient thead th {
+        color: white;
+        background-color: transparent;
+    }
+
+    /* ALERTS */
+
+    .alert {
+        @apply text-sm;
+    }
+
+    .alert-content {
+        @apply py-4 px-4;
+    }
+
+    .alert-danger {
+        @apply bg-red-100 text-red-500;
+    }
+
+    .alert-info {
+        @apply bg-[#e3f3fb] text-gris-azulado;
+    }
+
+    .alert .indicator {
+        @apply w-full h-1 bg-celeste-claro;
+        animation: alert-indicator 3s ease-in-out;
+    }
+
+    @keyframes alert-indicator {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+
+    /* CARDS */
+
+    .card {
+        @apply bg-white shadow-md p-4;
+    }
+
+    .card-title {
+        @apply text-xl font-semibold text-azul-marino;
+    }
+
+    .card-title span {
+        @apply text-celeste-claro;
+    }
+
+    /* NAVITEMS */
+
+    .nav-item {
+        @apply w-full transition-colors bg-azul-marino-fuerte rounded-md overflow-hidden;
+    }
+
+    .nav-item a {
+        @apply w-full transition-colors bg-azul-marino-fuerte py-4 px-2 text-center;
+    }
+
+    .nav-item-name {
+        @apply text-celeste-claro max-w-28 m-auto text-base mb-1 leading-5;
+    }
+
+    .nav-indicator {
+        @apply w-full h-1 bg-celeste-claro rounded-full;
+    }
+
+    .nav-item.active {
+        @apply bg-celeste-claro;
+    }
+
+    .nav-item.active .nav-indicator {
+        @apply bg-amarillo;
+    }
+    .nav-item.active .nav-item-name {
+        @apply text-amarillo;
+    }
+
+    .nav-item-description {
+        @apply text-xs max-w-28 m-auto text-white;
+    }
+}
