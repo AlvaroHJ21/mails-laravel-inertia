@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "clsx": "^2.1.0",
+        "react-hot-toast": "^2.4.1",
         "tailwind-merge": "^2.2.1"
     }
 }

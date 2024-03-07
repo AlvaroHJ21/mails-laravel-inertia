@@ -63,7 +63,9 @@ class PerfilController extends Controller
             || $var2ColumnIdx === false
             || $var3ColumnIdx === false
         ) {
-            throw new \Exception("No se encontraron las columnas necesarias");
+            return redirect()->back()->withErrors(
+                "El archivo no tiene las columnas requeridas"
+            );
         }
 
         //2.3 si se encuentra el titulo de la columna dni se extraen los dni's
@@ -85,11 +87,11 @@ class PerfilController extends Controller
             ];
         }
 
-        //3. Buscar los DNI's en BigQuery
-        $documentosStr = '"' . implode('","', $dniArray) . '"';
-        $personasNube = $this->getPersonsFromBigQuery($documentosStr);
-
         try {
+            //3. Buscar los DNI's en BigQuery
+            $documentosStr = '"' . implode('","', $dniArray) . '"';
+            $personasNube = $this->getPersonsFromBigQuery($documentosStr);
+
             DB::beginTransaction();
 
             //4. Crear un perfil en la tabla perfil
@@ -131,12 +133,17 @@ class PerfilController extends Controller
             return to_route('perfiles.index');
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            // throw $th;
+            return redirect()->back()->withErrors(
+                // "Ocurrio un error al procesar el archivo"
+                $th->getMessage()
+            );
         }
     }
 
     public function getPersonsFromBigQuery(String $documentos = "")
     {
+
         $projectId = env('BIGQUERY_PROJECT_ID');
         $datasetId = env('BIGQUERY_DATASET_ID');
         $tableId = 'prueba';

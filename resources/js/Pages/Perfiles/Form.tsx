@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { router } from "@inertiajs/react";
+import { Toaster } from "react-hot-toast";
 
 import excelSvg from "@/svg/excel.svg";
 import Button from "@/Components/Button";
@@ -37,8 +38,8 @@ export default function Form(props: Props) {
             onSuccess() {
                 onSended?.();
             },
-            onError() {
-                console.log("Error");
+            onError(errors) {
+                window.toast.error(errors[0]);
             },
             onFinish() {
                 setIsSending(false);
