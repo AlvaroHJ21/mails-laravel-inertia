@@ -152,7 +152,12 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                 onClose={() => setOpenModalName("")}
                 maxWidth="xs"
             >
-                <FormUpload />
+                <FormUpload
+                    onSended={(segmento) => {
+                        setOpenModalName(ModalName.Preview);
+                        setSelectedSegmento(segmento);
+                    }}
+                />
             </Modal>
 
             <Modal

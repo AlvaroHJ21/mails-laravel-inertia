@@ -22,17 +22,17 @@ class PerfilPersonaExport implements FromQuery, WithHeadings
     {
         return PerfilPersona::select(
             'documento',
-            'fh_nacimiento',
-            'sexo',
-            'estado_civil',
-            'ubigeo',
-            'departamento',
-            'provincia',
-            'distrito',
-            'correo',
-            'var1',
-            'var2',
-            'var3'
+            // 'fh_nacimiento',
+            // 'sexo',
+            // 'estado_civil',
+            // 'ubigeo',
+            // 'departamento',
+            // 'provincia',
+            // 'distrito',
+            // 'correo',
+            // 'var1',
+            // 'var2',
+            // 'var3'
         )
             ->where('perfil_id', $this->perfilId);
     }
@@ -40,18 +40,19 @@ class PerfilPersonaExport implements FromQuery, WithHeadings
     public function headings(): array
     {
         return [
-            'DOCUMENTO',
-            'FH_NACIMIENTO',
-            'SEXO',
-            'ESTADO_CIVIL',
-            'UBIGEO',
-            'DEPARTAMENTO',
-            'PROVINCIA',
-            'DISTRITO',
-            'CORREO',
-            'VAR1',
-            'VAR2',
-            'VAR3',
+            'documento',
+            // 'DOCUMENTO',
+            // 'FH_NACIMIENTO',
+            // 'SEXO',
+            // 'ESTADO_CIVIL',
+            // 'UBIGEO',
+            // 'DEPARTAMENTO',
+            // 'PROVINCIA',
+            // 'DISTRITO',
+            // 'CORREO',
+            // 'VAR1',
+            // 'VAR2',
+            // 'VAR3',
         ];
     }
 }

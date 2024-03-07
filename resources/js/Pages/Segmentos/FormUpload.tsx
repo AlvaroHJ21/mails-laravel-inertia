@@ -3,9 +3,10 @@ import { router } from "@inertiajs/react";
 
 import excelSvg from "@/svg/excel.svg";
 import Button from "@/Components/Button";
+import { Segmento } from "@/types/Segmento";
 
 interface Props {
-    onSended?: () => void;
+    onSended?: (segmento: Segmento) => void;
 }
 
 export default function FormUpload(props: Props) {
@@ -34,8 +35,11 @@ export default function FormUpload(props: Props) {
             onStart() {
                 setIsSending(true);
             },
-            onSuccess() {
-                onSended?.();
+            onSuccess(data) {
+                const segmentos = data.props.segmentos as Segmento[];
+                const lastSegmento = segmentos[segmentos.length - 1];
+                console.log(lastSegmento);
+                onSended?.(lastSegmento);
             },
             onError(errors) {
                 window.toast.error(errors[0]);
