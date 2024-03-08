@@ -89,7 +89,7 @@ export default function FormUpload(props: Props) {
                     </div>
 
                     <label className="text-center field">
-                        Nombre
+                        Nombre (opcional)
                         <input type="text" name="nombre" className="input" />
                     </label>
 
