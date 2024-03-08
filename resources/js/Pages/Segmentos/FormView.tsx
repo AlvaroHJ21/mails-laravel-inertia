@@ -1,7 +1,8 @@
 import { filters } from "@/Data/filters";
-import { SelectedFilter } from "@/Interfaces/Filter";
+import { Filter } from "@/Interfaces/Filter";
 import { Segmento } from "@/types/Segmento";
-import { useMemo, useState } from "react";
+import { router } from "@inertiajs/react";
+import { useEffect, useMemo, useState } from "react";
 
 interface Props {
     segmento: Segmento;
@@ -13,7 +14,7 @@ export default function FormView(props: Props) {
     const [allFilters, setAllFilters] = useState(filters);
 
     const activeFilterOptions = useMemo(() => {
-        let filtered: SelectedFilter[] = [];
+        let filtered: Filter[] = [];
 
         filtered = allFilters.map((filter) => ({
             attr: filter.attr,
@@ -23,6 +24,7 @@ export default function FormView(props: Props) {
                 .map((option) => ({
                     text: option.text,
                     value: option.value,
+                    active: true,
                 })),
             count: 0,
         }));
@@ -51,6 +53,36 @@ export default function FormView(props: Props) {
 
         return filtered.length;
     }, [activeFilterOptions]);
+
+    useEffect(() => {
+        //marcar como activo los filtros que ya estan seleccionados
+        const newFilters = allFilters.map((filter) => {
+            const filtros = segmento.filtros.find(
+                (f) => f.text === filter.text
+            );
+            if (filtros) {
+                return {
+                    ...filter,
+                    options: filter.options.map((option) => {
+                        const active = filtros.options.some(
+                            (o) => o.value === option.value
+                        );
+                        return {
+                            ...option,
+                            active,
+                        };
+                    }),
+                };
+            }
+            return filter;
+        });
+
+        console.log(newFilters);
+
+        setAllFilters(newFilters);
+
+        return () => {};
+    }, [segmento]);
 
     function handleToggleActiveOption(
         filterIndex: number,
@@ -90,7 +122,13 @@ export default function FormView(props: Props) {
     }
 
     function handleSave() {
+        const filtrosStr = JSON.stringify(activeFilterOptions);
+
         console.log(activeFilterOptions);
+
+        router.put(route("segmentos.update", { segmento }), {
+            filtros: filtrosStr,
+        });
     }
 
     return (

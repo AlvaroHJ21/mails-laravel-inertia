@@ -1,10 +1,12 @@
+import { Filter } from "@/Interfaces/Filter";
+
 export interface Segmento {
     id: number;
     nombre: string;
     user_id: string;
     created_at: string;
     updated_at: string;
-    filtros: string;
+    filtros: Filter[];
     personas: SegmentoPersona[];
 }
 

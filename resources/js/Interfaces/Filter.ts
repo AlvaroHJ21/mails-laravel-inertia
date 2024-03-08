@@ -8,14 +8,5 @@ export interface Filter {
         value: string;
         active: boolean;
     }[];
-}
-
-export interface SelectedFilter {
-    attr: keyof SegmentoPersona;
-    text: string;
-    options: {
-        text: string;
-        value: string | number;
-    }[];
     count: number;
 }

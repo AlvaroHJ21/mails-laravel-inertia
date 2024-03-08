@@ -79,17 +79,10 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                 </td>
                                 <td>
                                     <div className="flex flex-col gap-1">
-                                        {(
-                                            JSON.parse(segmento.filtros) as [
-                                                string
-                                            ]
-                                        ).map((filtro) => (
-                                            <div
-                                                key={filtro}
-                                                className="badge badge-primary"
-                                            >
-                                                {filtro}
-                                            </div>
+                                        {segmento.filtros.map((filtro) => (
+                                            <span key={filtro.text} className="badge">
+                                                {filtro.text}
+                                            </span>
                                         ))}
                                     </div>
                                 </td>

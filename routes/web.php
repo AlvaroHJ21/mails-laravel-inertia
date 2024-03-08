@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/segmentos', [SegmentoController::class, "index"])->name('segmentos.index');
     Route::post('/segmentos', [SegmentoController::class, "store"])->name('segmentos.store');
     Route::get('/segmentos/{segmento}/download', [SegmentoController::class, 'download'])->name('segmentos.download');
+    Route::put('/segmentos/{segmento}/update', [SegmentoController::class, 'update'])->name('segmentos.update');
     Route::delete('/segmentos/{segmento}/destroy', [SegmentoController::class, 'destroy'])->name('segmentos.destroy');
 
     Route::get('/programacion', function () {

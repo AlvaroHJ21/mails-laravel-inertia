@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('segmentos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('filtros')->default("[]");
+            $table->text('filtros');
             $table->foreignId("user_id")->constrained();
             $table->timestamps();
         });

@@ -17,6 +17,10 @@ class SegmentoController extends Controller
     public function index()
     {
         $segmentos = Segmento::with("personas")->where('user_id', Auth::user()->id)->get();
+        $segmentos = $segmentos->map(function ($segmento) {
+            $segmento->filtros = $segmento->filtros ? json_decode($segmento->filtros) : [];
+            return $segmento;
+        });
         return Inertia::render('Segmentos/Index', compact('segmentos'));
     }
 
@@ -40,7 +44,8 @@ class SegmentoController extends Controller
             //3. Crear el segmento
             $segmento = Segmento::create([
                 "nombre" => $request->nombre ??  "Segmento " . time(), //TODO: cambiar por un nombre mas descriptivo
-                "user_id" => Auth::user()->id
+                "user_id" => Auth::user()->id,
+                "filtros" => "[]"
             ]);
 
             //4. Asociar las personas al segmento
@@ -89,6 +94,24 @@ class SegmentoController extends Controller
     public function download(Segmento $segmento)
     {
         return (new SegmentoPersonaExport($segmento->id))->download($segmento->nombre . '.xlsx');
+    }
+
+    public function update(Request $request, Segmento $segmento)
+    {
+        $request->validate([
+            'filtros' => 'required|string',
+        ]);
+
+
+        // dd($request->filtros);
+
+        $segmento->update([
+            "filtros" => $request->filtros
+        ]);
+
+        // dd($segmento);
+
+        return to_route('segmentos.index');
     }
 
     public function destroy(Segmento $segmento)
