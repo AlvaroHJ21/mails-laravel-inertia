@@ -39,7 +39,7 @@ export default function Sidebar(props: Props) {
     return (
         <aside
             className={
-                "w-64 h-screen p-8 bg-azul-marino transition-[width,padding] duration-300 " +
+                "w-64 h-screen overflow-y-auto p-8 bg-azul-marino transition-[width,padding] duration-300 " +
                 (collapsed ? "collapsed" : "")
             }
         >
