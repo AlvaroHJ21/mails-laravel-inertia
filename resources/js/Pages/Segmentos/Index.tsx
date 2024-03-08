@@ -7,7 +7,7 @@ import verSvg from "@/svg/ver.svg";
 import editarSvg from "@/svg/editar.svg";
 import eliminarSvg from "@/svg/eliminar.svg";
 import { useState } from "react";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import Modal from "@/Components/Modal";
 import FormUpload from "./FormUpload";
 import { Segmento } from "@/types/Segmento";
@@ -28,7 +28,11 @@ export default function SegmentosPage(props: Props) {
     const [openModalName, setOpenModalName] = useState("");
     const [selectedSegmento, setSelectedSegmento] = useState<Segmento>();
 
-    function handleDelete(segmento: any) {}
+    function handleDelete(segmento: Segmento) {
+        if (confirm("¿Estás seguro de eliminar este segmento?")) {
+            router.delete(route("segmentos.destroy", { segmento }));
+        }
+    }
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -61,8 +65,8 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                 <td>{segmento.personas.length}</td>
                                 <td>
                                     <a
-                                        href={route("perfiles.download", {
-                                            perfil: segmento,
+                                        href={route("segmentos.download", {
+                                            segmento: segmento,
                                         })}
                                         className="btn btn-sm"
                                     >

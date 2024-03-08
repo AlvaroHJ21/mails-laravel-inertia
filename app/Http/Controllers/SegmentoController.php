@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SegmentoPersonaExport;
 use App\Helpers\CalculateCategory;
 use App\Helpers\GenerateArrayFromBigQuery;
 use App\Helpers\GenerateArrayFromExcel;
@@ -83,5 +84,17 @@ class SegmentoController extends Controller
                 $th->getMessage()
             );
         }
+    }
+
+    public function download(Segmento $segmento)
+    {
+        return (new SegmentoPersonaExport($segmento->id))->download($segmento->nombre . '.xlsx');
+    }
+
+    public function destroy(Segmento $segmento)
+    {
+        $segmento->delete();
+
+        return redirect()->route('segmentos.index');
     }
 }

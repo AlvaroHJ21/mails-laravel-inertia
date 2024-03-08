@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/segmentos', [SegmentoController::class, "index"])->name('segmentos.index');
     Route::post('/segmentos', [SegmentoController::class, "store"])->name('segmentos.store');
+    Route::get('/segmentos/{segmento}/download', [SegmentoController::class, 'download'])->name('segmentos.download');
+    Route::delete('/segmentos/{segmento}/destroy', [SegmentoController::class, 'destroy'])->name('segmentos.destroy');
 
     Route::get('/programacion', function () {
         return Inertia::render('Programacion/Index');
