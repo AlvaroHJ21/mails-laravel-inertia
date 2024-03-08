@@ -6,10 +6,11 @@ import { useEffect, useMemo, useState } from "react";
 
 interface Props {
     segmento: Segmento;
+    onSaved?: () => void;
 }
 
 export default function FormView(props: Props) {
-    const { segmento } = props;
+    const { segmento, onSaved } = props;
 
     const [allFilters, setAllFilters] = useState(filters);
 
@@ -77,8 +78,6 @@ export default function FormView(props: Props) {
             return filter;
         });
 
-        console.log(newFilters);
-
         setAllFilters(newFilters);
 
         return () => {};
@@ -124,11 +123,17 @@ export default function FormView(props: Props) {
     function handleSave() {
         const filtrosStr = JSON.stringify(activeFilterOptions);
 
-        console.log(activeFilterOptions);
-
-        router.put(route("segmentos.update", { segmento }), {
-            filtros: filtrosStr,
-        });
+        router.put(
+            route("segmentos.update", { segmento }),
+            {
+                filtros: filtrosStr,
+            },
+            {
+                onSuccess() {
+                    onSaved?.();
+                },
+            }
+        );
     }
 
     return (

@@ -12,6 +12,7 @@ import Modal from "@/Components/Modal";
 import FormUpload from "./FormUpload";
 import { Segmento } from "@/types/Segmento";
 import FormView from "./FormView";
+import { formatDate } from "@/Utils/formatDate";
 
 enum ModalName {
     Form = "Form",
@@ -61,7 +62,7 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                         {segmentos?.map((segmento) => (
                             <tr key={segmento.id}>
                                 <td>{segmento.nombre}</td>
-                                <td>{segmento.created_at}</td>
+                                <td>{formatDate(segmento.created_at)}</td>
                                 <td>{segmento.personas.length}</td>
                                 <td>
                                     <a
@@ -78,9 +79,12 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                     </a>
                                 </td>
                                 <td>
-                                    <div className="flex flex-col gap-1">
+                                    <div className="flex flex-wrap gap-1">
                                         {segmento.filtros.map((filtro) => (
-                                            <span key={filtro.text} className="badge">
+                                            <span
+                                                key={filtro.text}
+                                                className="badge"
+                                            >
                                                 {filtro.text}
                                             </span>
                                         ))}
@@ -162,7 +166,12 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                 onClose={() => setOpenModalName("")}
                 maxWidth="xl"
             >
-                {selectedSegmento && <FormView segmento={selectedSegmento} />}
+                {selectedSegmento && (
+                    <FormView
+                        segmento={selectedSegmento}
+                        onSaved={() => setOpenModalName("")}
+                    />
+                )}
             </Modal>
         </AuthenticatedLayout>
     );

@@ -15,6 +15,7 @@ import eliminarSvg from "@/svg/eliminar.svg";
 import verSvg from "@/svg/ver.svg";
 import enviarSvg from "@/svg/enviar.svg";
 import excelSvg from "@/svg/excel.svg";
+import { formatDate } from "@/Utils/formatDate";
 
 enum ModalName {
     Form = "Form",
@@ -64,7 +65,7 @@ export default function Perfiles(props: PerfilesProps) {
                         {perfiles.map((perfil) => (
                             <tr key={perfil.id}>
                                 <td>{perfil.nombre}</td>
-                                <td>{perfil.created_at}</td>
+                                <td>{formatDate(perfil.created_at)}</td>
                                 <td>{perfil.personas.length}</td>
                                 <td>
                                     <a
