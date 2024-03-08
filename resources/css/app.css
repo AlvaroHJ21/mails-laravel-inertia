@@ -162,6 +162,11 @@
     .alert .indicator {
         @apply w-full h-1 bg-celeste-claro;
         animation: alert-indicator 3s ease-in-out;
+        animation-play-state: running;
+    }
+
+    .alert:hover .indicator {
+        animation-play-state: paused;
     }
 
     @keyframes alert-indicator {
