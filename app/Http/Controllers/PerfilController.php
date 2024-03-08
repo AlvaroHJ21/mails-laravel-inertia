@@ -41,7 +41,8 @@ class PerfilController extends Controller
     {
         //1. Validar el archivo
         $request->validate([
-            'perfilamiento' => 'required|mimes:xlsx,xls'
+            'perfilamiento' => 'required|mimes:xlsx,xls',
+            'nombre' => 'nullable|string|max:255'
         ]);
 
         $excel = $request->file('perfilamiento');
@@ -98,7 +99,7 @@ class PerfilController extends Controller
 
             //4. Crear un perfil en la tabla perfil
             $perfil = Perfil::create([
-                "nombre" => "Perfil " . time(), //TODO: cambiar por un nombre mas descriptivo
+                "nombre" => $request->nombre ?? "Perfil " . time(),
                 "user_id" => Auth::user()->id
             ]);
 

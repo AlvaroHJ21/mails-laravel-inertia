@@ -22,7 +22,8 @@ class SegmentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'input_excel' => 'required|mimes:xlsx,xls'
+            'input_excel' => 'required|mimes:xlsx,xls',
+            'nombre' => 'nullable|string|max:255'
         ]);
 
         //1. Extraer los datos del excel
@@ -37,7 +38,7 @@ class SegmentoController extends Controller
 
             //3. Crear el segmento
             $segmento = Segmento::create([
-                "nombre" => "Segmento " . time(), //TODO: cambiar por un nombre mas descriptivo
+                "nombre" => $request->nombre ??  "Segmento " . time(), //TODO: cambiar por un nombre mas descriptivo
                 "user_id" => Auth::user()->id
             ]);
 
