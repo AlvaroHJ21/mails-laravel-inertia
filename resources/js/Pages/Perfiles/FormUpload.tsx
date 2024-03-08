@@ -36,6 +36,7 @@ export default function FormUpload(props: Props) {
             },
             onSuccess() {
                 onSended?.();
+                window.toast.success("Perfil generado correctamente");
             },
             onError(errors) {
                 window.toast.error(errors[0]);
