@@ -97,7 +97,7 @@ export default function FormView(props: Props) {
         <div className="p-10 bg-gray-100">
             <h1 className="title">Generación de Segmentos</h1>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
                 {/* Filtros */}
                 <div className="flex-1 p-8 bg-white rounded-lg">
                     <h2 className="text-xl font-bold" hidden>
@@ -140,7 +140,7 @@ export default function FormView(props: Props) {
                 </div>
 
                 {/* Preview */}
-                <div className="flex flex-col pb-8 w-[400px]">
+                <div className="flex flex-col pb-8 md:w-[400px]">
                     <div className="flex-1 p-8 mb-8 text-white rounded-lg bg-azul-marino">
                         <h2 className="text-2xl font-bold text-center">
                             Total de Registros
