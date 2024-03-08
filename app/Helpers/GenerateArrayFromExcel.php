@@ -26,9 +26,7 @@ class GenerateArrayFromExcel
             || $var2ColumnIdx === false
             || $var3ColumnIdx === false
         ) {
-            return redirect()->back()->withErrors(
-                "El archivo no tiene las columnas requeridas"
-            );
+            throw new \Exception("No se encontraron las columnas necesarias en el archivo excel");
         }
 
         //2.3 si se encuentra el titulo de la columna dni se extraen los dni's

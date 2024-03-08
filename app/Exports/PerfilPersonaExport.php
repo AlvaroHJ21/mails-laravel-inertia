@@ -29,10 +29,10 @@ class PerfilPersonaExport implements FromQuery, WithHeadings
             // 'departamento',
             // 'provincia',
             // 'distrito',
-            // 'correo',
-            // 'var1',
-            // 'var2',
-            // 'var3'
+            'correo',
+            'var1',
+            'var2',
+            'var3'
         )
             ->where('perfil_id', $this->perfilId);
     }
@@ -41,6 +41,10 @@ class PerfilPersonaExport implements FromQuery, WithHeadings
     {
         return [
             'documento',
+            'correo',
+            'var1',
+            'var2',
+            'var3'
             // 'DOCUMENTO',
             // 'FH_NACIMIENTO',
             // 'SEXO',

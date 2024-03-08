@@ -21,6 +21,10 @@ class SegmentoPersonaExport implements FromQuery, WithHeadings
     {
         return SegmentoPersona::select(
             'documento',
+            'correo',
+            'var1',
+            'var2',
+            'var3'
         )
             ->where('segmento_id', $this->id);
     }
@@ -28,7 +32,11 @@ class SegmentoPersonaExport implements FromQuery, WithHeadings
     public function headings(): array
     {
         return [
-            'documento'
+            'documento',
+            'correo',
+            'var1',
+            'var2',
+            'var3',
         ];
     }
 }

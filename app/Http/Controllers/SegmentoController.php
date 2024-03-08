@@ -31,16 +31,17 @@ class SegmentoController extends Controller
             'nombre' => 'nullable|string|max:255'
         ]);
 
-        //1. Extraer los datos del excel
-        $data = GenerateArrayFromExcel::generate($request->file('input_excel'));
-        $documentosStr = $data[0];
-        $personasExcel = $data[1];
-
         try {
-            DB::beginTransaction();
+            //1. Extraer los datos del excel
+            $data = GenerateArrayFromExcel::generate($request->file('input_excel'));
+
+            $documentosStr = $data[0];
+            $personasExcel = $data[1];
+
             //2. Extraer los datos de la nube
             $personasNube = GenerateArrayFromBigQuery::generate($documentosStr);
 
+            DB::beginTransaction();
             //3. Crear el segmento
             $segmento = Segmento::create([
                 "nombre" => $request->nombre ??  "Segmento " . time(), //TODO: cambiar por un nombre mas descriptivo
