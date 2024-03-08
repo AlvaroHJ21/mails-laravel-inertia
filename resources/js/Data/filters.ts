@@ -21,6 +21,7 @@ export const filters: Filter[] = [
                 active: false,
             },
         ],
+        count: 0,
     },
     {
         attr: "sexo",
@@ -38,6 +39,7 @@ export const filters: Filter[] = [
                 active: false,
             },
         ],
+        count: 0,
     },
     {
         attr: "estado_civil",
@@ -64,6 +66,7 @@ export const filters: Filter[] = [
                 active: false,
             },
         ],
+        count: 0,
     },
     {
         attr: "generacion",
@@ -85,6 +88,7 @@ export const filters: Filter[] = [
                 active: false,
             },
         ],
+        count: 0,
     },
     {
         attr: "departamento",
@@ -216,5 +220,6 @@ export const filters: Filter[] = [
                 active: false,
             },
         ],
+        count: 0,
     },
 ];
