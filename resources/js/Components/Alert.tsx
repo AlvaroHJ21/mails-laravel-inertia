@@ -22,7 +22,11 @@ export default function Alert(props: Props) {
     if (!open) return null;
 
     return (
-        <div className="mb-6 text-center alert alert-info">
+        <div
+            className={
+                "mb-6 text-center alert alert-info transition-[height] overflow-hidden"
+            }
+        >
             <div className="alert-content">
                 <p className="max-w-[90%] m-auto">
                     {text}
