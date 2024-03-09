@@ -110,13 +110,6 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                             }}
                                         >
                                             <img
-                                                src={verSvg}
-                                                alt="icono de ver"
-                                                width={24}
-                                            />
-                                        </button>
-                                        <button>
-                                            <img
                                                 src={editarSvg}
                                                 alt="icono de editar"
                                                 width={24}
