@@ -6,7 +6,7 @@ import { PageProps } from "@/types";
 import { Perfil } from "@/types/Perfil";
 
 import FormUpload from "./FormUpload";
-import Dashboard from "./Dashboard";
+import FormView from "./FormView";
 import { useState } from "react";
 import Alert from "@/Components/Alert";
 
@@ -16,10 +16,11 @@ import verSvg from "@/svg/ver.svg";
 import enviarSvg from "@/svg/enviar.svg";
 import excelSvg from "@/svg/excel.svg";
 import { formatDate } from "@/Utils/formatDate";
+import TextEditable from "@/Components/TextEditable";
 
 enum ModalName {
     Form = "Form",
-    Dashboard = "Dashboard",
+    View = "Dashboard",
 }
 
 type PerfilesProps = PageProps & {
@@ -30,6 +31,8 @@ export default function Perfiles(props: PerfilesProps) {
     const { auth, perfiles } = props;
 
     const [openModalName, setOpenModalName] = useState("");
+    const [activePerfil, setActivePerfil] = useState<Perfil>();
+    const [name, setName] = useState("Hola");
 
     function handleDelete(perfil: Perfil) {
         if (confirm("¿Estás seguro de eliminar este perfil?")) {
@@ -97,11 +100,12 @@ export default function Perfiles(props: PerfilesProps) {
                                 <td>
                                     <div className="flex w-20 gap-1">
                                         <button
-                                            onClick={() =>
+                                            onClick={() => {
                                                 setOpenModalName(
-                                                    ModalName.Dashboard
-                                                )
-                                            }
+                                                    ModalName.View
+                                                );
+                                                setActivePerfil(perfil);
+                                            }}
                                         >
                                             <img
                                                 src={verSvg}
@@ -145,13 +149,13 @@ export default function Perfiles(props: PerfilesProps) {
                 onClose={() => setOpenModalName("")}
                 maxWidth="xs"
             >
-                <FormUpload onSended={() => setOpenModalName(ModalName.Dashboard)} />
+                <FormUpload onSended={() => setOpenModalName(ModalName.View)} />
             </Modal>
             <Modal
-                show={openModalName == ModalName.Dashboard}
+                show={openModalName == ModalName.View}
                 onClose={() => setOpenModalName("")}
             >
-                <Dashboard />
+                {activePerfil && <FormView perfil={activePerfil} />}
             </Modal>
         </AuthenticatedLayout>
     );

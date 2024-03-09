@@ -40,7 +40,9 @@ export default function FormUpload(props: Props) {
                 const lastSegmento = segmentos[segmentos.length - 1];
                 console.log(lastSegmento);
                 onSended?.(lastSegmento);
-                window.toast.success("Información del segmento generada correctamente");
+                window.toast.success(
+                    "Información del segmento generada correctamente"
+                );
             },
             onError(errors) {
                 window.toast.error(errors[0]);
@@ -88,11 +90,6 @@ export default function FormUpload(props: Props) {
                             {fileName}
                         </span>
                     </div>
-
-                    <label className="text-center field">
-                        Nombre (opcional)
-                        <input type="text" name="nombre" className="input" />
-                    </label>
 
                     <Button disabled={fileName == ""} isLoading={isSending}>
                         Generar segmento

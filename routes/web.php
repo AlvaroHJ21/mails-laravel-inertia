@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfiles/template/download', [PerfilController::class, 'downloadTemplate'])->name('perfiles.downloadTemplate');
     Route::post('/perfiles/generate', [PerfilController::class, 'generate'])->name('perfiles.generate');
     Route::get('/perfiles/{perfil}/download', [PerfilController::class, 'download'])->name('perfiles.download');
+    Route::put('/perfiles/{perfil}/update', [PerfilController::class, 'update'])->name('perfiles.update');
     Route::delete('/perfiles/{perfil}/destroy', [PerfilController::class, 'destroy'])->name('perfiles.destroy');
 
     Route::get('/segmentos', [SegmentoController::class, "index"])->name('segmentos.index');

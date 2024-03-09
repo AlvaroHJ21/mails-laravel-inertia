@@ -100,17 +100,11 @@ class SegmentoController extends Controller
     public function update(Request $request, Segmento $segmento)
     {
         $request->validate([
-            'filtros' => 'required|string',
+            'filtros' => 'nullable|string',
+            'nombre' => 'nullable|string|max:255'
         ]);
 
-
-        // dd($request->filtros);
-
-        $segmento->update([
-            "filtros" => $request->filtros
-        ]);
-
-        // dd($segmento);
+        $segmento->update($request->all());
 
         return to_route('segmentos.index');
     }

@@ -195,6 +195,20 @@ class PerfilController extends Controller
         return response()->json($personas);
     }
 
+    public function update(Request $request, Perfil $perfil)
+    {
+
+        $request->validate([
+            'nombre' => 'required|string',
+        ]);
+
+        $perfil->update([
+            "nombre" => $request->nombre
+        ]);
+
+        return to_route('perfiles.index');
+    }
+
     public function destroy(Perfil $perfil)
     {
         $perfil->delete();

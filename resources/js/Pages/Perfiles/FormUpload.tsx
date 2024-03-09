@@ -85,11 +85,6 @@ export default function FormUpload(props: Props) {
                         </span>
                     </div>
 
-                    <label className="text-center field">
-                        Nombre (opcional)
-                        <input type="text" name="nombre" className="input" />
-                    </label>
-
                     <Button disabled={fileName == ""} isLoading={isSending}>
                         Generar perfil
                     </Button>

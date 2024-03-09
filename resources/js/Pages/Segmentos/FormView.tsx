@@ -1,3 +1,4 @@
+import TextEditable from "@/Components/TextEditable";
 import { filters } from "@/Data/filters";
 import { Filter } from "@/Interfaces/Filter";
 import { Segmento } from "@/types/Segmento";
@@ -11,6 +12,8 @@ interface Props {
 
 export default function FormView(props: Props) {
     const { segmento, onSaved } = props;
+
+    const [nombre, setNombre] = useState(segmento.nombre);
 
     const [allFilters, setAllFilters] = useState(filters);
 
@@ -136,10 +139,24 @@ export default function FormView(props: Props) {
         );
     }
 
+    function handleUpdateName(nombre: string) {
+        router.put(route("segmentos.update", { segmento }), {
+            nombre,
+        });
+    }
+
     return (
         <div className="p-10 bg-gray-100">
             <h1 className="title">Generación de Segmentos</h1>
-
+            <div className="flex items-center justify-center gap-2 p-4 mb-4 text-white rounded-full bg-azul-marino">
+                <TextEditable
+                    value={nombre}
+                    onClickOutside={(value) => {
+                        setNombre(value);
+                        if (nombre !== value) handleUpdateName(value);
+                    }}
+                />
+            </div>
             <div className="flex flex-col gap-4 md:flex-row">
                 {/* Filtros */}
                 <div className="flex-1 p-8 bg-white rounded-lg">
