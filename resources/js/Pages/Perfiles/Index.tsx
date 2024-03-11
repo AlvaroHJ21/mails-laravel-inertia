@@ -60,7 +60,7 @@ export default function Perfiles(props: PerfilesProps) {
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
                             <th>Información del cliente</th>
-                            <th>Enviar comunicación</th>
+                            <th>Programar campaña</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -110,13 +110,6 @@ export default function Perfiles(props: PerfilesProps) {
                                             <img
                                                 src={verSvg}
                                                 alt="icono de ver"
-                                                width={24}
-                                            />
-                                        </button>
-                                        <button>
-                                            <img
-                                                src={editarSvg}
-                                                alt="icono de editar"
                                                 width={24}
                                             />
                                         </button>

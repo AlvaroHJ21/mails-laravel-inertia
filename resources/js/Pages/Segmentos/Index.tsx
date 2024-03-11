@@ -1,18 +1,21 @@
-import { PageProps } from "@/types";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import Alert from "@/Components/Alert";
-import excelSvg from "@/svg/excel.svg";
-import enviarSvg from "@/svg/enviar.svg";
-import verSvg from "@/svg/ver.svg";
-import editarSvg from "@/svg/editar.svg";
-import eliminarSvg from "@/svg/eliminar.svg";
 import { useState } from "react";
-import { Head, router } from "@inertiajs/react";
-import Modal from "@/Components/Modal";
-import FormUpload from "./FormUpload";
-import { Segmento } from "@/types/Segmento";
-import FormView from "./FormView";
+
 import { formatDate } from "@/Utils/formatDate";
+import { Head, router } from "@inertiajs/react";
+
+import Alert from "@/Components/Alert";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import FormUpload from "./FormUpload";
+import FormView from "./FormView";
+import Modal from "@/Components/Modal";
+
+import eliminarSvg from "@/svg/eliminar.svg";
+import enviarSvg from "@/svg/enviar.svg";
+import excelSvg from "@/svg/excel.svg";
+import verSvg from "@/svg/ver.svg";
+
+import { PageProps } from "@/types";
+import { Segmento } from "@/types/Segmento";
 
 enum ModalName {
     Form = "Form",
@@ -54,7 +57,7 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
                             <th>Filtros</th>
-                            <th>Enviar comunicación</th>
+                            <th>Programar campaña</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -110,8 +113,8 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                             }}
                                         >
                                             <img
-                                                src={editarSvg}
-                                                alt="icono de editar"
+                                                src={verSvg}
+                                                alt="icono de ver"
                                                 width={24}
                                             />
                                         </button>
