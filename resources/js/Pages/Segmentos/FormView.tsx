@@ -4,6 +4,7 @@ import { router } from "@inertiajs/react";
 import useFormFilter from "./useFormFilter";
 import TextEditable from "@/Components/TextEditable";
 import { Segmento } from "@/Interfaces/Segmento";
+import { filtersGroups } from "@/Data/filters";
 
 interface Props {
     segmento: Segmento;
@@ -16,21 +17,23 @@ export default function FormView(props: Props) {
     const [nombre, setNombre] = useState(segmento.nombre);
 
     const {
-        activeFilterOptions,
-        allFilters,
-        handleToggleActiveOption,
-        loadFilters,
+        activeFilterGroups,
+        handleToggleActiveFilter,
+        isFilterActive,
+        loadFilterGroups,
         resetFilters,
         totalByAllActiveFilters,
-    } = useFormFilter({ segmento });
+    } = useFormFilter({
+        segmento,
+    });
 
     useEffect(() => {
-        loadFilters();
+        loadFilterGroups();
         return () => {};
     }, [segmento]);
 
     function handleSave() {
-        const filtrosStr = JSON.stringify(activeFilterOptions);
+        const filtrosStr = JSON.stringify(activeFilterGroups);
 
         router.put(
             route("segmentos.update", { segmento }),
@@ -70,27 +73,29 @@ export default function FormView(props: Props) {
                         Filtros
                     </h2>
                     <div className="flex flex-wrap gap-8 mb-8">
-                        {allFilters.map((filter, filterIdx) => (
-                            <div key={filter.text}>
+                        {filtersGroups.map((group) => (
+                            <div key={group.text}>
                                 <h3 className="mb-2 text-lg font-bold text-celeste-claro">
-                                    {filter.text}
+                                    {group.text}
                                 </h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {filter.options.map((option, optionIdx) => (
+                                    {group.filters.map((filter) => (
                                         <button
-                                            key={option.value}
+                                            key={filter.value}
                                             onClick={() =>
-                                                handleToggleActiveOption(
-                                                    filterIdx,
-                                                    optionIdx
+                                                handleToggleActiveFilter(
+                                                    group,
+                                                    filter
                                                 )
                                             }
                                             className={
                                                 "capitalize btn btn-sm btn-outline " +
-                                                (option.active ? "active" : "")
+                                                (isFilterActive(group, filter)
+                                                    ? "active"
+                                                    : "")
                                             }
                                         >
-                                            {option.text}
+                                            {filter.text}
                                         </button>
                                     ))}
                                 </div>
@@ -115,27 +120,27 @@ export default function FormView(props: Props) {
                             {segmento.personas.length}
                         </p>
 
-                        {activeFilterOptions.map((filter, filterIdx) => (
-                            <div key={filter.text} className="mb-4">
+                        {activeFilterGroups.map((groups, filterIdx) => (
+                            <div key={groups.text} className="mb-4">
                                 <h3 className="mb-2 text-2xl font-bold text-white">
                                     Filtro {filterIdx + 1}{" "}
                                     <span className="italic text-celeste-claro">
-                                        {filter.text}
+                                        {groups.text}
                                     </span>
                                 </h3>
                                 <div className="flex flex-wrap gap-2 mb-2">
-                                    {filter.options.map((opt) => (
+                                    {groups.filters.map((filter) => (
                                         <div
-                                            key={opt.text}
+                                            key={filter.text}
                                             className="text-white capitalize border-gray-400 btn btn-sm"
                                         >
-                                            {opt.text}
+                                            {filter.text}
                                         </div>
                                     ))}
                                 </div>
                                 <div className="text-xs text-amarillo">
                                     <span className="text-xl font-bold">
-                                        {filter.count}
+                                        {groups.count}
                                     </span>{" "}
                                     Registros en total
                                 </div>

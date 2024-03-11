@@ -1,12 +1,13 @@
 import { SegmentoPersona } from "./Segmento";
 
 export interface Filter {
+    text: string;
+    value: string;
+}
+
+export interface FilterGroup {
     attr: keyof SegmentoPersona;
     text: string;
-    options: {
-        text: string;
-        value: string;
-        active: boolean;
-    }[];
+    filters: Filter[];
     count: number;
 }

@@ -84,7 +84,7 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                 <td>
                                     <div className="flex flex-wrap gap-1">
                                         {segmento.filtros.map((option) =>
-                                            option.options.map((option) => (
+                                            option.filters.map((option) => (
                                                 <span
                                                     key={option.text}
                                                     className="badge"

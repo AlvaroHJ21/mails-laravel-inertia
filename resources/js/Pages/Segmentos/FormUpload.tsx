@@ -38,7 +38,6 @@ export default function FormUpload(props: Props) {
             onSuccess(data) {
                 const segmentos = data.props.segmentos as Segmento[];
                 const lastSegmento = segmentos[segmentos.length - 1];
-                console.log(lastSegmento);
                 onSended?.(lastSegmento);
                 window.toast.success(
                     "Información del segmento generada correctamente"

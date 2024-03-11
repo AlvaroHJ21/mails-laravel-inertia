@@ -1,4 +1,4 @@
-import { Filter } from "@/Interfaces/Filter";
+import { FilterGroup } from "@/Interfaces/Filter";
 
 export interface Segmento {
     id: number;
@@ -6,7 +6,7 @@ export interface Segmento {
     user_id: string;
     created_at: string;
     updated_at: string;
-    filtros: Filter[];
+    filtros: FilterGroup[];
     personas: SegmentoPersona[];
 }
 
