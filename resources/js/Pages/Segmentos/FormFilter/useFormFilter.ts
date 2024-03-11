@@ -1,12 +1,21 @@
 import { useMemo, useState } from "react";
+import { filtersGroups } from "@/Data/filters";
 import { Segmento } from "@/Interfaces/Segmento";
 import { FilterGroup, Filter } from "@/Interfaces/Filter";
+import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
 
 interface Props {
     segmento: Segmento;
+    departamentos: PeruDepartment[];
+    provincias: PeruProvince[];
+    distritos: PeruDistrict[];
 }
 
-export default function useFormFilter({ segmento }: Props) {
+export default function useFormFilter(props: Props) {
+    const { segmento, departamentos, provincias, distritos } = props;
+
+    const [allfiltersGroups, setAllfiltersGroups] = useState(filtersGroups);
+
     const [activeFilterGroups, setActiveFilterGroups] = useState<FilterGroup[]>(
         []
     );
@@ -16,7 +25,11 @@ export default function useFormFilter({ segmento }: Props) {
         filtered = segmento.personas.filter((persona) => {
             return activeFilterGroups.every((group) => {
                 const value = persona[group.attr];
-                return group.filters.some((filter) => filter.value === value);
+                return group.filters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        value.toString().toLowerCase()
+                );
             });
         });
         return filtered.length;
@@ -97,7 +110,10 @@ export default function useFormFilter({ segmento }: Props) {
                 ...group,
                 count: segmento.personas.filter((persona) => {
                     return group.filters.some((filter) => {
-                        return persona[group.attr] === filter.value;
+                        return (
+                            persona[group.attr].toString().toLowerCase() ===
+                            filter.value.toLowerCase()
+                        );
                     });
                 }).length,
             };
@@ -121,12 +137,64 @@ export default function useFormFilter({ segmento }: Props) {
         setActiveFilterGroups([]);
     }
 
+    function updateAllFilters() {
+        const departamentGroup: FilterGroup = {
+            attr: "departamento",
+            count: 0,
+            filters: departamentos.map((d) => {
+                return {
+                    id: d.id,
+                    text: d.name,
+                    value: d.name,
+                };
+            }),
+            text: "Departamento",
+        };
+
+        const provinceGroup: FilterGroup = {
+            attr: "provincia",
+            count: 0,
+            filters: provincias.map((p) => {
+                return {
+                    id: p.id,
+                    text: p.name,
+                    value: p.name,
+                };
+            }),
+            text: "Provincia",
+            table: true,
+        };
+
+        const districtGroup: FilterGroup = {
+            attr: "distrito",
+            count: 0,
+            filters: distritos.map((d) => {
+                return {
+                    id: d.id,
+                    text: d.name,
+                    value: d.name,
+                };
+            }),
+            text: "Distrito",
+            table: true,
+        };
+
+        setAllfiltersGroups([
+            ...filtersGroups,
+            departamentGroup,
+            provinceGroup,
+            districtGroup,
+        ]);
+    }
+
     return {
+        allfiltersGroups,
         activeFilterGroups,
         handleToggleActiveFilter,
         isFilterActive,
         loadFilterGroups,
         resetFilters,
         totalByAllActiveFilters,
+        updateAllFilters,
     };
 }

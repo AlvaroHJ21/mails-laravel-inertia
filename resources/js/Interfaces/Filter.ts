@@ -1,6 +1,7 @@
 import { SegmentoPersona } from "./Segmento";
 
 export interface Filter {
+    id: string | number;
     text: string;
     value: string;
 }
@@ -10,4 +11,5 @@ export interface FilterGroup {
     text: string;
     filters: Filter[];
     count: number;
+    table?: boolean;
 }

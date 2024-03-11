@@ -6,7 +6,7 @@ import { Head, router } from "@inertiajs/react";
 import Alert from "@/Components/Alert";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import FormUpload from "./FormUpload";
-import FormView from "./FormView";
+import FormView from "./FormFilter/Index";
 import Modal from "@/Components/Modal";
 
 import eliminarSvg from "@/svg/eliminar.svg";
@@ -16,6 +16,7 @@ import verSvg from "@/svg/ver.svg";
 
 import { PageProps } from "@/types";
 import { Segmento } from "@/Interfaces/Segmento";
+import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
 
 enum ModalName {
     Form = "Form",
@@ -24,6 +25,9 @@ enum ModalName {
 
 type Props = PageProps & {
     segmentos: Segmento[];
+    departamentos: PeruDepartment[];
+    provincias: PeruProvince[];
+    distritos: PeruDistrict[];
 };
 
 export default function SegmentosPage(props: Props) {
@@ -168,6 +172,9 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                     <FormView
                         segmento={selectedSegmento}
                         onSaved={() => setOpenModalName("")}
+                        departamentos={props.departamentos}
+                        distritos={props.distritos}
+                        provincias={props.provincias}
                     />
                 )}
             </Modal>

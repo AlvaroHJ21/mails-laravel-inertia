@@ -6,6 +6,9 @@ use App\Exports\SegmentoPersonaExport;
 use App\Helpers\CalculateCategory;
 use App\Helpers\GenerateArrayFromBigQuery;
 use App\Helpers\GenerateArrayFromExcel;
+use App\Models\PeruDepartment;
+use App\Models\PeruDistrict;
+use App\Models\PeruProvince;
 use App\Models\Segmento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +24,12 @@ class SegmentoController extends Controller
             $segmento->filtros = $segmento->filtros ? json_decode($segmento->filtros) : [];
             return $segmento;
         });
-        return Inertia::render('Segmentos/Index', compact('segmentos'));
+
+        $departamentos = PeruDepartment::all();
+        $provincias = PeruProvince::all();
+        $distritos = PeruDistrict::all();
+
+        return Inertia::render('Segmentos/Index', compact('segmentos', 'departamentos', 'provincias', 'distritos'));
     }
 
     public function store(Request $request)
