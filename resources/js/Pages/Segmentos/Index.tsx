@@ -15,7 +15,7 @@ import excelSvg from "@/svg/excel.svg";
 import verSvg from "@/svg/ver.svg";
 
 import { PageProps } from "@/types";
-import { Segmento } from "@/types/Segmento";
+import { Segmento } from "@/Interfaces/Segmento";
 
 enum ModalName {
     Form = "Form",

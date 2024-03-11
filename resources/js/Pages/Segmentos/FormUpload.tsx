@@ -3,7 +3,7 @@ import { router } from "@inertiajs/react";
 
 import excelSvg from "@/svg/excel.svg";
 import Button from "@/Components/Button";
-import { Segmento } from "@/types/Segmento";
+import { Segmento } from "@/Interfaces/Segmento";
 
 interface Props {
     onSended?: (segmento: Segmento) => void;

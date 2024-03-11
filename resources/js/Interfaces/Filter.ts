@@ -1,4 +1,4 @@
-import { SegmentoPersona } from "../types/Segmento";
+import { SegmentoPersona } from "./Segmento";
 
 export interface Filter {
     attr: keyof SegmentoPersona;

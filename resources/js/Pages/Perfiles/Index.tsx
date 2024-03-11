@@ -3,7 +3,7 @@ import { Head, router } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Modal from "@/Components/Modal";
 import { PageProps } from "@/types";
-import { Perfil } from "@/types/Perfil";
+import { Perfil } from "@/Interfaces/Perfil";
 
 import FormUpload from "./FormUpload";
 import FormView from "./FormView";

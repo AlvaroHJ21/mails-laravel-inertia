@@ -1,5 +1,5 @@
 import TextEditable from "@/Components/TextEditable";
-import { Perfil } from "@/types/Perfil";
+import { Perfil } from "@/Interfaces/Perfil";
 import { router } from "@inertiajs/react";
 import { useState } from "react";
 
