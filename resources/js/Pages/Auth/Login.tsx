@@ -1,4 +1,4 @@
-import { useEffect, FormEventHandler } from "react";
+import { useEffect, FormEventHandler, useState } from "react";
 import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
@@ -15,6 +15,8 @@ export default function Login({
     status?: string;
     canResetPassword: boolean;
 }) {
+    const [showPassword, setShowPassword] = useState(false);
+
     const { data, setData, post, processing, errors, reset } = useForm({
         username: "",
         password: "",
@@ -72,12 +74,12 @@ export default function Login({
                 </div>
 
                 <div className="mb-3">
-                    <label className="input-group">
+                    <label className="relative input-group">
                         <span className="input-group-icon">
                             <i className="fa fa-key"></i>
                         </span>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             className="input"
                             placeholder="Contraseña"
@@ -86,6 +88,17 @@ export default function Login({
                                 setData("password", e.target.value)
                             }
                         />
+                        <button
+                            type="button"
+                            className="absolute top-0 bottom-0 m-auto right-4"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? (
+                                <i className="fa fa-eye-slash"></i>
+                            ) : (
+                                <i className="fa fa-eye"></i>
+                            )}
+                        </button>
                     </label>
                     <InputError message={errors.password} className="mt-2" />
                 </div>
