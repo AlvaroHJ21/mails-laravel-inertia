@@ -6,17 +6,17 @@ export const filters: Filter[] = [
         text: "Edad",
         options: [
             {
-                text: "jovenes",
+                text: "Jovenes",
                 value: "JOVEN",
                 active: false,
             },
             {
-                text: "adultos",
+                text: "Adultos",
                 value: "ADULTO",
                 active: false,
             },
             {
-                text: "adultos mayores",
+                text: "Adultos Mayores",
                 value: "ADULTO MAYOR",
                 active: false,
             },
@@ -29,12 +29,12 @@ export const filters: Filter[] = [
 
         options: [
             {
-                text: "hombres",
+                text: "Hombres",
                 value: "M",
                 active: false,
             },
             {
-                text: "mujeres",
+                text: "Mujeres",
                 value: "F",
                 active: false,
             },
@@ -46,22 +46,22 @@ export const filters: Filter[] = [
         text: "Estado Civil",
         options: [
             {
-                text: "solteros",
+                text: "Solteros",
                 value: "SOLTERO",
                 active: false,
             },
             {
-                text: "casados",
+                text: "Casados",
                 value: "CASADO",
                 active: false,
             },
             {
-                text: "divorciados",
+                text: "Divorciados",
                 value: "DIVORCIADO",
                 active: false,
             },
             {
-                text: "viudos",
+                text: "Viudos",
                 value: "VIUDO",
                 active: false,
             },
@@ -73,17 +73,17 @@ export const filters: Filter[] = [
         text: "Generaciones",
         options: [
             {
-                text: "generación x",
+                text: "Generación x",
                 value: "GENERACIÓN X",
                 active: false,
             },
             {
-                text: "millennials",
+                text: "Millennials",
                 value: "MILLENNIALS",
                 active: false,
             },
             {
-                text: "generación z",
+                text: "Generación z",
                 value: "GENERACIÓN Z",
                 active: false,
             },
@@ -100,122 +100,122 @@ export const filters: Filter[] = [
                 active: false,
             },
             {
-                text: "ancash",
+                text: "Ancash",
                 value: "ANCASH",
                 active: false,
             },
             {
-                text: "apurimac",
+                text: "Apurimac",
                 value: "APURIMAC",
                 active: false,
             },
             {
-                text: "arequipa",
+                text: "Arequipa",
                 value: "AREQUIPA",
                 active: false,
             },
             {
-                text: "ayacucho",
+                text: "Ayacucho",
                 value: "AYACUCHO",
                 active: false,
             },
             {
-                text: "cajamarca",
+                text: "Cajamarca",
                 value: "CAJAMARCA",
                 active: false,
             },
             {
-                text: "callao",
+                text: "Callao",
                 value: "CALLAO",
                 active: false,
             },
             {
-                text: "cusco",
+                text: "Cusco",
                 value: "CUSCO",
                 active: false,
             },
             {
-                text: "huancavelica",
+                text: "Huancavelica",
                 value: "HUANCAVELICA",
                 active: false,
             },
             {
-                text: "huanuco",
+                text: "Huanuco",
                 value: "HUANUCO",
                 active: false,
             },
             {
-                text: "ica",
+                text: "Ica",
                 value: "ICA",
                 active: false,
             },
             {
-                text: "junin",
+                text: "Junin",
                 value: "JUNIN",
                 active: false,
             },
             {
-                text: "la libertad",
+                text: "La libertad",
                 value: "LA LIBERTAD",
                 active: false,
             },
             {
-                text: "lambayeque",
+                text: "Lambayeque",
                 value: "LAMBAYEQUE",
                 active: false,
             },
             {
-                text: "lima",
+                text: "Lima",
                 value: "LIMA",
                 active: false,
             },
             {
-                text: "loreto",
+                text: "Loreto",
                 value: "LORETO",
                 active: false,
             },
             {
-                text: "madre de dios",
+                text: "Madre de dios",
                 value: "MADRE DE DIOS",
                 active: false,
             },
             {
-                text: "moquegua",
+                text: "Moquegua",
                 value: "MOQUEGUA",
                 active: false,
             },
             {
-                text: "pasco",
+                text: "Pasco",
                 value: "PASCO",
                 active: false,
             },
             {
-                text: "piura",
+                text: "Piura",
                 value: "PIURA",
                 active: false,
             },
             {
-                text: "puno",
+                text: "Puno",
                 value: "PUNO",
                 active: false,
             },
             {
-                text: "san martin",
+                text: "San martin",
                 value: "SAN MARTIN",
                 active: false,
             },
             {
-                text: "tacna",
+                text: "Tacna",
                 value: "TACNA",
                 active: false,
             },
             {
-                text: "tumbes",
+                text: "Tumbes",
                 value: "TUMBES",
                 active: false,
             },
             {
-                text: "ucayali",
+                text: "Ucayali",
                 value: "UCAYALI",
                 active: false,
             },
