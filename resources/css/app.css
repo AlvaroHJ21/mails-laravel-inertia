@@ -10,6 +10,24 @@
     body {
         @apply text-gris-azulado;
     }
+
+    ::-webkit-scrollbar {
+        /* Customize the scrollbar width */
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        /* Customize the scrollbar track */
+        background: #0000001c;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        /* Customize the scrollbar thumb */
+        background: #4F93FE;
+        border-radius: 10px;
+    }
 }
 
 @layer utilities {
