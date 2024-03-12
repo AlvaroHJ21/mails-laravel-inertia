@@ -33,9 +33,9 @@ class CalculateCategory
 
         // if ($anio >= 1928 && $anio <= 1945) {
         //     return "GENERACIÓN SILENCIOSA";
-        // } else if ($anio >= 1946 && $anio <= 1964) {
-        //     return "BOOMERS";
-        if ($anio >= 1965 && $anio <= 1980) {
+        if ($anio >= 1946 && $anio <= 1964) {
+            return "BOOMERS";
+        } else if ($anio >= 1965 && $anio <= 1980) {
             return "GENERACIÓN X";
         } else if ($anio >= 1981 && $anio <= 1996) {
             return "MILLENNIALS";
