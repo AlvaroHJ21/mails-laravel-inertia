@@ -1,20 +1,32 @@
-import { FilterGroup, Filter } from "@/Interfaces/Filter";
 import { Segmento } from "@/Interfaces/Segmento";
 import { router } from "@inertiajs/react";
+import { UseFilter } from "./useFilter";
+import { FilterGroup } from "@/Interfaces/Filter";
 
 interface Props {
     segmento: Segmento;
-    activeFilterGroups: FilterGroup[];
+    filters: UseFilter[];
     totalByAllActiveFilters: number;
     onSaved?: () => void;
 }
 
 export default function Preview(props: Props) {
-    const { segmento, activeFilterGroups, totalByAllActiveFilters, onSaved } =
-        props;
+    const { segmento, filters, totalByAllActiveFilters, onSaved } = props;
 
     function handleSave() {
-        const filtrosStr = JSON.stringify(activeFilterGroups);
+        const filterGroups: FilterGroup[] = filters.map((f) => ({
+            attr: f.attr,
+            count: f.partialCount,
+            filters: f.activeFilters.map((filter) => ({
+                id: filter.id,
+                value: filter.value,
+                text: filter.text,
+            })),
+            text: f.text,
+            table: f.table,
+        }));
+
+        const filtrosStr = JSON.stringify(filterGroups);
 
         router.put(
             route("segmentos.update", { segmento }),
@@ -39,32 +51,34 @@ export default function Preview(props: Props) {
                     {segmento.personas.length}
                 </p>
 
-                {activeFilterGroups.map((groups, filterIdx) => (
-                    <div key={groups.text} className="mb-4">
-                        <h3 className="mb-2 text-xl font-bold text-white">
-                            Filtro {filterIdx + 1}{" "}
-                            <span className="italic text-celeste-claro">
-                                {groups.text}
-                            </span>
-                        </h3>
-                        <div className="flex flex-wrap gap-2 mb-2">
-                            {groups.filters.map((filter) => (
-                                <div
-                                    key={filter.text}
-                                    className="py-0 text-white capitalize border-gray-400 btn btn-sm"
-                                >
-                                    {filter.text}
-                                </div>
-                            ))}
+                {filters
+                    .filter((g) => g.activeFilters.length > 0)
+                    .map((groups, filterIdx) => (
+                        <div key={groups.text} className="mb-4">
+                            <h3 className="mb-2 text-xl font-bold text-white">
+                                Filtro {filterIdx + 1}{" "}
+                                <span className="italic text-celeste-claro">
+                                    {groups.text}
+                                </span>
+                            </h3>
+                            <div className="flex flex-wrap gap-2 mb-2">
+                                {groups.activeFilters.map((filter) => (
+                                    <div
+                                        key={filter.text}
+                                        className="py-0 text-white capitalize border-gray-400 btn btn-sm"
+                                    >
+                                        {filter.text}
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="text-xs text-amarillo">
+                                <span className="text-xl font-bold">
+                                    {groups.partialCount}
+                                </span>{" "}
+                                Registros en total
+                            </div>
                         </div>
-                        <div className="text-xs text-amarillo">
-                            <span className="text-xl font-bold">
-                                {groups.count}
-                            </span>{" "}
-                            Registros en total
-                        </div>
-                    </div>
-                ))}
+                    ))}
 
                 <div className="w-full h-px bg-celeste-claro"></div>
                 <div className="">

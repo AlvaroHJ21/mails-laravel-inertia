@@ -1,8 +1,15 @@
-import { useMemo, useState } from "react";
-import { filtersGroups } from "@/Data/filters";
+import { useEffect, useMemo, useState } from "react";
+import {
+    filtersGroups,
+    initialEdadFilters,
+    initialEstadoCivilFilters,
+    initialGeneracionFilters,
+    initialSexoFilters,
+} from "@/Data/filters";
 import { Segmento } from "@/Interfaces/Segmento";
-import { FilterGroup, Filter } from "@/Interfaces/Filter";
+import { Filter } from "@/Interfaces/Filter";
 import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
+import useFilter from "./useFilter";
 
 interface Props {
     segmento: Segmento;
@@ -16,305 +23,252 @@ export default function useFormFilter(props: Props) {
 
     const [allfiltersGroups, setAllfiltersGroups] = useState(filtersGroups);
 
-    const [activeFilterGroups, setActiveFilterGroups] = useState<FilterGroup[]>(
-        []
-    );
+    // Edad
+    const edadFilters = useFilter({
+        attr: "edad_grupo",
+        initialFilters: initialEdadFilters,
+        text: "Edad",
+        segmento,
+    });
+
+    // Sexo
+    const sexoFilters = useFilter({
+        attr: "sexo",
+        initialFilters: initialSexoFilters,
+        text: "Sexo",
+        segmento,
+    });
+
+    // Estado Civil
+    const estadoCivilFilters = useFilter({
+        attr: "estado_civil",
+        initialFilters: initialEstadoCivilFilters,
+        text: "Estado Civil",
+        segmento,
+    });
+
+    // Generación
+    const generacionFilters = useFilter({
+        attr: "generacion",
+        initialFilters: initialGeneracionFilters,
+        text: "Generación",
+        segmento,
+    });
+
+    // Departamento
+    const departamentoFilters = useFilter({
+        attr: "departamento",
+        initialFilters: departamentos.map((d) => {
+            return {
+                id: d.id,
+                text: d.name,
+                value: d.name,
+            };
+        }),
+        text: "Departamento",
+        segmento,
+    });
+
+    // Provincia
+    const provinciaFilters = useFilter({
+        attr: "provincia",
+        initialFilters: [],
+        text: "Provincia",
+        table: true,
+        segmento,
+    });
+
+    // Distrito
+    const distritoFilters = useFilter({
+        attr: "distrito",
+        initialFilters: [],
+        text: "Distrito",
+        table: true,
+        segmento,
+    });
 
     const totalByAllActiveFilters = useMemo(() => {
-        let filtered = [];
-        filtered = segmento.personas.filter((persona) => {
-            return activeFilterGroups.every((group) => {
-                const value = persona[group.attr];
-                return group.filters.some(
+        let filtered = [...segmento.personas];
+
+        if (edadFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                edadFilters.activeFilters.some(
                     (filter) =>
                         filter.value.toLowerCase() ===
-                        value.toString().toLowerCase()
-                );
-            });
-        });
-        return filtered.length;
-    }, [activeFilterGroups]);
+                        persona.edad_grupo.toLowerCase()
+                )
+            );
+        }
 
-    function handleToggleActiveFilter(group: FilterGroup, filter: Filter) {
-        const filterGroup = activeFilterGroups.find(
-            (g) => g.attr === group.attr
+        if (sexoFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                sexoFilters.activeFilters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        persona.sexo.toLowerCase()
+                )
+            );
+        }
+
+        if (estadoCivilFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                estadoCivilFilters.activeFilters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        persona.estado_civil.toLowerCase()
+                )
+            );
+        }
+
+        if (generacionFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                generacionFilters.activeFilters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        persona.generacion.toLowerCase()
+                )
+            );
+        }
+
+        if (departamentoFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                departamentoFilters.activeFilters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        persona.departamento.toLowerCase()
+                )
+            );
+        }
+
+        if (provinciaFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                provinciaFilters.activeFilters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        persona.provincia.toLowerCase()
+                )
+            );
+        }
+
+        if (distritoFilters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                distritoFilters.activeFilters.some(
+                    (filter) =>
+                        filter.value.toLowerCase() ===
+                        persona.distrito.toLowerCase()
+                )
+            );
+        }
+
+        return filtered.length;
+    }, [
+        edadFilters.activeFilters,
+        sexoFilters.activeFilters,
+        estadoCivilFilters.activeFilters,
+        generacionFilters.activeFilters,
+        departamentoFilters.activeFilters,
+        provinciaFilters.activeFilters,
+    ]);
+
+    useEffect(() => {
+        const departamentosSelectedIds = departamentoFilters.activeFilters.map(
+            (f) => f.id
         );
 
-        if (filterGroup) {
-            /**
-             * Si el filtro que se esta seleccionando es el unico que esta seleccionado
-             * en el grupo actual, entonces se elimina el grupo completo
-             */
-            if (
-                filterGroup.filters.length == 1 &&
-                filterGroup.filters[0].value === filter.value
-            ) {
-                let newActiveFilterGroups = [...activeFilterGroups];
-
-                /**
-                 * Eliminar el grupo de filtros si el seleccionado es el ultimo
-                 */
-                newActiveFilterGroups = newActiveFilterGroups.filter((g) => {
-                    return g.attr !== group.attr;
-                });
-
-                /**
-                 * Si el filtro seleccionado es provincia, entonces
-                 * adicionalmente se elimina el grupo de distrito
-                 */
-                if (filterGroup.attr === "provincia") {
-                    newActiveFilterGroups = newActiveFilterGroups.filter(
-                        (g) => {
-                            return g.attr !== "distrito";
-                        }
-                    );
-                }
-                /**
-                 * Si el filtro seleccionado es departamento, entonces
-                 * adicionalmente se eliminan los grupos de provincia y distrito
-                 */
-                if (filterGroup.attr === "departamento") {
-                    newActiveFilterGroups = newActiveFilterGroups.filter(
-                        (g) => {
-                            return (
-                                g.attr !== "provincia" && g.attr !== "distrito"
-                            );
-                        }
-                    );
-                }
-
-                setActiveFilterGroups(newActiveFilterGroups);
-
-                return;
-            }
-
-            let currentFilters = [...filterGroup.filters];
-            const exists = currentFilters.find((o) => o.value === filter.value);
-
-            /**
-             * Si el filtro ya esta seleccionado, y no es el último
-             * entonces se elimina
-             */
-            if (exists) {
-                currentFilters = currentFilters.filter(
-                    (o) => o.value !== filter.value
-                );
-            } else {
-                currentFilters = [...currentFilters, filter];
-            }
-
-            const newFilterGroup = {
-                ...filterGroup,
-                filters: currentFilters,
-            };
-
-            let newFilterGroups = activeFilterGroups.map((g) => {
-                if (g.attr === group.attr) {
-                    return newFilterGroup;
-                }
-                return g;
+        let filters: Filter[] = provincias
+            .filter((provincia) =>
+                departamentosSelectedIds.includes(provincia.department_id)
+            )
+            .map((p) => {
+                return {
+                    id: p.id,
+                    text: p.name,
+                    value: p.name,
+                };
             });
 
-            /**
-             * Actualizar el contador de cada grupo de filtros
-             */
-            newFilterGroups = updateCounts(newFilterGroups);
-            setActiveFilterGroups(newFilterGroups);
-        } else {
-            const newFilterGroup = {
-                attr: group.attr,
-                text: group.text,
-                filters: [filter],
-                count: 0,
-            };
+        provinciaFilters.setAllFilter(filters);
 
-            let newFilterGroups = [...activeFilterGroups, newFilterGroup];
+        return () => {};
+    }, [departamentoFilters.activeFilters]);
 
-            /**
-             * Actualizar el contador de cada grupo de filtros
-             */
-            newFilterGroups = updateCounts(newFilterGroups);
-            setActiveFilterGroups(newFilterGroups);
-        }
-    }
+    useEffect(() => {
+        const provinciasSelectedIds = provinciaFilters.activeFilters.map(
+            (f) => f.id
+        );
 
-    function updateCounts(filterGroup: FilterGroup[]) {
-        // console.log("actualizando contadores");
-        // console.log(filterGroup);
-        return filterGroup.map((group) => {
-            return {
-                ...group,
-                count: segmento.personas.filter((persona) => {
-                    return group.filters.some((filter) => {
-                        return (
-                            persona[group.attr].toString().toLowerCase() ===
-                            filter.value.toLowerCase()
-                        );
-                    });
-                }).length,
-            };
-        });
-    }
+        let filters: Filter[] = distritos
+            .filter((distrito) =>
+                provinciasSelectedIds.includes(distrito.province_id)
+            )
+            .map((p) => {
+                return {
+                    id: p.id,
+                    text: p.name,
+                    value: p.name,
+                };
+            });
 
-    function isFilterActive(filterGroup: FilterGroup, filter: Filter) {
-        return activeFilterGroups.some((f) => {
-            if (f.attr === filterGroup.attr) {
-                return f.filters.some((o) => o.value === filter.value);
-            }
-            return false;
-        });
-    }
+        distritoFilters.setAllFilter(filters);
+
+        return () => {};
+    }, [provinciaFilters.activeFilters]);
 
     function loadFilterGroups() {
-        setActiveFilterGroups(segmento.filtros);
+        segmento.filtros.forEach((f) => {
+            if (f.attr === "edad_grupo") {
+                edadFilters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "sexo") {
+                sexoFilters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "estado_civil") {
+                estadoCivilFilters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "generacion") {
+                generacionFilters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "departamento") {
+                departamentoFilters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "provincia") {
+                provinciaFilters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "distrito") {
+                distritoFilters.setActiveFilters(f.filters);
+            }
+        });
     }
 
     function resetFilters() {
-        setActiveFilterGroups([]);
-    }
-
-    function updateAllFilters() {
-        /**
-         * Generamos el grupo de filtros para el departamento
-         */
-        const departmentGroup: FilterGroup = {
-            attr: "departamento",
-            count: 0,
-            filters: departamentos.map((d) => {
-                return {
-                    id: d.id,
-                    text: d.name,
-                    value: d.name,
-                };
-            }),
-            text: "Departamento",
-        };
-
-        /**
-         * Obtenemos los departamentos seleccionados
-         */
-        const selectedDepartmentGroups = activeFilterGroups.find(
-            (group) => group.attr === "departamento"
-        );
-        const selectedDepartmentsId = selectedDepartmentGroups
-            ? selectedDepartmentGroups.filters.map((filter) => filter.id)
-            : [];
-
-        /**
-         * Generamos el grupo de filtros para la provincia, solo si hay departamentos seleccionados
-         */
-        const provinceGroup: FilterGroup = {
-            attr: "provincia",
-            count: 0,
-            filters: provincias
-                .filter((provincia) =>
-                    selectedDepartmentsId.includes(provincia.department_id)
-                )
-                .map((p) => {
-                    return {
-                        id: p.id,
-                        text: p.name,
-                        value: p.name,
-                    };
-                }),
-            text: "Provincia",
-            table: true,
-        };
-
-        /**
-         * Obtenemos las provincias seleccionadas
-         */
-        const selectedProvinceGroups = activeFilterGroups.find(
-            (group) => group.attr === "provincia"
-        );
-        const selectedProvincesId = selectedProvinceGroups
-            ? selectedProvinceGroups.filters.map((filter) => filter.id)
-            : [];
-
-        /**
-         * Generamos el grupo de filtros para el distrito, solo si hay provincias seleccionadas
-         * y departamentos seleccionados
-         * */
-        const districtGroup: FilterGroup = {
-            attr: "distrito",
-            count: 0,
-            filters: distritos
-                .filter((distrito) =>
-                    selectedProvincesId.includes(distrito.province_id)
-                )
-                .map((d) => {
-                    return {
-                        id: d.id,
-                        text: d.name,
-                        value: d.name,
-                    };
-                }),
-            text: "Distrito",
-            table: true,
-        };
-
-        /**
-         * Verificamos si ya existe el grupo de filtros para departamento, provincia y distrito
-         */
-        const existsDepartment = allfiltersGroups.find(
-            (group) => group.attr === "departamento"
-        );
-        const existsProvince = allfiltersGroups.find(
-            (group) => group.attr === "provincia"
-        );
-        const existsDistrict = allfiltersGroups.find(
-            (group) => group.attr === "distrito"
-        );
-
-        let newFilterGroups = [...allfiltersGroups];
-
-        /**
-         * Si no existe el grupo de filtros para departamento, provincia y distrito
-         * entonces los agregamos
-         */
-        if (!existsDepartment) {
-            newFilterGroups.push(departmentGroup);
-        }
-        if (!existsProvince) {
-            newFilterGroups.push(provinceGroup);
-        }
-        if (!existsDistrict) {
-            newFilterGroups.push(districtGroup);
-        }
-
-        /**
-         * Si ya existen los grupos de filtros para departamento, provincia y distrito
-         * entonces los actualizamos
-         */
-        newFilterGroups = newFilterGroups.map((group) => {
-            if (group.attr === "departamento") {
-                return departmentGroup;
-            }
-            if (group.attr === "provincia") {
-                return provinceGroup;
-            }
-            if (group.attr === "distrito") {
-                return districtGroup;
-            }
-            return group;
-        });
-
-        setAllfiltersGroups(newFilterGroups);
-        /**
-         * TODO: Actualizar el contador de cada grupo de filtros ACTIVOS
-         */
-        // newFilterGroups = updateCounts(activeFilterGroups);
-        // setActiveFilterGroups(updateCounts(activeFilterGroups));
+        edadFilters.resetFilters();
+        sexoFilters.resetFilters();
+        estadoCivilFilters.resetFilters();
+        generacionFilters.resetFilters();
+        departamentoFilters.resetFilters();
+        provinciaFilters.resetFilters();
+        distritoFilters.resetFilters();
     }
 
     return {
         allfiltersGroups,
-        activeFilterGroups,
-        handleToggleActiveFilter,
-        isFilterActive,
         loadFilterGroups,
         resetFilters,
         totalByAllActiveFilters,
-        updateAllFilters,
+        filters: [
+            edadFilters,
+            sexoFilters,
+            estadoCivilFilters,
+            generacionFilters,
+            departamentoFilters,
+            provinciaFilters,
+            distritoFilters,
+        ],
     };
 }

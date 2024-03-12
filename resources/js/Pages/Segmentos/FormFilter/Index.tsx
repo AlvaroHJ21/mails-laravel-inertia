@@ -23,27 +23,18 @@ export default function FormFilter(props: Props) {
     const [nombre, setNombre] = useState(segmento.nombre);
 
     const {
-        allfiltersGroups,
-        activeFilterGroups,
-        handleToggleActiveFilter,
-        isFilterActive,
+        // activeFilterGroups,
         loadFilterGroups,
         resetFilters,
         totalByAllActiveFilters,
-        updateAllFilters,
+        // updateAllFilters,
+        filters,
     } = useFormFilter({
         segmento,
         departamentos: props.departamentos,
         provincias: props.provincias,
         distritos: props.distritos,
     });
-
-    useEffect(() => {
-        console.log("update...");
-        updateAllFilters();
-
-        return () => {};
-    }, [activeFilterGroups]); //TODO: FIX
 
     useEffect(() => {
         loadFilterGroups();
@@ -72,9 +63,7 @@ export default function FormFilter(props: Props) {
                 {/* Filtros */}
                 <div className="flex-1 p-8 bg-white rounded-lg">
                     <FilterGroups
-                        allfiltersGroups={allfiltersGroups}
-                        handleToggleActiveFilter={handleToggleActiveFilter}
-                        isFilterActive={isFilterActive}
+                        filterGroups={filters}
                         resetFilters={resetFilters}
                     />
                 </div>
@@ -83,7 +72,7 @@ export default function FormFilter(props: Props) {
                 <div className="flex flex-col pb-8 md:w-[400px]">
                     <Preview
                         segmento={segmento}
-                        activeFilterGroups={activeFilterGroups}
+                        filters={filters}
                         totalByAllActiveFilters={totalByAllActiveFilters}
                         onSaved={onSaved}
                     />

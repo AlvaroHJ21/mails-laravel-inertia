@@ -1,13 +1,12 @@
 import { Filter, FilterGroup } from "@/Interfaces/Filter";
+import { UseFilter } from "./useFilter";
 
 interface Props {
-    group: FilterGroup;
-    isFilterActive: (group: FilterGroup, filter: Filter) => boolean;
-    handleToggleActiveFilter: (group: FilterGroup, filter: Filter) => void;
+    group: UseFilter;
 }
 
 export default function FilterGroupTable(props: Props) {
-    const { group, handleToggleActiveFilter, isFilterActive } = props;
+    const { group } = props;
 
     return (
         <div className="shadow-md">
@@ -15,25 +14,25 @@ export default function FilterGroupTable(props: Props) {
                 Seleccionar {group.text}
             </div>
             <div className="overflow-y-auto max-h-60">
-                {group.filters.map((filter) => (
+                {group.allFilter.map((filter) => (
                     <div
                         key={filter.id}
                         className="border-b border-b-celeste-claro"
                     >
                         <button
                             onClick={() =>
-                                handleToggleActiveFilter(group, filter)
+                                group.handleToggleActiveFilter(filter)
                             }
                             className={
                                 "text-sm px-4 flex items-center w-full justify-between " +
-                                (isFilterActive(group, filter) ? "active" : "")
+                                (group.isActiveFilter(filter) ? "active" : "")
                             }
                         >
                             {filter.text}
                             <div
                                 className={
                                     "w-3 h-3 border border-azul-marino rounded-full " +
-                                    (isFilterActive(group, filter)
+                                    (group.isActiveFilter(filter)
                                         ? "bg-azul-marino"
                                         : "")
                                 }

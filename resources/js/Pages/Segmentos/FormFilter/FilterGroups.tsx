@@ -1,54 +1,43 @@
 import { Filter, FilterGroup } from "@/Interfaces/Filter";
 import FilterGroupTable from "./FilterGroupTable";
+import { UseFilter } from "./useFilter";
 
 interface Props {
-    allfiltersGroups: FilterGroup[];
-    handleToggleActiveFilter: (group: FilterGroup, filter: Filter) => void;
-    isFilterActive: (group: FilterGroup, filter: Filter) => boolean;
+    filterGroups: UseFilter[];
     resetFilters: () => void;
 }
 
 export default function FilterGroups(props: Props) {
-    const {
-        allfiltersGroups,
-        handleToggleActiveFilter,
-        isFilterActive,
-        resetFilters,
-    } = props;
+    const { filterGroups, resetFilters } = props;
     return (
         <div>
             <h2 className="text-xl font-bold" hidden>
                 Filtros
             </h2>
             <div className="flex flex-wrap gap-4 mb-8">
-                {allfiltersGroups.map((group) => (
+                {filterGroups.map((group) => (
                     <div key={group.text}>
                         <h3 className="mb-2 text-lg font-bold text-celeste-claro">
                             {group.text}
                         </h3>
 
                         {group.table ? (
-                            <FilterGroupTable
-                                group={group}
-                                handleToggleActiveFilter={
-                                    handleToggleActiveFilter
-                                }
-                                isFilterActive={isFilterActive}
-                            />
+                            <span>
+                                <FilterGroupTable group={group} />
+                            </span>
                         ) : (
                             <div className="flex flex-wrap gap-2">
-                                {group.filters.map((filter) => (
+                                {group.allFilter.map((filter) => (
                                     <button
                                         key={filter.id}
                                         onClick={() =>
-                                            handleToggleActiveFilter(
-                                                group,
+                                            group.handleToggleActiveFilter(
                                                 filter
                                             )
                                         }
                                         className={
                                             "capitalize btn btn-sm btn-outline py-0 " +
-                                            (isFilterActive(group, filter)
+                                            (group.isActiveFilter(filter)
                                                 ? "active"
                                                 : "")
                                         }
