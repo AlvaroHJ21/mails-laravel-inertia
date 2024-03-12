@@ -18,6 +18,10 @@ class PerfilPersona extends Model
         "departamento",
         "provincia",
         "distrito",
+
+        "edad_grupo",
+        "generacion",
+
         "correo",
         "var1",
         "var2",
