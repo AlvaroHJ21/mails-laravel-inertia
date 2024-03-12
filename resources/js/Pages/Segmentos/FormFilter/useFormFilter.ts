@@ -138,7 +138,11 @@ export default function useFormFilter(props: Props) {
     }
 
     function updateAllFilters() {
-        const departamentGroup: FilterGroup = {
+        console.log(departamentos);
+        /**
+         * Generamos el grupo de filtros para el departamento
+         */
+        const departmentGroup: FilterGroup = {
             attr: "departamento",
             count: 0,
             filters: departamentos.map((d) => {
@@ -151,40 +155,103 @@ export default function useFormFilter(props: Props) {
             text: "Departamento",
         };
 
+        /**
+         * Obtenemos los departamentos seleccionados
+         */
+        const selectedDepartmentGroups = activeFilterGroups.find(
+            (group) => group.attr === "departamento"
+        );
+        const selectedDepartmentsId = selectedDepartmentGroups
+            ? selectedDepartmentGroups.filters.map((filter) => filter.id)
+            : [];
+
+        /**
+         * Generamos el grupo de filtros para la provincia, solo si hay departamentos seleccionados
+         */
         const provinceGroup: FilterGroup = {
             attr: "provincia",
             count: 0,
-            filters: provincias.map((p) => {
-                return {
-                    id: p.id,
-                    text: p.name,
-                    value: p.name,
-                };
-            }),
+            filters: provincias
+                .filter((provincia) =>
+                    selectedDepartmentsId.includes(provincia.department_id)
+                )
+                .map((p) => {
+                    return {
+                        id: p.id,
+                        text: p.name,
+                        value: p.name,
+                    };
+                }),
             text: "Provincia",
             table: true,
         };
 
+        /**
+         * Obtenemos las provincias seleccionadas
+         */
+        const selectedProvinceGroups = activeFilterGroups.find(
+            (group) => group.attr === "provincia"
+        );
+        const selectedProvincesId = selectedProvinceGroups
+            ? selectedProvinceGroups.filters.map((filter) => filter.id)
+            : [];
+
+        /**
+         * Generamos el grupo de filtros para el distrito, solo si hay provincias seleccionadas
+         * y departamentos seleccionados
+         * */
         const districtGroup: FilterGroup = {
             attr: "distrito",
             count: 0,
-            filters: distritos.map((d) => {
-                return {
-                    id: d.id,
-                    text: d.name,
-                    value: d.name,
-                };
-            }),
+            filters: distritos
+                .filter((distrito) =>
+                    selectedProvincesId.includes(distrito.province_id)
+                )
+                .map((d) => {
+                    return {
+                        id: d.id,
+                        text: d.name,
+                        value: d.name,
+                    };
+                }),
             text: "Distrito",
             table: true,
         };
 
-        setAllfiltersGroups([
-            ...filtersGroups,
-            departamentGroup,
-            provinceGroup,
-            districtGroup,
-        ]);
+        const existsDepartment = allfiltersGroups.some(
+            (group) => group.attr === "departamento"
+        );
+        const existsProvince = allfiltersGroups.some(
+            (group) => group.attr === "provincia"
+        );
+        const existsDistrict = allfiltersGroups.some(
+            (group) => group.attr === "distrito"
+        );
+
+        if (!existsDepartment) {
+            setAllfiltersGroups([...allfiltersGroups, departmentGroup]);
+        }
+        if (!existsProvince) {
+            setAllfiltersGroups([...allfiltersGroups, provinceGroup]);
+        }
+        if (!existsDistrict) {
+            setAllfiltersGroups([...allfiltersGroups, districtGroup]);
+        }
+
+        setAllfiltersGroups(
+            allfiltersGroups.map((group) => {
+                if (group.attr === "departamento") {
+                    return departmentGroup;
+                }
+                if (group.attr === "provincia") {
+                    return provinceGroup;
+                }
+                if (group.attr === "distrito") {
+                    return districtGroup;
+                }
+                return group;
+            })
+        );
     }
 
     return {

@@ -39,10 +39,11 @@ export default function FormFilter(props: Props) {
     });
 
     useEffect(() => {
+        console.log("update...");
         updateAllFilters();
 
         return () => {};
-    }, []);
+    }, [activeFilterGroups]);
 
     useEffect(() => {
         loadFilterGroups();

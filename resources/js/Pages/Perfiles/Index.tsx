@@ -147,6 +147,7 @@ export default function Perfiles(props: PerfilesProps) {
             <Modal
                 show={openModalName == ModalName.View}
                 onClose={() => setOpenModalName("")}
+                maxWidth="2xl"
             >
                 {activePerfil && <FormView perfil={activePerfil} />}
             </Modal>

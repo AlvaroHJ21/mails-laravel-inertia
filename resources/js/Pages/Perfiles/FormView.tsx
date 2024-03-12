@@ -29,7 +29,27 @@ export default function FormView(props: Props) {
                     }}
                 />
             </div>
-            <img src="/dashboard.png" alt="" />
+            {/* <img src="/dashboard.png" alt="" /> */}
+            <div className="m-auto border w-fit">
+                {/* <iframe
+                    title="dashboard perfilamiento"
+                    width="600"
+                    height="373.5"
+                    src="https://app.powerbi.com/view?r=eyJrIjoiZWM2Njg2OGEtMmE1Yy00ODY4LWJiZDAtYWY1NWM4ZjZjODlmIiwidCI6IjBmYjBkZjA5LTc0MGYtNDFmZS1hODNmLTVhOWVjZjcwMmRhYiIsImMiOjR9"
+                    frameBorder="0"
+                    allowFullScreen
+                ></iframe> */}
+                <div style={{ scale: 0.5 }}>
+                    <iframe
+                        title="dashboard perfilamiento"
+                        width="1600"
+                        height="600"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiZDg5NTljMTgtMDU0Yi00NzI4LWI4ODYtZTZjYzc5Y2YzYWFlIiwidCI6IjBmYjBkZjA5LTc0MGYtNDFmZS1hODNmLTVhOWVjZjcwMmRhYiIsImMiOjR9"
+                        frameBorder="0"
+                        allowFullScreen
+                    ></iframe>
+                </div>
+            </div>
         </div>
     );
 }
