@@ -26,6 +26,14 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('12345678')
         ]);
 
+
+        \App\Models\User::factory()->create([
+            'name' => 'Joel Lapa',
+            'username' => 'joellapa',
+            'email' => 'joel.lapa@datalabs.pe',
+            'password' => bcrypt('DataLabs$2023')
+        ]);
+
         \App\Models\BigQueryDev::factory(200)->create();
     }
 }
