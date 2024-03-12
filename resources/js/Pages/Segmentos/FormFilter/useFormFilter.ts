@@ -35,7 +35,7 @@ export default function useFormFilter(props: Props) {
     const sexoFilters = useFilter({
         attr: "sexo",
         initialFilters: initialSexoFilters,
-        text: "Sexo",
+        text: "Género",
         segmento,
     });
 
@@ -51,7 +51,7 @@ export default function useFormFilter(props: Props) {
     const generacionFilters = useFilter({
         attr: "generacion",
         initialFilters: initialGeneracionFilters,
-        text: "Generación",
+        text: "Generaciones",
         segmento,
     });
 
@@ -65,7 +65,7 @@ export default function useFormFilter(props: Props) {
                 value: d.name,
             };
         }),
-        text: "Departamento",
+        text: "Departamentos",
         segmento,
     });
 
@@ -73,7 +73,7 @@ export default function useFormFilter(props: Props) {
     const provinciaFilters = useFilter({
         attr: "provincia",
         initialFilters: [],
-        text: "Provincia",
+        text: "Provincias",
         table: true,
         segmento,
     });
@@ -82,7 +82,7 @@ export default function useFormFilter(props: Props) {
     const distritoFilters = useFilter({
         attr: "distrito",
         initialFilters: [],
-        text: "Distrito",
+        text: "Distritos",
         table: true,
         segmento,
     });

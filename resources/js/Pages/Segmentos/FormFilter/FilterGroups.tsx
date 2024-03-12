@@ -1,4 +1,3 @@
-import { Filter, FilterGroup } from "@/Interfaces/Filter";
 import FilterGroupTable from "./FilterGroupTable";
 import { UseFilter } from "./useFilter";
 
@@ -17,7 +16,7 @@ export default function FilterGroups(props: Props) {
             <div className="flex flex-wrap gap-4 mb-8">
                 {filterGroups.map((group) => (
                     <div key={group.text}>
-                        <h3 className="mb-2 text-lg font-bold text-celeste-claro">
+                        <h3 className="mb-1 text-xl font-bold text-celeste-claro">
                             {group.text}
                         </h3>
 
@@ -36,9 +35,9 @@ export default function FilterGroups(props: Props) {
                                             )
                                         }
                                         className={
-                                            "capitalize btn btn-sm btn-outline py-0 " +
+                                            "border shadow-sm text-sm px-3 rounded-md py-0 " +
                                             (group.isActiveFilter(filter)
-                                                ? "active"
+                                                ? "bg-azul-marino text-amarillo"
                                                 : "")
                                         }
                                     >

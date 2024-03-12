@@ -49,6 +49,10 @@
     .collapsed {
         @apply w-0 px-0 overflow-hidden;
     }
+
+    .bg-horizontal-gradient {
+        background: linear-gradient(to right, #4f93fe, #02315d);
+    }
 }
 
 @layer components {
