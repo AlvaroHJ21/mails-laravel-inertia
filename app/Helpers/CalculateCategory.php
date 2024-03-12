@@ -10,14 +10,20 @@ class CalculateCategory
         $hoy = new \DateTime();
         $edad = $hoy->diff($fechaNacimiento)->y;
 
-        if ($edad >= 18 && $edad <= 30) {
+        if ($edad >= 0 && $edad <= 4) {
+            return "BEBÉ";
+        } else if ($edad >= 5 && $edad <= 9) {
+            return "NIÑO";
+        } else if ($edad >= 10 && $edad <= 14) {
+            return "PRE-ADOLESCENTE";
+        } else if ($edad >= 15 && $edad <= 24) {
             return "JOVEN";
-        } else if ($edad > 30 && $edad <= 60) {
+        } else if ($edad >= 25 && $edad <= 44) {
             return "ADULTO";
-        } else if ($edad > 60) {
-            return "ADULO MAYOR";
+        } else if ($edad >= 45 && $edad <= 59) {
+            return "ADULTO MAYOR";
         } else {
-            return "";
+            return "TERCERA EDAD";
         }
     }
 
@@ -31,7 +37,7 @@ class CalculateCategory
         $fechaNacimiento = new \DateTime($fh_nacimiento);
         $anio = $fechaNacimiento->format("Y");
 
-        if ($anio >= 1928 && $anio <= 1945) {
+        if ($anio >= 1920 && $anio <= 1945) {
             return "GENERACIÓN SILENCIOSA";
         } else if ($anio >= 1946 && $anio <= 1964) {
             return "BOOMERS";
@@ -39,8 +45,10 @@ class CalculateCategory
             return "GENERACIÓN X";
         } else if ($anio >= 1981 && $anio <= 1996) {
             return "MILLENNIALS";
-        } else if ($anio >= 1997 && $anio <= 2012) {
+        } else if ($anio >= 1997 && $anio <= 2010) {
             return "GENERACIÓN Z";
+        } else if ($anio >= 2011 && $anio <= 2025) {
+            return "GENERACIÓN ALPHA";
         } else {
             return "";
         }
