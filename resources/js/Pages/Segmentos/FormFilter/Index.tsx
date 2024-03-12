@@ -43,7 +43,7 @@ export default function FormFilter(props: Props) {
         updateAllFilters();
 
         return () => {};
-    }, [activeFilterGroups]);
+    }, [activeFilterGroups]); //TODO: FIX
 
     useEffect(() => {
         loadFilterGroups();

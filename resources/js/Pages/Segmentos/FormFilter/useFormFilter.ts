@@ -49,9 +49,42 @@ export default function useFormFilter(props: Props) {
                 filterGroup.filters.length == 1 &&
                 filterGroup.filters[0].value === filter.value
             ) {
-                setActiveFilterGroups(
-                    activeFilterGroups.filter((g) => g.attr !== group.attr)
-                );
+                let newActiveFilterGroups = [...activeFilterGroups];
+
+                /**
+                 * Eliminar el grupo de filtros si el seleccionado es el ultimo
+                 */
+                newActiveFilterGroups = newActiveFilterGroups.filter((g) => {
+                    return g.attr !== group.attr;
+                });
+
+                /**
+                 * Si el filtro seleccionado es provincia, entonces
+                 * adicionalmente se elimina el grupo de distrito
+                 */
+                if (filterGroup.attr === "provincia") {
+                    newActiveFilterGroups = newActiveFilterGroups.filter(
+                        (g) => {
+                            return g.attr !== "distrito";
+                        }
+                    );
+                }
+                /**
+                 * Si el filtro seleccionado es departamento, entonces
+                 * adicionalmente se eliminan los grupos de provincia y distrito
+                 */
+                if (filterGroup.attr === "departamento") {
+                    newActiveFilterGroups = newActiveFilterGroups.filter(
+                        (g) => {
+                            return (
+                                g.attr !== "provincia" && g.attr !== "distrito"
+                            );
+                        }
+                    );
+                }
+
+                setActiveFilterGroups(newActiveFilterGroups);
+
                 return;
             }
 
@@ -59,7 +92,8 @@ export default function useFormFilter(props: Props) {
             const exists = currentFilters.find((o) => o.value === filter.value);
 
             /**
-             * Si el filtro ya esta seleccionado, entonces se elimina
+             * Si el filtro ya esta seleccionado, y no es el último
+             * entonces se elimina
              */
             if (exists) {
                 currentFilters = currentFilters.filter(
@@ -105,6 +139,8 @@ export default function useFormFilter(props: Props) {
     }
 
     function updateCounts(filterGroup: FilterGroup[]) {
+        // console.log("actualizando contadores");
+        // console.log(filterGroup);
         return filterGroup.map((group) => {
             return {
                 ...group,
@@ -138,7 +174,6 @@ export default function useFormFilter(props: Props) {
     }
 
     function updateAllFilters() {
-        console.log(departamentos);
         /**
          * Generamos el grupo de filtros para el departamento
          */
@@ -218,18 +253,25 @@ export default function useFormFilter(props: Props) {
             table: true,
         };
 
-        const existsDepartment = allfiltersGroups.some(
+        /**
+         * Verificamos si ya existe el grupo de filtros para departamento, provincia y distrito
+         */
+        const existsDepartment = allfiltersGroups.find(
             (group) => group.attr === "departamento"
         );
-        const existsProvince = allfiltersGroups.some(
+        const existsProvince = allfiltersGroups.find(
             (group) => group.attr === "provincia"
         );
-        const existsDistrict = allfiltersGroups.some(
+        const existsDistrict = allfiltersGroups.find(
             (group) => group.attr === "distrito"
         );
 
         let newFilterGroups = [...allfiltersGroups];
 
+        /**
+         * Si no existe el grupo de filtros para departamento, provincia y distrito
+         * entonces los agregamos
+         */
         if (!existsDepartment) {
             newFilterGroups.push(departmentGroup);
         }
@@ -240,6 +282,10 @@ export default function useFormFilter(props: Props) {
             newFilterGroups.push(districtGroup);
         }
 
+        /**
+         * Si ya existen los grupos de filtros para departamento, provincia y distrito
+         * entonces los actualizamos
+         */
         newFilterGroups = newFilterGroups.map((group) => {
             if (group.attr === "departamento") {
                 return departmentGroup;
@@ -254,6 +300,11 @@ export default function useFormFilter(props: Props) {
         });
 
         setAllfiltersGroups(newFilterGroups);
+        /**
+         * TODO: Actualizar el contador de cada grupo de filtros ACTIVOS
+         */
+        // newFilterGroups = updateCounts(activeFilterGroups);
+        // setActiveFilterGroups(updateCounts(activeFilterGroups));
     }
 
     return {
