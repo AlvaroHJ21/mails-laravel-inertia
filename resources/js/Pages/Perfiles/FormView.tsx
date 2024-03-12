@@ -43,7 +43,7 @@ export default function FormView(props: Props) {
                     <iframe
                         title="dashboard perfilamiento"
                         width="1350"
-                        height="600"
+                        height="550"
                         src="https://app.powerbi.com/view?r=eyJrIjoiZDg5NTljMTgtMDU0Yi00NzI4LWI4ODYtZTZjYzc5Y2YzYWFlIiwidCI6IjBmYjBkZjA5LTc0MGYtNDFmZS1hODNmLTVhOWVjZjcwMmRhYiIsImMiOjR9"
                         frameBorder="0"
                         allowFullScreen

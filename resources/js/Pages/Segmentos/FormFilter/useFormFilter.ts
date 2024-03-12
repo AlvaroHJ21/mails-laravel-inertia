@@ -228,30 +228,32 @@ export default function useFormFilter(props: Props) {
             (group) => group.attr === "distrito"
         );
 
+        let newFilterGroups = [...allfiltersGroups];
+
         if (!existsDepartment) {
-            setAllfiltersGroups([...allfiltersGroups, departmentGroup]);
+            newFilterGroups.push(departmentGroup);
         }
         if (!existsProvince) {
-            setAllfiltersGroups([...allfiltersGroups, provinceGroup]);
+            newFilterGroups.push(provinceGroup);
         }
         if (!existsDistrict) {
-            setAllfiltersGroups([...allfiltersGroups, districtGroup]);
+            newFilterGroups.push(districtGroup);
         }
 
-        setAllfiltersGroups(
-            allfiltersGroups.map((group) => {
-                if (group.attr === "departamento") {
-                    return departmentGroup;
-                }
-                if (group.attr === "provincia") {
-                    return provinceGroup;
-                }
-                if (group.attr === "distrito") {
-                    return districtGroup;
-                }
-                return group;
-            })
-        );
+        newFilterGroups = newFilterGroups.map((group) => {
+            if (group.attr === "departamento") {
+                return departmentGroup;
+            }
+            if (group.attr === "provincia") {
+                return provinceGroup;
+            }
+            if (group.attr === "distrito") {
+                return districtGroup;
+            }
+            return group;
+        });
+
+        setAllfiltersGroups(newFilterGroups);
     }
 
     return {
