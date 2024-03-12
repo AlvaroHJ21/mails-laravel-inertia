@@ -31,9 +31,9 @@ class CalculateCategory
         $fechaNacimiento = new \DateTime($fh_nacimiento);
         $anio = $fechaNacimiento->format("Y");
 
-        // if ($anio >= 1928 && $anio <= 1945) {
-        //     return "GENERACIÓN SILENCIOSA";
-        if ($anio >= 1946 && $anio <= 1964) {
+        if ($anio >= 1928 && $anio <= 1945) {
+            return "GENERACIÓN SILENCIOSA";
+        } else if ($anio >= 1946 && $anio <= 1964) {
             return "BOOMERS";
         } else if ($anio >= 1965 && $anio <= 1980) {
             return "GENERACIÓN X";
