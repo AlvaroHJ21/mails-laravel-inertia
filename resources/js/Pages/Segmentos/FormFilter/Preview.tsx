@@ -51,34 +51,36 @@ export default function Preview(props: Props) {
                     {segmento.personas.length}
                 </p>
 
-                {filters
-                    .filter((g) => g.activeFilters.length > 0)
-                    .map((groups, filterIdx) => (
-                        <div key={groups.text} className="mb-4">
-                            <h3 className="mb-2 text-xl font-bold text-white">
-                                Filtro {filterIdx + 1}{" "}
-                                <span className="italic text-celeste-claro">
-                                    {groups.text}
-                                </span>
-                            </h3>
-                            <div className="flex flex-wrap gap-2 mb-2">
-                                {groups.activeFilters.map((filter) => (
-                                    <div
-                                        key={filter.text}
-                                        className="py-0 text-white capitalize border-gray-400 btn btn-sm"
-                                    >
-                                        {filter.text}
-                                    </div>
-                                ))}
+                <div>
+                    {filters
+                        .filter((g) => g.activeFilters.length > 0)
+                        .map((groups, filterIdx) => (
+                            <div key={groups.text} className="mb-4">
+                                <h3 className="mb-2 text-xl font-bold text-white">
+                                    Filtro {filterIdx + 1}{" "}
+                                    <span className="italic text-celeste-claro">
+                                        {groups.text}
+                                    </span>
+                                </h3>
+                                <div className="flex flex-wrap gap-2 mb-2">
+                                    {groups.activeFilters.map((filter) => (
+                                        <div
+                                            key={filter.text}
+                                            className="py-0 text-white capitalize border-gray-400 btn btn-sm"
+                                        >
+                                            {filter.text}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="text-xs text-amarillo">
+                                    <span className="text-xl font-bold">
+                                        {groups.partialCount}
+                                    </span>{" "}
+                                    Registros en total
+                                </div>
                             </div>
-                            <div className="text-xs text-amarillo">
-                                <span className="text-xl font-bold">
-                                    {groups.partialCount}
-                                </span>{" "}
-                                Registros en total
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                </div>
 
                 <div className="w-full h-px bg-celeste-claro"></div>
                 <div className="">

@@ -10,7 +10,7 @@ interface Props {
 export default function FilterGroups(props: Props) {
     const { filterGroups, resetFilters } = props;
     return (
-        <div>
+        <div className="">
             <h2 className="text-xl font-bold" hidden>
                 Filtros
             </h2>

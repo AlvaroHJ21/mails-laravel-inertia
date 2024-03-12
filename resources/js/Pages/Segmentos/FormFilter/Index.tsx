@@ -48,9 +48,9 @@ export default function FormFilter(props: Props) {
     }
 
     return (
-        <div className="p-10 bg-gray-100">
+        <div className="px-10 py-4 bg-gray-100">
             <h1 className="title">Generación de Segmentos</h1>
-            <div className="flex items-center justify-center gap-2 p-4 mb-4 text-white rounded-full bg-azul-marino">
+            <div className="flex items-center justify-center gap-2 p-2 mb-4 text-white rounded-full bg-azul-marino">
                 <TextEditable
                     value={nombre}
                     onClickOutside={(value) => {
@@ -61,7 +61,7 @@ export default function FormFilter(props: Props) {
             </div>
             <div className="flex flex-col gap-4 md:flex-row">
                 {/* Filtros */}
-                <div className="flex-1 p-8 bg-white rounded-lg">
+                <div className="flex-1 p-8 bg-white rounded-lg max-h-[500px] overflow-y-auto">
                     <FilterGroups
                         filterGroups={filters}
                         resetFilters={resetFilters}
@@ -69,7 +69,7 @@ export default function FormFilter(props: Props) {
                 </div>
 
                 {/* Preview */}
-                <div className="flex flex-col pb-8 md:w-[400px]">
+                <div className="flex flex-col pb-8 md:w-[400px] max-h-[500px] overflow-y-auto">
                     <Preview
                         segmento={segmento}
                         filters={filters}
