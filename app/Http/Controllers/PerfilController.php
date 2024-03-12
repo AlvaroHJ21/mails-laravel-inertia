@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Exports\PerfilPersonaExport;
 use App\Helpers\CalculateCategory;
-use App\Imports\PerfilImport;
-use App\Models\BigQueryDev;
+use App\Helpers\GenerateArrayFromBigQuery;
+use App\Helpers\GenerateArrayFromExcel;
 use App\Models\Perfil;
-use Google\Cloud\BigQuery\BigQueryClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,71 +39,29 @@ class PerfilController extends Controller
 
     public function generate(Request $request)
     {
-        //1. Validar el archivo
         $request->validate([
             'perfilamiento' => 'required|mimes:xlsx,xls',
             'nombre' => 'nullable|string|max:255'
         ]);
 
-        $excel = $request->file('perfilamiento');
-
-        $array = (new PerfilImport)->toArray($excel);
-
-        //2. Extraer array de DNI's
-        //2.1 buscar en la primera fila el titulo de la columna dni
-        $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
-        $correoColumnIdx = array_search('correo', array_map('strtolower', $array[0][0]));
-        $var1ColumnIdx = array_search('var1', array_map('strtolower', $array[0][0]));
-        $var2ColumnIdx = array_search('var2', array_map('strtolower', $array[0][0]));
-        $var3ColumnIdx = array_search('var3', array_map('strtolower', $array[0][0]));
-
-        //2.2 si no se encuentran los titulos de las columnas se retorna un error
-        if (
-            $documentoColumnIdx === false
-            || $correoColumnIdx === false
-            || $var1ColumnIdx === false
-            || $var2ColumnIdx === false
-            || $var3ColumnIdx === false
-        ) {
-            return redirect()->back()->withErrors(
-                "El archivo no tiene las columnas requeridas"
-            );
-        }
-
-        //2.3 si se encuentra el titulo de la columna dni se extraen los dni's
-        $dniArray = [];
-        foreach ($array[0] as $key => $row) {
-            if ($key == 0) continue;
-            $dniArray[] = $row[$documentoColumnIdx];
-        }
-
-        //2.4 extraer los datos del excel
-        $personasExcel = [];
-        foreach ($array[0] as $key => $row) {
-            if ($key == 0) continue;
-            $personasExcel[$row[$documentoColumnIdx]] = [
-                "correo" => $row[$correoColumnIdx],
-                "var1" => $row[$var1ColumnIdx],
-                "var2" => $row[$var2ColumnIdx],
-                "var3" => $row[$var3ColumnIdx],
-            ];
-        }
-
         try {
-            //3. Buscar los DNI's en BigQuery
-            $documentosStr = '"' . implode('","', $dniArray) . '"';
+            //1. Extraer los datos del excel
+            $data = GenerateArrayFromExcel::generate($request->file('perfilamiento'));
 
-            $personasNube = env("BIGQUERY_ACTIVE") ? $this->getPersonsFromBigQuery($documentosStr) : $this->getPersonsFromBigQueryDev($documentosStr);
+            $documentosStr = $data[0];
+            $personasExcel = $data[1];
+
+            //2. Extraer los datos de la nube
+            $personasNube = GenerateArrayFromBigQuery::generate($documentosStr);
 
             DB::beginTransaction();
-
-            //4. Crear un perfil en la tabla perfil
+            //3. Crear el perfil
             $perfil = Perfil::create([
-                "nombre" => $request->nombre ?? "Perfil " . time(),
-                "user_id" => Auth::user()->id
+                "nombre" => $request->nombre ??  "Perfil " . time(),
+                "user_id" => Auth::user()->id,
             ]);
 
-            //5. Crear las personas en la tabla perfil_personas
+            //4. Asociar las personas al perfil
             $personasDelPerfil = [];
             foreach ($personasNube as $persona) {
                 $personasDelPerfil[] = [
@@ -136,65 +93,20 @@ class PerfilController extends Controller
             $perfil->load('personas');
 
             DB::commit();
+
             return to_route('perfiles.index');
         } catch (\Throwable $th) {
+            //throw $th;
             DB::rollBack();
-            // throw $th;
             return redirect()->back()->withErrors(
-                // "Ocurrio un error al procesar el archivo"
                 $th->getMessage()
             );
         }
     }
 
-    public function getPersonsFromBigQuery(String $documentos = "")
-    {
-
-        $projectId = env('BIGQUERY_PROJECT_ID');
-        $datasetId = env('BIGQUERY_DATASET_ID');
-        $tableId = 'TB_PERFIL';
-
-        $bigQuery = new BigQueryClient([
-            'projectId' => $projectId,
-        ]);
-
-        if ($documentos == "") {
-            $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '` LIMIT 100';
-        } else {
-            $query = 'SELECT * FROM `' . $projectId . '.' . $datasetId . '.' . $tableId . '` WHERE DOCUMENTO IN (' . $documentos . ')';
-        }
-
-        // Run the query
-        $jobConfig = $bigQuery->query($query);
-        $queryJob = $bigQuery->startQuery($jobConfig);
-
-        // Wait for the query to complete
-        $queryJob->waitUntilComplete();
-
-        // Get the results
-        $queryResults = $queryJob->queryResults();
-
-        $data = [];
-        foreach ($queryResults as $row) {
-            $data[] = $row;
-        }
-
-        return $data;
-    }
-
-    public function getPersonsFromBigQueryDev(String $documentos = "")
-    {
-        $personas = BigQueryDev::select(
-            DB::raw('DOCUMENTO, FH_NACIMIENTO, SEXO, ESTADO_CIVIL, UBIGEO, DEPARTAMENTO, PROVINCIA, DISTRITO')
-        )
-            ->whereRaw('DOCUMENTO IN (' . $documentos . ')')
-            ->get();
-        return $personas;
-    }
-
     public function test()
     {
-        $personas = $this->getPersonsFromBigQuery();
+        $personas = GenerateArrayFromBigQuery::generate("");
 
         return response()->json($personas);
     }
