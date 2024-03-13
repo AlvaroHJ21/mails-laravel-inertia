@@ -1,32 +1,34 @@
-import { Segmento } from "@/Interfaces/Segmento";
 import { router } from "@inertiajs/react";
-import { UseFilterGroup } from "./useFilterGroup";
+import { Segmento } from "@/Interfaces/Segmento";
 import { FilterGroup } from "@/Interfaces/Filter";
 
 interface Props {
     segmento: Segmento;
-    filters: UseFilterGroup[];
-    totalByAllActiveFilters: number;
+    activeFilterGroups: FilterGroup[];
+    partialCounts: number[];
+    totalCount: number;
     onSaved?: () => void;
 }
 
 export default function Preview(props: Props) {
-    const { segmento, filters, totalByAllActiveFilters, onSaved } = props;
+    const { segmento, activeFilterGroups, partialCounts, totalCount, onSaved } =
+        props;
 
     function handleSave() {
-        const filterGroups: FilterGroup[] = filters.map((f) => ({
-            attr: f.attr,
-            count: f.partialCount,
-            filters: f.activeFilters.map((filter) => ({
-                id: filter.id,
-                value: filter.value,
-                text: filter.text,
-            })),
-            text: f.text,
-            table: f.table,
-        }));
+        const filterGroupsToSave: FilterGroup[] = activeFilterGroups.map(
+            (f) => ({
+                attr: f.attr,
+                filters: f.filters.map((filter) => ({
+                    id: filter.id,
+                    value: filter.value,
+                    text: filter.text,
+                })),
+                text: f.text,
+                table: f.table,
+            })
+        );
 
-        const filtrosStr = JSON.stringify(filterGroups);
+        const filtrosStr = JSON.stringify(filterGroupsToSave);
 
         router.put(
             route("segmentos.update", { segmento }),
@@ -52,8 +54,8 @@ export default function Preview(props: Props) {
                 </p>
 
                 <div>
-                    {filters
-                        .filter((g) => g.activeFilters.length > 0)
+                    {activeFilterGroups
+                        .filter((g) => g.filters.length > 0)
                         .map((groups, filterIdx) => (
                             <div key={groups.text} className="mb-4">
                                 <h3 className="mb-2 text-xl font-bold text-white">
@@ -63,7 +65,7 @@ export default function Preview(props: Props) {
                                     </span>
                                 </h3>
                                 <div className="flex flex-wrap gap-2 mb-2">
-                                    {groups.activeFilters.map((filter) => (
+                                    {groups.filters.map((filter) => (
                                         <div
                                             key={filter.text}
                                             className="py-0 text-white capitalize border-gray-400 btn btn-sm"
@@ -74,7 +76,7 @@ export default function Preview(props: Props) {
                                 </div>
                                 <div className="text-xs text-amarillo">
                                     <span className="text-xl font-bold">
-                                        {groups.partialCount}
+                                        {partialCounts[filterIdx]}
                                     </span>{" "}
                                     Registros en total
                                 </div>
@@ -90,7 +92,7 @@ export default function Preview(props: Props) {
                             :
                         </div>
                         <div className="text-3xl font-bold text-amarillo">
-                            {totalByAllActiveFilters}
+                            {totalCount}
                         </div>
                     </div>
                 </div>

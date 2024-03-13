@@ -1,11 +1,13 @@
-import { UseFilterGroup } from "./useFilterGroup";
+import { Filter, FilterGroup } from "@/Interfaces/Filter";
 
 interface Props {
-    group: UseFilterGroup;
+    group: FilterGroup;
+    isFilterActive: (group: FilterGroup, filter: Filter) => boolean;
+    toogleFilter: (group: FilterGroup, filter: Filter) => void;
 }
 
 export default function FilterGroupTable(props: Props) {
-    const { group } = props;
+    const { group, isFilterActive, toogleFilter } = props;
 
     return (
         <div className="overflow-hidden shadow-md rounded-t-md">
@@ -13,18 +15,16 @@ export default function FilterGroupTable(props: Props) {
                 Seleccionar {group.text}
             </div>
             <div className="overflow-y-auto max-h-40">
-                {group.allFilter.map((filter) => (
+                {group.filters.map((filter) => (
                     <div
                         key={filter.id}
                         className="border-b border-b-celeste-claro"
                     >
                         <button
-                            onClick={() =>
-                                group.handleToggleActiveFilter(filter)
-                            }
+                            onClick={() => toogleFilter(group, filter)}
                             className={
                                 "text-xs px-4 py-1 font-semibold flex items-center w-full justify-between " +
-                                (group.isActiveFilter(filter) ? "active" : "")
+                                (isFilterActive(group, filter) ? "active" : "")
                             }
                         >
                             {filter.text}
@@ -32,7 +32,7 @@ export default function FilterGroupTable(props: Props) {
                                 <div
                                     className={
                                         "h-full w-full border-azul-marino rounded-full " +
-                                        (group.isActiveFilter(filter)
+                                        (isFilterActive(group, filter)
                                             ? "bg-azul-marino"
                                             : "")
                                     }

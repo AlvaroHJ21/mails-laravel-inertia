@@ -10,6 +10,5 @@ export interface FilterGroup {
     attr: keyof SegmentoPersona;
     text: string;
     filters: Filter[];
-    count: number;
     table?: boolean;
 }

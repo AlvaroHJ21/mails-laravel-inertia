@@ -1,13 +1,15 @@
+import { Filter, FilterGroup } from "@/Interfaces/Filter";
 import FilterGroupTable from "./FilterGroupTable";
-import { UseFilterGroup } from "./useFilterGroup";
 
 interface Props {
-    filterGroups: UseFilterGroup[];
+    filterGroups: FilterGroup[];
+    isFilterActive: (group: FilterGroup, filter: Filter) => boolean;
     resetFilters: () => void;
+    toogleFilter: (group: FilterGroup, filter: Filter) => void;
 }
 
 export default function FilterGroups(props: Props) {
-    const { filterGroups, resetFilters } = props;
+    const { filterGroups, resetFilters, isFilterActive, toogleFilter } = props;
     return (
         <div className="">
             <h2 className="text-xl font-bold" hidden>
@@ -22,21 +24,23 @@ export default function FilterGroups(props: Props) {
 
                         {group.table ? (
                             <span>
-                                <FilterGroupTable group={group} />
+                                <FilterGroupTable
+                                    group={group}
+                                    isFilterActive={isFilterActive}
+                                    toogleFilter={toogleFilter}
+                                />
                             </span>
                         ) : (
                             <div className="flex flex-wrap gap-2">
-                                {group.allFilter.map((filter) => (
+                                {group.filters.map((filter) => (
                                     <button
                                         key={filter.id}
                                         onClick={() =>
-                                            group.handleToggleActiveFilter(
-                                                filter
-                                            )
+                                            toogleFilter(group, filter)
                                         }
                                         className={
                                             "border shadow-sm text-sm px-3 rounded-md py-0 " +
-                                            (group.isActiveFilter(filter)
+                                            (isFilterActive(group, filter)
                                                 ? "bg-azul-marino text-amarillo"
                                                 : "")
                                         }
@@ -51,7 +55,12 @@ export default function FilterGroups(props: Props) {
             </div>
             <div className="flex items-start gap-4 mb-6">
                 {filterGroups.slice(7, filterGroups.length).map((group) => (
-                    <FilterGroupTable key={group.attr} group={group} />
+                    <FilterGroupTable
+                        key={group.attr}
+                        group={group}
+                        isFilterActive={isFilterActive}
+                        toogleFilter={toogleFilter}
+                    />
                 ))}
             </div>
             <button

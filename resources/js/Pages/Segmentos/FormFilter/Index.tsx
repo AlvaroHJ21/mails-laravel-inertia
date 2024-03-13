@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { router } from "@inertiajs/react";
 
 import TextEditable from "@/Components/TextEditable";
 import { Segmento } from "@/Interfaces/Segmento";
 
 import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
-import useFormFilter from "./useFormFilter";
 import FilterGroups from "./FilterGroups";
 import Preview from "./Preview";
+import useFormFilter from "./useFormFilter";
 
 interface Props {
     segmento: Segmento;
@@ -18,28 +18,24 @@ interface Props {
 }
 
 export default function FormFilter(props: Props) {
-    const { segmento, onSaved } = props;
+    const { segmento, departamentos, provincias, distritos, onSaved } = props;
 
     const [nombre, setNombre] = useState(segmento.nombre);
 
     const {
-        // activeFilterGroups,
-        loadFilterGroups,
+        activeFilterGroups,
+        allFilterGroups,
+        partialCounts,
+        totalCount,
         resetFilters,
-        totalByAllActiveFilters,
-        // updateAllFilters,
-        filters,
+        isFilterActive,
+        toogleFilter,
     } = useFormFilter({
+        departamentos,
+        provincias,
+        distritos,
         segmento,
-        departamentos: props.departamentos,
-        provincias: props.provincias,
-        distritos: props.distritos,
     });
-
-    useEffect(() => {
-        loadFilterGroups();
-        return () => {};
-    }, [segmento]);
 
     function handleUpdateName(nombre: string) {
         router.put(route("segmentos.update", { segmento }), {
@@ -63,8 +59,10 @@ export default function FormFilter(props: Props) {
                 {/* Filtros */}
                 <div className="flex-1 p-8 bg-white rounded-lg max-h-[500px] overflow-y-auto">
                     <FilterGroups
-                        filterGroups={filters}
+                        filterGroups={allFilterGroups}
+                        isFilterActive={isFilterActive}
                         resetFilters={resetFilters}
+                        toogleFilter={toogleFilter}
                     />
                 </div>
 
@@ -72,8 +70,9 @@ export default function FormFilter(props: Props) {
                 <div className="flex flex-col pb-8 md:w-[400px] max-h-[500px] overflow-y-auto">
                     <Preview
                         segmento={segmento}
-                        filters={filters}
-                        totalByAllActiveFilters={totalByAllActiveFilters}
+                        activeFilterGroups={activeFilterGroups}
+                        partialCounts={partialCounts}
+                        totalCount={totalCount}
                         onSaved={onSaved}
                     />
                 </div>
