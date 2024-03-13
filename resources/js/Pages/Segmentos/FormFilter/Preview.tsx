@@ -1,11 +1,11 @@
 import { Segmento } from "@/Interfaces/Segmento";
 import { router } from "@inertiajs/react";
-import { UseFilter } from "./useFilter";
+import { UseFilterGroup } from "./useFilterGroup";
 import { FilterGroup } from "@/Interfaces/Filter";
 
 interface Props {
     segmento: Segmento;
-    filters: UseFilter[];
+    filters: UseFilterGroup[];
     totalByAllActiveFilters: number;
     onSaved?: () => void;
 }

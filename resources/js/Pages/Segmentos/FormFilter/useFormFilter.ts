@@ -9,7 +9,7 @@ import {
 import { Segmento } from "@/Interfaces/Segmento";
 import { Filter } from "@/Interfaces/Filter";
 import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
-import useFilter from "./useFilter";
+import useFilter from "./useFilterGroup";
 
 interface Props {
     segmento: Segmento;
@@ -20,8 +20,6 @@ interface Props {
 
 export default function useFormFilter(props: Props) {
     const { segmento, departamentos, provincias, distritos } = props;
-
-    const [allfiltersGroups, setAllfiltersGroups] = useState(filtersGroups);
 
     // Edad
     const edadFilters = useFilter({
@@ -87,6 +85,9 @@ export default function useFormFilter(props: Props) {
         segmento,
     });
 
+    /**
+     * Calculamos el total de personas que cumplen con todos los filtros
+     */
     const totalByAllActiveFilters = useMemo(() => {
         let filtered = [...segmento.personas];
 
@@ -170,6 +171,10 @@ export default function useFormFilter(props: Props) {
         provinciaFilters.activeFilters,
     ]);
 
+    /**
+     * Sí hay filtros de departamento seleccionados, entonces
+     * cargamos los filtros de provincia
+     */
     useEffect(() => {
         const departamentosSelectedIds = departamentoFilters.activeFilters.map(
             (f) => f.id
@@ -192,6 +197,10 @@ export default function useFormFilter(props: Props) {
         return () => {};
     }, [departamentoFilters.activeFilters]);
 
+    /**
+     * Sí hay filtros de provincia seleccionados, entonces
+     * cargamos los filtros de distrito
+     */
     useEffect(() => {
         const provinciasSelectedIds = provinciaFilters.activeFilters.map(
             (f) => f.id
@@ -213,6 +222,19 @@ export default function useFormFilter(props: Props) {
 
         return () => {};
     }, [provinciaFilters.activeFilters]);
+
+    /**
+     * Sí no hay filtros de departamento seleccionados,
+     * entonces borramos los filtros de provincia y distrito
+     */
+    useEffect(() => {
+        if (departamentoFilters.activeFilters.length === 0) {
+            provinciaFilters.resetFilters();
+            distritoFilters.resetFilters();
+        }
+
+        return () => {};
+    }, [departamentoFilters.activeFilters]);
 
     function loadFilterGroups() {
         segmento.filtros.forEach((f) => {
@@ -257,7 +279,6 @@ export default function useFormFilter(props: Props) {
     }
 
     return {
-        allfiltersGroups,
         loadFilterGroups,
         resetFilters,
         totalByAllActiveFilters,

@@ -1,7 +1,7 @@
-import { UseFilter } from "./useFilter";
+import { UseFilterGroup } from "./useFilterGroup";
 
 interface Props {
-    group: UseFilter;
+    group: UseFilterGroup;
 }
 
 export default function FilterGroupTable(props: Props) {

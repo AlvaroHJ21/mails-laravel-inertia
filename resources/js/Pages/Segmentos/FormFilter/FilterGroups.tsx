@@ -1,8 +1,8 @@
 import FilterGroupTable from "./FilterGroupTable";
-import { UseFilter } from "./useFilter";
+import { UseFilterGroup } from "./useFilterGroup";
 
 interface Props {
-    filterGroups: UseFilter[];
+    filterGroups: UseFilterGroup[];
     resetFilters: () => void;
 }
 
