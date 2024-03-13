@@ -102,7 +102,7 @@ class SegmentoController extends Controller
 
     public function download(Segmento $segmento)
     {
-        return (new SegmentoPersonaExport($segmento->id))->download($segmento->nombre . '.xlsx');
+        return (new SegmentoPersonaExport($segmento->id, $segmento->filtros))->download($segmento->nombre . '.xlsx');
     }
 
     public function update(Request $request, Segmento $segmento)

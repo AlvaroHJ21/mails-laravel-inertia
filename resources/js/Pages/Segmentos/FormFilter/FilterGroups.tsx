@@ -51,7 +51,7 @@ export default function FilterGroups(props: Props) {
             </div>
             <div className="flex gap-4 mb-6">
                 {filterGroups.slice(7, filterGroups.length).map((group) => (
-                    <FilterGroupTable group={group} />
+                    <FilterGroupTable key={group.attr} group={group} />
                 ))}
             </div>
             <button
