@@ -44,7 +44,7 @@ export default function FormView(props: Props) {
                         title="dashboard perfilamiento"
                         width="1350"
                         height="550"
-                        src="https://app.powerbi.com/view?r=eyJrIjoiZDg5NTljMTgtMDU0Yi00NzI4LWI4ODYtZTZjYzc5Y2YzYWFlIiwidCI6IjBmYjBkZjA5LTc0MGYtNDFmZS1hODNmLTVhOWVjZjcwMmRhYiIsImMiOjR9"
+                        src="https://app.powerbi.com/view?r=eyJrIjoiNzE2MzE3YzktYWFiZS00Mzg4LWIzOTAtODA3OTBjNTdjMDNlIiwidCI6IjBmYjBkZjA5LTc0MGYtNDFmZS1hODNmLTVhOWVjZjcwMmRhYiIsImMiOjR9"
                         frameBorder="0"
                         allowFullScreen
                     ></iframe>
