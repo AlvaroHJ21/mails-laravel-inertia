@@ -244,7 +244,7 @@
     }
 
     .nav-item-description {
-        @apply text-xs max-w-28 m-auto text-white;
+        @apply text-xs max-w-40 m-auto text-white;
     }
 
     /* BADGES */
