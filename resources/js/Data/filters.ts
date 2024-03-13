@@ -1,9 +1,10 @@
 import { Filter, FilterGroup } from "@/Interfaces/Filter";
 
 export const initialEdadFilters: Filter[] = [
-    { id: 1, text: "18-25", value: "JOVEN" },
-    { id: 2, text: "26-35", value: "ADULTO" },
-    { id: 3, text: "36-45", value: "ADULTO MAYOR" },
+    { id: 1, text: "15-24", value: "JOVEN" },
+    { id: 2, text: "25-44", value: "ADULTO" },
+    { id: 3, text: "45-59", value: "ADULTO MAYOR" },
+    { id: 4, text: "+60", value: "TERCERA EDAD" },
 ];
 
 export const initialSexoFilters: Filter[] = [
@@ -45,18 +46,33 @@ export const initialEstadoCivilFilters: Filter[] = [
 export const initialGeneracionFilters: Filter[] = [
     {
         id: 1,
-        text: "Generación x",
-        value: "GENERACIÓN X",
+        text: "Generación Alpha",
+        value: "GENERACIÓN ALPHA",
     },
     {
         id: 2,
+        text: "Generación Z",
+        value: "GENERACIÓN Z",
+    },
+    {
+        id: 3,
         text: "Millennials",
         value: "MILLENNIALS",
     },
     {
-        id: 3,
-        text: "Generación z",
-        value: "GENERACIÓN Z",
+        id: 4,
+        text: "Generación X",
+        value: "GENERACIÓN X",
+    },
+    {
+        id: 5,
+        text: "Boomers",
+        value: "BOOMERS",
+    },
+    {
+        id: 6,
+        text: "Silenciosa",
+        value: "GENERACIÓN SILENCIOSA",
     },
 ];
 
