@@ -12,7 +12,7 @@ export default function FilterGroupTable(props: Props) {
             <div className="px-4 py-1 text-sm font-semibold text-white bg-horizontal-gradient">
                 Seleccionar {group.text}
             </div>
-            <div className="overflow-y-auto max-h-60">
+            <div className="overflow-y-auto max-h-40">
                 {group.allFilter.map((filter) => (
                     <div
                         key={filter.id}
