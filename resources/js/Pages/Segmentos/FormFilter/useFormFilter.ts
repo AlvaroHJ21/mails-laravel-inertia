@@ -310,6 +310,10 @@ export default function useFormFilter(props: Props) {
                 };
             });
 
+        /**
+         * Seteamos los filtros de provincia y todos activos
+         */
+        provinciaFilters.setActiveFilters(filters);
         provinciaFilters.setAllFilter(filters);
 
         return () => {};
@@ -411,6 +415,8 @@ export default function useFormFilter(props: Props) {
         provinciaFilters.resetFilters();
         distritoFilters.resetFilters();
     }
+
+
 
     return {
         loadFilterGroups,
