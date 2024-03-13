@@ -191,8 +191,9 @@ export default function useFormFilter(props: Props) {
             filtered = filtered.filter((persona) =>
                 estadoCivilFilters.activeFilters.some(
                     (filter) =>
+                        persona.estado_civil &&
                         filter.value.toLowerCase() ===
-                        persona.estado_civil.toLowerCase()
+                            persona.estado_civil.toLowerCase()
                 )
             );
         }
@@ -201,8 +202,9 @@ export default function useFormFilter(props: Props) {
             filtered = filtered.filter((persona) =>
                 generacionFilters.activeFilters.some(
                     (filter) =>
+                        persona.generacion &&
                         filter.value.toLowerCase() ===
-                        persona.generacion.toLowerCase()
+                            persona.generacion.toLowerCase()
                 )
             );
         }
@@ -211,8 +213,9 @@ export default function useFormFilter(props: Props) {
             filtered = filtered.filter((persona) =>
                 departamentoFilters.activeFilters.some(
                     (filter) =>
+                        persona.departamento &&
                         filter.value.toLowerCase() ===
-                        persona.departamento.toLowerCase()
+                            persona.departamento.toLowerCase()
                 )
             );
         }
@@ -221,8 +224,9 @@ export default function useFormFilter(props: Props) {
             filtered = filtered.filter((persona) =>
                 provinciaFilters.activeFilters.some(
                     (filter) =>
+                        persona.provincia &&
                         filter.value.toLowerCase() ===
-                        persona.provincia.toLowerCase()
+                            persona.provincia.toLowerCase()
                 )
             );
         }
@@ -231,8 +235,42 @@ export default function useFormFilter(props: Props) {
             filtered = filtered.filter((persona) =>
                 distritoFilters.activeFilters.some(
                     (filter) =>
+                        persona.distrito &&
                         filter.value.toLowerCase() ===
-                        persona.distrito.toLowerCase()
+                            persona.distrito.toLowerCase()
+                )
+            );
+        }
+
+        if (var1Filters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                var1Filters.activeFilters.some(
+                    (filter) =>
+                        persona.var1 &&
+                        filter.value.toLowerCase() ===
+                            persona.var1.toLowerCase()
+                )
+            );
+        }
+
+        if (var2Filters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                var2Filters.activeFilters.some(
+                    (filter) =>
+                        persona.var2 &&
+                        filter.value.toLowerCase() ===
+                            persona.var2.toLowerCase()
+                )
+            );
+        }
+
+        if (var3Filters.activeFilters.length > 0) {
+            filtered = filtered.filter((persona) =>
+                var3Filters.activeFilters.some(
+                    (filter) =>
+                        persona.var3 &&
+                        filter.value.toLowerCase() ===
+                            persona.var3.toLowerCase()
                 )
             );
         }
@@ -245,6 +283,10 @@ export default function useFormFilter(props: Props) {
         generacionFilters.activeFilters,
         departamentoFilters.activeFilters,
         provinciaFilters.activeFilters,
+        distritoFilters.activeFilters,
+        var1Filters.activeFilters,
+        var2Filters.activeFilters,
+        var3Filters.activeFilters,
     ]);
 
     /**
