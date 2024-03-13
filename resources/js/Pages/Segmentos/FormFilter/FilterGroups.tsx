@@ -14,7 +14,7 @@ export default function FilterGroups(props: Props) {
                 Filtros
             </h2>
             <div className="flex flex-wrap gap-4 mb-8">
-                {filterGroups.map((group) => (
+                {filterGroups.slice(0, 7).map((group) => (
                     <div key={group.text}>
                         <h3 className="mb-1 text-xl font-bold text-celeste-claro">
                             {group.text}
@@ -47,6 +47,11 @@ export default function FilterGroups(props: Props) {
                             </div>
                         )}
                     </div>
+                ))}
+            </div>
+            <div className="flex gap-4 mb-6">
+                {filterGroups.slice(7, filterGroups.length).map((group) => (
+                    <FilterGroupTable group={group} />
                 ))}
             </div>
             <button

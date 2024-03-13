@@ -34,6 +34,7 @@ export default function useFilter(props: Props): UseFilterGroup {
         return segmento.personas.filter((p) => {
             return activeFilters.some(
                 (f) =>
+                    p[attr] &&
                     f.value.toLowerCase() === p[attr].toString().toLowerCase()
             );
         }).length;

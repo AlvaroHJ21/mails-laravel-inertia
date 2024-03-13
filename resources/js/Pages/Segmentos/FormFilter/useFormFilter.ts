@@ -85,6 +85,82 @@ export default function useFormFilter(props: Props) {
         segmento,
     });
 
+    //Var1
+    const var1Filters = useFilter({
+        attr: "var1",
+        initialFilters: [],
+        text: "Variable 1",
+        table: true,
+        segmento,
+    });
+
+    //Var2
+    const var2Filters = useFilter({
+        attr: "var2",
+        initialFilters: [],
+        text: "Variable 2",
+        table: true,
+        segmento,
+    });
+
+    //Var3
+    const var3Filters = useFilter({
+        attr: "var3",
+        initialFilters: [],
+        text: "Variable 3",
+        table: true,
+        segmento,
+    });
+
+    /**
+     * Cargamos los filtros de var1, var2 y var3
+     */
+    useEffect(() => {
+        const var1ValuesUniques = segmento.personas
+            .map((persona) => persona.var1)
+            .filter(
+                (valor, indice, arreglo) =>
+                    arreglo.indexOf(valor) === indice && valor !== null
+            );
+        var1Filters.setAllFilter(
+            var1ValuesUniques.map((v) => ({
+                id: v,
+                text: v,
+                value: v,
+            }))
+        );
+
+        const var2ValuesUniques = segmento.personas
+            .map((persona) => persona.var2)
+            .filter(
+                (valor, indice, arreglo) =>
+                    arreglo.indexOf(valor) === indice && valor !== null
+            );
+        var2Filters.setAllFilter(
+            var2ValuesUniques.map((v) => ({
+                id: v,
+                text: v,
+                value: v,
+            }))
+        );
+
+        const var3ValuesUniques = segmento.personas
+            .map((persona) => persona.var3)
+            .filter(
+                (valor, indice, arreglo) =>
+                    arreglo.indexOf(valor) === indice && valor !== null
+            );
+        var3Filters.setAllFilter(
+            var3ValuesUniques.map((v) => ({
+                id: v,
+                text: v,
+                value: v,
+            }))
+        );
+
+        return () => {};
+    }, []);
+
     /**
      * Calculamos el total de personas que cumplen con todos los filtros
      */
@@ -236,6 +312,10 @@ export default function useFormFilter(props: Props) {
         return () => {};
     }, [departamentoFilters.activeFilters]);
 
+    /**
+     * funcion para cargar los filtros de los grupos
+     * de filtros guardados en el segmento
+     */
     function loadFilterGroups() {
         segmento.filtros.forEach((f) => {
             if (f.attr === "edad_grupo") {
@@ -265,6 +345,18 @@ export default function useFormFilter(props: Props) {
             if (f.attr === "distrito") {
                 distritoFilters.setActiveFilters(f.filters);
             }
+
+            if (f.attr === "var1") {
+                var1Filters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "var2") {
+                var2Filters.setActiveFilters(f.filters);
+            }
+
+            if (f.attr === "var3") {
+                var3Filters.setActiveFilters(f.filters);
+            }
         });
     }
 
@@ -290,6 +382,9 @@ export default function useFormFilter(props: Props) {
             departamentoFilters,
             provinciaFilters,
             distritoFilters,
+            var1Filters,
+            var2Filters,
+            var3Filters,
         ],
     };
 }
