@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Segmento, SegmentoPersona } from "@/Interfaces/Segmento";
 import { Filter } from "@/Interfaces/Filter";
+import { compareValues } from "@/Utils/compareValues";
 
 interface Props {
     attr: keyof SegmentoPersona;
@@ -32,11 +33,7 @@ export default function useFilter(props: Props): UseFilterGroup {
 
     const partialCount = useMemo(() => {
         return segmento.personas.filter((p) => {
-            return activeFilters.some(
-                (f) =>
-                    p[attr] &&
-                    f.value.toLowerCase() === p[attr].toString().toLowerCase()
-            );
+            return activeFilters.some((f) => compareValues(f.value, p[attr]));
         }).length;
     }, [segmento, activeFilters]);
 

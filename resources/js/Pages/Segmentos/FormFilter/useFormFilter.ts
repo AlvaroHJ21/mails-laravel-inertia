@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-    filtersGroups,
     initialEdadFilters,
     initialEstadoCivilFilters,
     initialGeneracionFilters,
@@ -10,6 +9,7 @@ import { Segmento } from "@/Interfaces/Segmento";
 import { Filter } from "@/Interfaces/Filter";
 import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
 import useFilter from "./useFilterGroup";
+import { compareValues } from "@/Utils/compareValues";
 
 interface Props {
     segmento: Segmento;
@@ -169,108 +169,80 @@ export default function useFormFilter(props: Props) {
 
         if (edadFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                edadFilters.activeFilters.some(
-                    (filter) =>
-                        filter.value.toLowerCase() ===
-                        persona.edad_grupo.toLowerCase()
+                edadFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.edad_grupo)
                 )
             );
         }
 
         if (sexoFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                sexoFilters.activeFilters.some(
-                    (filter) =>
-                        filter.value.toLowerCase() ===
-                        persona.sexo.toLowerCase()
+                sexoFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.sexo)
                 )
             );
         }
 
         if (estadoCivilFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                estadoCivilFilters.activeFilters.some(
-                    (filter) =>
-                        persona.estado_civil &&
-                        filter.value.toLowerCase() ===
-                            persona.estado_civil.toLowerCase()
+                estadoCivilFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.estado_civil)
                 )
             );
         }
 
         if (generacionFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                generacionFilters.activeFilters.some(
-                    (filter) =>
-                        persona.generacion &&
-                        filter.value.toLowerCase() ===
-                            persona.generacion.toLowerCase()
+                generacionFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.generacion)
                 )
             );
         }
 
         if (departamentoFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                departamentoFilters.activeFilters.some(
-                    (filter) =>
-                        persona.departamento &&
-                        filter.value.toLowerCase() ===
-                            persona.departamento.toLowerCase()
+                departamentoFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.departamento)
                 )
             );
         }
 
         if (provinciaFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                provinciaFilters.activeFilters.some(
-                    (filter) =>
-                        persona.provincia &&
-                        filter.value.toLowerCase() ===
-                            persona.provincia.toLowerCase()
+                provinciaFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.provincia)
                 )
             );
         }
 
         if (distritoFilters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                distritoFilters.activeFilters.some(
-                    (filter) =>
-                        persona.distrito &&
-                        filter.value.toLowerCase() ===
-                            persona.distrito.toLowerCase()
+                distritoFilters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.distrito)
                 )
             );
         }
 
         if (var1Filters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                var1Filters.activeFilters.some(
-                    (filter) =>
-                        persona.var1 &&
-                        filter.value.toLowerCase() ===
-                            persona.var1.toLowerCase()
+                var1Filters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.var1)
                 )
             );
         }
 
         if (var2Filters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                var2Filters.activeFilters.some(
-                    (filter) =>
-                        persona.var2 &&
-                        filter.value.toLowerCase() ===
-                            persona.var2.toLowerCase()
+                var2Filters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.var2)
                 )
             );
         }
 
         if (var3Filters.activeFilters.length > 0) {
             filtered = filtered.filter((persona) =>
-                var3Filters.activeFilters.some(
-                    (filter) =>
-                        persona.var3 &&
-                        filter.value.toLowerCase() ===
-                            persona.var3.toLowerCase()
+                var3Filters.activeFilters.some((filter) =>
+                    compareValues(filter.value, persona.var3)
                 )
             );
         }
@@ -415,8 +387,6 @@ export default function useFormFilter(props: Props) {
         provinciaFilters.resetFilters();
         distritoFilters.resetFilters();
     }
-
-
 
     return {
         loadFilterGroups,
