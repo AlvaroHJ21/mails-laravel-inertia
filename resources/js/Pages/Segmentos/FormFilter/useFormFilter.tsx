@@ -186,38 +186,27 @@ export default function useFormFilterLaFe(props: Props) {
                     )
                 );
             }
-
-            //Activar todos los filtros de provincias
-            const activeProvinciaGroups = activeFilterGroups.find(
-                (g) => g.attr === "provincia"
-            );
-            if (activeProvinciaGroups) {
-                setActiveFilterGroups((prev) =>
-                    prev.map((g) =>
-                        g.attr === "provincia"
-                            ? { ...g, filters: provinciasFiltros }
-                            : g
-                    )
-                );
-            } else {
-                setActiveFilterGroups((prev) => [
-                    ...prev,
-                    {
-                        attr: "provincia",
-                        text: "Provincia",
-                        filters: provinciasFiltros,
-                    },
-                ]);
-            }
         } else {
-            // Si no hay departamentos seleccionados, vaciar provincias
+            // Si no hay departamentos seleccionados, vaciar provincias y distritos
             const provinciasGroup = allFilterGroups.find(
                 (g) => g.attr === "provincia"
             );
+            const distritoGroup = allFilterGroups.find(
+                (g) => g.attr === "distrito"
+            );
+
             if (provinciasGroup) {
                 setAllFilterGroups((prev) =>
                     prev.map((g) =>
                         g.attr === "provincia" ? { ...g, filters: [] } : g
+                    )
+                );
+            }
+
+            if (distritoGroup) {
+                setAllFilterGroups((prev) =>
+                    prev.map((g) =>
+                        g.attr === "distrito" ? { ...g, filters: [] } : g
                     )
                 );
             }
@@ -267,6 +256,7 @@ export default function useFormFilterLaFe(props: Props) {
             const distritoGroup = allFilterGroups.find(
                 (g) => g.attr === "distrito"
             );
+
             if (distritoGroup) {
                 setAllFilterGroups((prev) =>
                     prev.map((g) =>
@@ -332,6 +322,23 @@ export default function useFormFilterLaFe(props: Props) {
                 setActiveFilterGroups((prev) =>
                     prev.filter((g) => g.attr !== group.attr)
                 );
+
+                // Si el grupo es departamentos, quitar provincias y distritos
+                if (group.attr === "departamento") {
+                    setActiveFilterGroups((prev) =>
+                        prev.filter((g) => g.attr !== "provincia")
+                    );
+                    setActiveFilterGroups((prev) =>
+                        prev.filter((g) => g.attr !== "distrito")
+                    );
+                }
+
+                // Si el grupo es provincias, quitar distritos
+                if (group.attr === "provincia") {
+                    setActiveFilterGroups((prev) =>
+                        prev.filter((g) => g.attr !== "distrito")
+                    );
+                }
             } else {
                 setActiveFilterGroups((prev) =>
                     prev.map((g) => (g.attr === group.attr ? tempGroup : g))
