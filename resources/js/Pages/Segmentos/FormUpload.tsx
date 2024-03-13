@@ -73,7 +73,7 @@ export default function FormUpload(props: Props) {
                     <p className="m-auto mb-3 text-center max-w-60">
                         Sube tu archivo para poder generar los segmentos.
                     </p>
-                    <div className="relative mb-8">
+                    <div className="relative mb-4">
                         <label className="font-bold btn btn-secondary">
                             Subir archivo
                             <input
@@ -89,6 +89,11 @@ export default function FormUpload(props: Props) {
                             {fileName}
                         </span>
                     </div>
+
+                    <label className="text-center field">
+                        Nombre (opcional)
+                        <input type="text" name="nombre" className="input" />
+                    </label>
 
                     <Button disabled={fileName == ""} isLoading={isSending}>
                         Generar segmento
