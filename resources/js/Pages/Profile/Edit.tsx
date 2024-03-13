@@ -1,19 +1,22 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
-import { Head } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
+import { Head } from "@inertiajs/react";
+import { PageProps } from "@/types";
 
-export default function Edit({ auth, mustVerifyEmail, status }: PageProps<{ mustVerifyEmail: boolean, status?: string }>) {
+export default function Edit({
+    auth,
+    mustVerifyEmail,
+    status,
+}: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
         <AuthenticatedLayout
             user={auth.user}
             // header={<h2 className="text-xl font-semibold leading-tight text-gray-800">Profile</h2>}
         >
-            <Head title="Profile" />
+            <Head title="Perfil de usuario" />
 
-            <div className="py-12">
+            <div>
                 <div className="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
                     <div className="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                         <UpdateProfileInformationForm
@@ -27,9 +30,9 @@ export default function Edit({ auth, mustVerifyEmail, status }: PageProps<{ must
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
 
-                    <div className="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
+                    {/* <div className="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
                         <DeleteUserForm className="max-w-xl" />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </AuthenticatedLayout>
