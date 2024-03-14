@@ -43,11 +43,11 @@ class SegmentoController extends Controller
             //1. Extraer los datos del excel
             $data = GenerateArrayFromExcel::generate($request->file('input_excel'));
 
-            $documentosStr = $data[0];
+            $documentos = $data[0];
             $personasExcel = $data[1];
 
             //2. Extraer los datos de la nube
-            $personasNube = GenerateArrayFromBigQuery::generate($documentosStr);
+            $personasNube = GenerateArrayFromBigQuery::generate($documentos);
 
             DB::beginTransaction();
             //3. Crear el segmento

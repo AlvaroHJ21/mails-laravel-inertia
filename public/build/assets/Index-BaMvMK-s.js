@@ -1,0 +1,1 @@
+import{j as t}from"./app-D77_fFI3.js";import{A as r}from"./AuthenticatedLayout-DtRtj6j7.js";import"./transition-D0Tbg9CT.js";function i(s){const{auth:e}=s;return t.jsx(r,{user:e.user,children:t.jsx("h1",{className:"title",children:"Resultados"})})}export{i as default};
