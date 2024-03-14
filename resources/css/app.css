@@ -100,11 +100,15 @@
     /* INPUTS */
 
     .input-group {
-        @apply flex rounded-md overflow-hidden;
+        @apply flex overflow-hidden;
     }
 
     .input-group-icon {
         @apply w-[42px] h-[42px] grid place-items-center bg-[#d5e5fe] text-celeste-claro;
+    }
+
+    .input-group .label {
+        @apply font-bold text-azul-marino;
     }
 
     .input {
@@ -113,15 +117,19 @@
     }
 
     .input-group .input {
-        @apply flex-1 rounded-l-none;
+        @apply flex-1 border-transparent focus:border-celeste-claro;
     }
 
     .field {
-        @apply flex flex-col gap-2 mb-3 text-sm font-semibold;
+        @apply flex flex-col gap-2;
+    }
+
+    .field .label {
+        @apply text-azul-marino font-bold;
     }
 
     .input {
-        @apply py-2 px-4 outline-none rounded-md border text-base font-normal bg-cielo-alba;
+        @apply py-2 px-4 outline-none border text-base font-normal bg-cielo-alba;
     }
 
     .input[type="file"] {

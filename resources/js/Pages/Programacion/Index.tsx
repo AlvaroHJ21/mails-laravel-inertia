@@ -1,20 +1,25 @@
-import { PageProps } from "@/types";
+import { useState } from "react";
+
+import { formatDate } from "@/Utils/formatDate";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Alert from "@/Components/Alert";
-import { formatDate } from "@/Utils/formatDate";
+import Button from "@/Components/Button";
+import Modal from "@/Components/Modal";
+import Form from "./Form";
+
 import excelSvg from "@/svg/excel.svg";
 import enviarSvg from "@/svg/enviar.svg";
 import verSvg from "@/svg/ver.svg";
-import { useState } from "react";
 import eliminarSvg from "@/svg/eliminar.svg";
+
+import { PageProps } from "@/types";
+
+type modalName = "" | "Form";
 
 export default function Programacion(props: PageProps) {
     const { auth } = props;
 
-    const [openModalName, setOpenModalName] = useState("");
-    enum ModalName {
-        Form = "Form",
-    }
+    const [openModalName, setOpenModalName] = useState<modalName>("");
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -75,9 +80,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                     <div className="flex w-20 gap-1">
                                         <button
                                             onClick={() => {
-                                                setOpenModalName(
-                                                    ModalName.Form
-                                                );
+                                                setOpenModalName("Form");
                                                 // setActivePerfil(campania);
                                             }}
                                         >
@@ -105,6 +108,18 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                     </tbody>
                 </table>
             </div>
+
+            <Button onClick={() => setOpenModalName("Form")} className="m-auto">
+                Generar nueva campaña
+            </Button>
+
+            <Modal
+                show={openModalName === "Form"}
+                onClose={() => setOpenModalName("")}
+                maxWidth="2xl"
+            >
+                <Form />
+            </Modal>
         </AuthenticatedLayout>
     );
 }
