@@ -140,7 +140,7 @@
     }
 
     .table th {
-        @apply py-3 px-6;
+        @apply py-3 px-6 min-w-32;
     }
 
     .table thead {

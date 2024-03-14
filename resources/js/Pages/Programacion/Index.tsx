@@ -28,12 +28,13 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                 <table className="table table-blue">
                     <thead>
                         <tr>
-                            <th>Perfil</th>
+                            <th>Campaña</th>
                             <th>Fecha de creación</th>
+                            <th>Fecha de envío</th>
+                            <th>Hora de envío</th>
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
-                            <th>Información del cliente</th>
-                            <th>Programar campaña</th>
+                            <th>Documentos adjuntos</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
