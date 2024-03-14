@@ -18,6 +18,7 @@ import { PageProps } from "@/types";
 import { Segmento } from "@/Interfaces/Segmento";
 import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
 import { getTotalFiltered } from "@/Utils/getTotalFiltered";
+import getAllDocumentsFiltered from "@/Utils/getAllDocumentsFiltered";
 
 enum ModalName {
     Form = "Form",
@@ -71,14 +72,15 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                             <tr key={segmento.id}>
                                 <td>{segmento.nombre}</td>
                                 <td>{formatDate(segmento.created_at)}</td>
-                                <td>
-                                    {/* {segmento.personas.length} */}
-                                    {getTotalFiltered(segmento)}
-                                </td>
+                                <td>{getTotalFiltered(segmento)}</td>
                                 <td>
                                     <a
                                         href={route("segmentos.download", {
                                             segmento: segmento,
+                                            documentos:
+                                                getAllDocumentsFiltered(
+                                                    segmento
+                                                ),
                                         })}
                                         className="btn btn-sm"
                                     >

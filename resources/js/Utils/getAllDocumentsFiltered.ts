@@ -1,7 +1,7 @@
 import { Segmento } from "@/Interfaces/Segmento";
 import { compareValues } from "./compareValues";
 
-export function getTotalFiltered(segmento: Segmento) {
+export default function getAllDocumentsFiltered(segmento: Segmento): string[] {
     const filtersGroups = segmento.filtros;
 
     let personasFiltered = [...segmento.personas];
@@ -16,5 +16,5 @@ export function getTotalFiltered(segmento: Segmento) {
         }
     });
 
-    return personasFiltered.length;
+    return personasFiltered.map((persona) => persona.documento);
 }

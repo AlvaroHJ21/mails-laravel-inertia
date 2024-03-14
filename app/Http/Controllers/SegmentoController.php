@@ -100,9 +100,13 @@ class SegmentoController extends Controller
         }
     }
 
-    public function download(Segmento $segmento)
+    public function download(Segmento $segmento, Request $request)
     {
-        return (new SegmentoPersonaExport($segmento->id, $segmento->filtros))->download($segmento->nombre . '.xlsx');
+        $request->validate([
+            'documentos' => 'array|required',
+        ]);
+
+        return (new SegmentoPersonaExport($segmento->id, $request->documentos))->download($segmento->nombre . '.xlsx');
     }
 
     public function update(Request $request, Segmento $segmento)

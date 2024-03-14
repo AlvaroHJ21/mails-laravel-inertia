@@ -12,12 +12,12 @@ class SegmentoPersonaExport implements FromQuery, WithHeadings
     use Exportable;
 
     private $id;
-    private $filtros;
+    private $documentos;
 
-    public function __construct(int $id, String $filtros)
+    public function __construct(int $id, $documentos)
     {
         $this->id = $id;
-        $this->filtros = json_decode($filtros);
+        $this->documentos = $documentos;
     }
     public function query()
     {
@@ -32,20 +32,8 @@ class SegmentoPersonaExport implements FromQuery, WithHeadings
             'var3'
         );
 
-        foreach ($this->filtros as $grupo) {
-            if (count($grupo->filters) > 0) {
-                /**
-                 * añadir los filtros, donde el grupo tiene el attr(atributo) y
-                 * cada filtro tiene un value por el cual filtrar
-                 * los filtros de un grupo se aplican con un OR
-                 */
-                $query->where(function ($query) use ($grupo) {
-                    foreach ($grupo->filters as $filtro) {
-                        $query->orWhere($grupo->attr, "=", $filtro->value);
-                    }
-                });
-            }
-        }
+        //filtrar por los documentos
+        $query->whereIn('documento', $this->documentos);
 
         return $query->where('segmento_id', $this->id);
     }
