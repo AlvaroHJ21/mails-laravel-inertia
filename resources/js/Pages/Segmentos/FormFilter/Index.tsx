@@ -30,6 +30,8 @@ export default function FormFilter(props: Props) {
         resetFilters,
         isFilterActive,
         toogleFilter,
+        toggleSelectAll,
+        isGroupAllSelected,
     } = useFormFilter({
         departamentos,
         provincias,
@@ -63,6 +65,8 @@ export default function FormFilter(props: Props) {
                         isFilterActive={isFilterActive}
                         resetFilters={resetFilters}
                         toogleFilter={toogleFilter}
+                        toggleSelectAll={toggleSelectAll}
+                        isGroupAllSelected={isGroupAllSelected}
                     />
                 </div>
 

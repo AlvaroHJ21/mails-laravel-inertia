@@ -67,7 +67,7 @@ export default function Preview(props: Props) {
                                 <div className="flex flex-wrap gap-2 mb-2">
                                     {groups.filters.map((filter) => (
                                         <div
-                                            key={filter.text}
+                                            key={filter.id}
                                             className="py-0 text-white capitalize border-gray-400 btn btn-sm"
                                         >
                                             {filter.text}

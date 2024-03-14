@@ -6,10 +6,19 @@ interface Props {
     isFilterActive: (group: FilterGroup, filter: Filter) => boolean;
     resetFilters: () => void;
     toogleFilter: (group: FilterGroup, filter: Filter) => void;
+    toggleSelectAll: (group: FilterGroup) => void;
+    isGroupAllSelected: (group: FilterGroup) => boolean;
 }
 
 export default function FilterGroups(props: Props) {
-    const { filterGroups, resetFilters, isFilterActive, toogleFilter } = props;
+    const {
+        filterGroups,
+        resetFilters,
+        isFilterActive,
+        toogleFilter,
+        toggleSelectAll,
+        isGroupAllSelected,
+    } = props;
     return (
         <div className="">
             <h2 className="text-xl font-bold" hidden>
@@ -18,9 +27,17 @@ export default function FilterGroups(props: Props) {
             <div className="flex flex-wrap gap-4 mb-8">
                 {filterGroups.slice(0, 7).map((group) => (
                     <div key={group.text}>
-                        <h3 className="mb-1 text-xl font-bold text-celeste-claro">
-                            {group.text}
-                        </h3>
+                        <label className="flex items-center gap-2 w-fit">
+                            <h3 className="mb-1 text-xl font-bold select-none text-celeste-claro">
+                                {group.text}
+                            </h3>
+                            <input
+                                type="checkbox"
+                                className="w-3 h-3 cursor-pointer"
+                                checked={isGroupAllSelected(group)}
+                                onChange={() => toggleSelectAll(group)}
+                            />
+                        </label>
 
                         {group.table ? (
                             <span>
@@ -55,12 +72,24 @@ export default function FilterGroups(props: Props) {
             </div>
             <div className="flex items-start gap-4 mb-6">
                 {filterGroups.slice(7, filterGroups.length).map((group) => (
-                    <FilterGroupTable
-                        key={group.attr}
-                        group={group}
-                        isFilterActive={isFilterActive}
-                        toogleFilter={toogleFilter}
-                    />
+                    <div key={group.attr}>
+                        <label className="flex items-center gap-2 w-fit">
+                            <h3 className="mb-1 text-xl font-bold select-none text-celeste-claro">
+                                {group.text}
+                            </h3>
+                            <input
+                                type="checkbox"
+                                className="w-3 h-3 cursor-pointer"
+                                checked={isGroupAllSelected(group)}
+                                onChange={() => toggleSelectAll(group)}
+                            />
+                        </label>
+                        <FilterGroupTable
+                            group={group}
+                            isFilterActive={isFilterActive}
+                            toogleFilter={toogleFilter}
+                        />
+                    </div>
                 ))}
             </div>
             <button

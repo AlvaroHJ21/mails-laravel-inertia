@@ -353,6 +353,42 @@ export default function useFormFilterLaFe(props: Props) {
         }
     }
 
+    /*
+     * Funcion para seleccionar todos o quitar todos los filtros de un grupo
+     */
+    function toggleSelectAll(group: FilterGroup) {
+        const existsGroup = activeFilterGroups.find(
+            (g) => g.attr === group.attr
+        );
+
+        if (existsGroup) {
+            setActiveFilterGroups((prev) =>
+                prev.filter((g) => g.attr !== group.attr)
+            );
+        } else {
+            setActiveFilterGroups((prev) => [
+                ...prev,
+                { ...group, filters: group.filters },
+            ]);
+        }
+    }
+
+    /*
+     * Funcion para saber si un grupo de filtros tiene
+     * todos los filtros seleccionados
+     */
+    function isGroupAllSelected(group: FilterGroup) {
+        const existsGroup = activeFilterGroups.find(
+            (g) => g.attr === group.attr
+        );
+
+        if (existsGroup) {
+            return existsGroup.filters.length === group.filters.length;
+        }
+
+        return false;
+    }
+
     return {
         allFilterGroups,
         activeFilterGroups,
@@ -361,5 +397,7 @@ export default function useFormFilterLaFe(props: Props) {
         resetFilters,
         isFilterActive,
         toogleFilter,
+        toggleSelectAll,
+        isGroupAllSelected,
     };
 }
