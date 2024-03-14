@@ -58,7 +58,7 @@ export default function Modal({
                     leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
                     <Dialog.Panel
-                        className={`relative max-h-[calc(100vh-80px)] bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all sm:w-[90%] sm:mx-auto ${maxWidthClass}`}
+                        className={`relative max-h-screen bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all sm:w-[90%] sm:mx-auto ${maxWidthClass}`}
                     >
                         <button onClick={close} className="absolute top-2 right-4 text-celeste-claro">
                             <i className="fa fa-x"></i>
