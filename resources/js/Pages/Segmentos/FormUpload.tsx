@@ -73,7 +73,7 @@ export default function FormUpload(props: Props) {
                     <p className="m-auto mb-3 text-center max-w-60">
                         Sube tu archivo para poder generar los segmentos.
                     </p>
-                    <div className="relative mb-4">
+                    <div className="relative mb-8">
                         <label className="font-bold btn btn-secondary">
                             Subir archivo
                             <input
@@ -85,9 +85,11 @@ export default function FormUpload(props: Props) {
                                 onChange={handleInputFileChange}
                             />
                         </label>
-                        <span className="absolute left-0 text-xs italic">
-                            {fileName}
-                        </span>
+                        <div className="absolute left-0 right-0 m-auto w-fit">
+                            <label className="text-xs italic text-nowrap">
+                                {fileName}
+                            </label>
+                        </div>
                     </div>
 
                     <label className="text-center field">
