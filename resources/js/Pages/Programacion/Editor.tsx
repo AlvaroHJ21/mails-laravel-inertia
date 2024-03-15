@@ -23,6 +23,11 @@ export default function Editor(props: Props) {
                             "200px",
                             editor.editing.view.document.getRoot()!
                         );
+                        writer.setStyle(
+                            "border",
+                            "1px solid #4F93FE",
+                            editor.editing.view.document.getRoot()!
+                        );
                     });
                 }}
             />

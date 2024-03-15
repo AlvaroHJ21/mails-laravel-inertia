@@ -5,9 +5,12 @@ import Editor from "./Editor";
 import "./Editor.css";
 import { useState } from "react";
 import { htmlTransformInlineCss } from "@/Utils/htmlTransformInlineCss";
+import useData from "@/Hooks/useData";
 
 export default function Form() {
     const [mailContent, setMailContent] = useState("");
+
+    const { values, handleChange } = useData({ subject: "" });
 
     async function copyHtml() {
         const resp = await htmlTransformInlineCss(mailContent);
@@ -124,6 +127,12 @@ export default function Form() {
                                     name="username"
                                     className="input"
                                     placeholder="Escribe el asunto..."
+                                    value={values.subject}
+                                    onChange={(e) =>
+                                        handleChange({
+                                            subject: e.target.value,
+                                        })
+                                    }
                                 />
                             </div>
                         </label>
@@ -142,10 +151,15 @@ export default function Form() {
                 {/* Preview */}
                 <div className="relative flex-1 overflow-y-auto rounded-lg shadow-lg">
                     <div className="h-full p-4 bg-gray-200">
-                        <div
-                            className="w-full h-full p-4 overflow-y-auto bg-white rounded-lg ck-content"
-                            dangerouslySetInnerHTML={{ __html: mailContent }}
-                        ></div>
+                        <div className="h-full p-4 overflow-y-auto bg-white rounded-lg">
+                            <h2 className="mb-2 text-3xl font-bold">{values.subject}</h2>
+                            <div
+                                className="ck-content"
+                                dangerouslySetInnerHTML={{
+                                    __html: mailContent,
+                                }}
+                            ></div>
+                        </div>
                     </div>
 
                     <div className="absolute left-0 right-0 flex gap-2 m-auto w-fit bottom-8">
