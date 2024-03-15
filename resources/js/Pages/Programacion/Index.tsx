@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { router } from "@inertiajs/react";
 
-import { formatDate } from "@/Utils/formatDate";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Alert from "@/Components/Alert";
 import Button from "@/Components/Button";
@@ -8,18 +8,32 @@ import Modal from "@/Components/Modal";
 import Form from "./Form";
 
 import excelSvg from "@/svg/excel.svg";
-import enviarSvg from "@/svg/enviar.svg";
 import verSvg from "@/svg/ver.svg";
 import eliminarSvg from "@/svg/eliminar.svg";
 
+import { formatDate } from "@/Utils/formatDate";
+import { formatTime } from "@/Utils/formatTime";
+
 import { PageProps } from "@/types";
+import { Campania } from "@/Interfaces/Campania";
 
 type modalName = "" | "Form";
 
-export default function Programacion(props: PageProps) {
-    const { auth } = props;
+type Props = PageProps & {
+    campanias: Campania[];
+};
+
+export default function Programacion(props: Props) {
+    const { auth, campanias } = props;
 
     const [openModalName, setOpenModalName] = useState<modalName>("");
+    const [activeCampania, setActiveCampania] = useState<Campania>();
+
+    function handleDelete(campania: Campania) {
+        if (confirm("¿Estás seguro de eliminar la campaña?")) {
+            router.delete(route("campanias.destroy", campania.id));
+        }
+    }
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -44,44 +58,37 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                         </tr>
                     </thead>
                     <tbody>
-                        {[].map((campania: any) => (
+                        {campanias.map((campania) => (
                             <tr key={campania.id}>
                                 <td>{campania.nombre}</td>
                                 <td>{formatDate(campania.created_at)}</td>
-                                <td>{campania.personas.length}</td>
+                                <td>{formatDate(campania.fecha_envio)}</td>
+                                <td>{formatTime(campania.fecha_envio)}</td>
+                                <td>{/* TODO */}1</td>
                                 <td>
-                                    <a
-                                        href={route("perfiles.download", {
-                                            perfil: campania,
-                                        })}
-                                        className="btn btn-sm"
-                                    >
+                                    <button>
                                         <img
                                             src={excelSvg}
                                             alt="icono de excel"
                                             width={24}
                                         />
-                                    </a>
-                                </td>
-                                <td>
-                                    <div>V1: Segmento de valor</div>
-                                    <div>V2: Segmento transaccional</div>
-                                </td>
-                                <td>
-                                    <button>
-                                        <img
-                                            src={enviarSvg}
-                                            alt="icono de ver"
-                                            width={24}
-                                        />
                                     </button>
+                                </td>
+                                <td>
+                                    {/* TODO */}
+                                    <span className="block underline text-celeste-claro">
+                                        Banner
+                                    </span>
+                                    <span className="block underline text-celeste-claro">
+                                        Imagen
+                                    </span>
                                 </td>
                                 <td>
                                     <div className="flex w-20 gap-1">
                                         <button
                                             onClick={() => {
                                                 setOpenModalName("Form");
-                                                // setActivePerfil(campania);
+                                                setActiveCampania(campania);
                                             }}
                                         >
                                             <img
@@ -91,9 +98,9 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                             />
                                         </button>
                                         <button
-                                        // onClick={() =>
-                                        //     handleDelete(campania)
-                                        // }
+                                            onClick={() =>
+                                                handleDelete(campania)
+                                            }
                                         >
                                             <img
                                                 src={eliminarSvg}
@@ -109,7 +116,13 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                 </table>
             </div>
 
-            <Button onClick={() => setOpenModalName("Form")} className="m-auto">
+            <Button
+                onClick={() => {
+                    setOpenModalName("Form");
+                    setActiveCampania(undefined);
+                }}
+                className="m-auto"
+            >
                 Generar nueva campaña
             </Button>
 
@@ -118,7 +131,10 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                 onClose={() => setOpenModalName("")}
                 maxWidth="2xl"
             >
-                <Form />
+                <Form
+                    campania={activeCampania}
+                    onClose={() => setOpenModalName("")}
+                />
             </Modal>
         </AuthenticatedLayout>
     );

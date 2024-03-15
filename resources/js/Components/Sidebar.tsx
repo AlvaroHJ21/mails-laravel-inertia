@@ -24,7 +24,7 @@ export default function Sidebar(props: Props) {
         {
             name: "Programación de campañas",
             description: "Programa una comunicación a tus clientes",
-            url: route("programacion.index"),
+            url: route("campanias.index"),
             active: route().current("programacion.*"),
         },
         {

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaniaController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SegmentoController;
@@ -51,9 +52,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/segmentos/{segmento}/update', [SegmentoController::class, 'update'])->name('segmentos.update');
     Route::delete('/segmentos/{segmento}/destroy', [SegmentoController::class, 'destroy'])->name('segmentos.destroy');
 
-    Route::get('/programacion', function () {
-        return Inertia::render('Programacion/Index');
-    })->name('programacion.index');
+    Route::get('/programacion', [CampaniaController::class, "index"])->name('campanias.index');
+    Route::post('/campanias', [CampaniaController::class, "store"])->name('campanias.store');
+    Route::put('/campanias/{campania}', [CampaniaController::class, "update"])->name('campanias.update');
+    Route::delete('/campanias/{campania}', [CampaniaController::class, "destroy"])->name('campanias.destroy');
+
+
     Route::get('/resultados', function () {
         return Inertia::render('Resultados/Index');
     })->name('resultados.index');
