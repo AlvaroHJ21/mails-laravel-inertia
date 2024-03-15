@@ -24,6 +24,8 @@
         "vite": "^5.1.5"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-react": "^6.2.0",
+        "ckeditor5-custom-build": "file:ckeditor5",
         "clsx": "^2.1.0",
         "react-hot-toast": "^2.4.1",
         "tailwind-merge": "^2.2.1"
