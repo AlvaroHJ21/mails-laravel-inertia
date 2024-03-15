@@ -4,9 +4,25 @@ import Editor from "./Editor";
 
 import "./Editor.css";
 import { useState } from "react";
+import { htmlTransformInlineCss } from "@/Utils/htmlTransformInlineCss";
 
 export default function Form() {
     const [mailContent, setMailContent] = useState("");
+
+    async function copyHtml() {
+        const resp = await htmlTransformInlineCss(mailContent);
+
+        if (resp.ok) {
+            navigator.clipboard.writeText(resp.html);
+            window.toast.success("HTML generado y copiado al portapapeles", {
+                position: "bottom-center",
+            });
+        } else {
+            window.toast.error("Error al generar el HTML", {
+                position: "bottom-center",
+            });
+        }
+    }
 
     return (
         <div className="h-screen p-12">
@@ -127,26 +143,15 @@ export default function Form() {
                 <div className="relative flex-1 overflow-y-auto rounded-lg shadow-lg">
                     <div className="h-full p-4 bg-gray-200">
                         <div
-                            className="w-full h-full p-4 bg-white rounded-lg ck-content"
+                            className="w-full h-full p-4 overflow-y-auto bg-white rounded-lg ck-content"
                             dangerouslySetInnerHTML={{ __html: mailContent }}
                         ></div>
                     </div>
 
                     <div className="absolute left-0 right-0 flex gap-2 m-auto w-fit bottom-8">
                         <Button>Exportar a HTML</Button>
-                        <Button
-                            onClick={() => {
-                                navigator.clipboard.writeText(mailContent);
-                                window.toast.success(
-                                    "HTML copiado al portapapeles",
-                                    {
-                                        position: "bottom-center",
-                                    }
-                                );
-                            }}
-                            className="bottom-8"
-                        >
-                            Copiar HTML
+                        <Button onClick={copyHtml} className="bottom-8">
+                            Genererar / Copiar HTML
                         </Button>
                     </div>
                 </div>

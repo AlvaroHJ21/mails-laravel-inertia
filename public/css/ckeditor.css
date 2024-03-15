@@ -30,10 +30,10 @@ body {
 }
 
 .ck-content {
-    /* max-width: 700px; */
-    /* margin: 0 auto; */
-    /* width: 90%; */
-    /* padding: 16px; */
+    max-width: 700px;
+    margin: 0 auto;
+    width: 90%;
+    padding: 16px;
 }
 
 .ck-content h2 {

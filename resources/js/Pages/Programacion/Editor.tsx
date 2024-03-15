@@ -9,12 +9,21 @@ interface Props {
 export default function Editor(props: Props) {
     const { value, onChange } = props;
     return (
-        <div>
+        <div className="overflow-x-auto">
             <CKEditor
                 editor={CustomEditor}
                 data={value}
                 onChange={(_, editor) => {
                     onChange(editor.getData());
+                }}
+                onReady={(editor) => {
+                    editor.editing.view.change((writer) => {
+                        writer.setStyle(
+                            "min-height",
+                            "200px",
+                            editor.editing.view.document.getRoot()!
+                        );
+                    });
                 }}
             />
         </div>
