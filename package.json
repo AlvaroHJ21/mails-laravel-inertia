@@ -24,6 +24,7 @@
         "vite": "^5.1.5"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-multi-root": "^41.2.0",
         "@ckeditor/ckeditor5-react": "^6.2.0",
         "ckeditor5-custom-build": "file:ckeditor5",
         "clsx": "^2.1.0",
