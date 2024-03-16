@@ -29,11 +29,8 @@ body {
     font-size: 16px;
 }
 
-.ck-content {
-    /* max-width: 700px; */
-    /* margin: 0 auto; */
-    /* width: 90%; */
-    /* padding: 16px; */
+.ck-content a img {
+    display: inline-block;
 }
 
 .ck-content h2 {

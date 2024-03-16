@@ -288,7 +288,7 @@ export default function Form(props: Props) {
                 {/* Preview */}
                 <div className="relative flex-1 overflow-y-auto rounded-lg shadow-lg">
                     <div className="h-full p-4 bg-gray-200">
-                        <div className="h-full p-4 overflow-y-auto bg-white rounded-lg">
+                        <div className="h-full p-4 pb-12 overflow-y-auto bg-white rounded-lg">
                             <h2 className="mb-2 text-3xl font-bold">
                                 {values.subject}
                             </h2>

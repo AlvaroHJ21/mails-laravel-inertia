@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Alert from "@/Components/Alert";
@@ -37,6 +37,8 @@ export default function Programacion(props: Props) {
 
     return (
         <AuthenticatedLayout user={auth.user}>
+            <Head title="Programación de campañas" />
+
             <h1 className="title">Programación de Cámpañas</h1>
 
             <Alert
