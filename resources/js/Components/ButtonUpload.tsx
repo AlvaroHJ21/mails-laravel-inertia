@@ -2,10 +2,12 @@ import React, { useState } from "react";
 
 interface Props {
     text?: string;
+    file: File | undefined;
+    setFile: (file: File) => void;
 }
 
 export default function ButtonUpload(props: Props) {
-    const { text } = props;
+    const { text, setFile } = props;
 
     const [fileName, setFileName] = useState("");
 
@@ -15,6 +17,7 @@ export default function ButtonUpload(props: Props) {
 
         if (file) {
             setFileName(file.name);
+            setFile(file);
         }
     }
 

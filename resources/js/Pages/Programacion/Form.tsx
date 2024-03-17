@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { router } from "@inertiajs/react";
 
 import useData from "@/Hooks/useData";
@@ -27,6 +27,8 @@ export default function Form(props: Props) {
         subject: "",
         content: "",
     });
+
+    const [personsFile, setPersonsFile] = useState<File>();
 
     /*
      * Cargar datos de la campaña
@@ -71,9 +73,10 @@ export default function Form(props: Props) {
     async function handleSave() {
         if (campania) {
             // Update
-            router.put(
+            router.post(
                 route("campanias.update", { campania: campania.id }),
                 {
+                    _method: "put",
                     nombre: values.name,
                     correo_envio: values.email_send,
                     fecha_envio: values.send_date,
@@ -81,6 +84,7 @@ export default function Form(props: Props) {
                     link: values.link,
                     asunto: values.subject,
                     contenido: values.content,
+                    personas: personsFile,
                 },
                 {
                     onError: (errors) => {
@@ -105,6 +109,7 @@ export default function Form(props: Props) {
                     link: values.link,
                     asunto: values.subject,
                     contenido: values.content,
+                    personas: personsFile,
                 },
                 {
                     onError: (errors) => {
@@ -203,7 +208,11 @@ export default function Form(props: Props) {
                             <span className="text-lg label">
                                 Listado de datos
                             </span>
-                            <ButtonUpload text="Cargar archivo..." />
+                            <ButtonUpload
+                                text="Cargar archivo..."
+                                file={personsFile}
+                                setFile={setPersonsFile}
+                            />
                         </label>
 
                         <label className="field">

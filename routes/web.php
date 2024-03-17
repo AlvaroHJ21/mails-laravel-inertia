@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/programacion', [CampaniaController::class, "index"])->name('campanias.index');
     Route::post('/campanias', [CampaniaController::class, "store"])->name('campanias.store');
+    Route::get('/campanias/{campania}/download', [CampaniaController::class, 'download'])->name('campanias.download');
     Route::put('/campanias/{campania}', [CampaniaController::class, "update"])->name('campanias.update');
     Route::delete('/campanias/{campania}', [CampaniaController::class, "destroy"])->name('campanias.destroy');
 

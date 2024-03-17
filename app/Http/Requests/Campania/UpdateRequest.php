@@ -4,7 +4,7 @@ namespace App\Http\Requests\Campania;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             "link" => ["required", "url"],
             "asunto" => ["required", "string"],
             "contenido" => ["required", "string"],
-            "personas" => ["required", "file", "mimes:xlsx,xls"],
+            "personas" => ["nullable", "file", "mimes:xlsx,xls"],
         ];
     }
 }

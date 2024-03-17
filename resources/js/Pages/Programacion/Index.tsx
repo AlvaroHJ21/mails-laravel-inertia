@@ -66,15 +66,20 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                 <td>{formatDate(campania.created_at)}</td>
                                 <td>{formatDate(campania.fecha_envio)}</td>
                                 <td>{formatTime(campania.fecha_envio)}</td>
-                                <td>{/* TODO */}1</td>
+                                <td>{campania.personas.length}</td>
                                 <td>
-                                    <button>
+                                    <a
+                                        href={route("campanias.download", {
+                                            campania,
+                                        })}
+                                        className="btn btn-sm"
+                                    >
                                         <img
                                             src={excelSvg}
                                             alt="icono de excel"
                                             width={24}
                                         />
-                                    </button>
+                                    </a>
                                 </td>
                                 <td>
                                     {/* TODO */}

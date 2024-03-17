@@ -49,4 +49,37 @@ class GenerateArrayFromExcel
 
         return [$dniArray, $personasExcel];
     }
+
+    static function generateOnlyMails($file)
+    {
+        $array = (new ExcelImport)->toArray($file);
+
+        //2. Extraer array de DNI's
+        //2.1 buscar en la primera fila el titulo de la columna dni
+        $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
+        $correoColumnIdx = array_search('correo', array_map('strtolower', $array[0][0]));
+
+        //2.2 si no se encuentran los titulos de las columnas se retorna un error
+        if (
+            $documentoColumnIdx === false ||
+            $correoColumnIdx === false
+        ) {
+            throw new \Exception("No se encontraron las columnas necesarias en el archivo excel");
+        }
+
+        //2.4 extraer los datos del excel
+        $personasExcel = [];
+        foreach ($array[0] as $key => $row) {
+            if ($key == 0) continue;
+
+            //si tiene un correo se agrega al array
+            if (!empty($row[$correoColumnIdx]))
+                $personasExcel[] = [
+                    "documento" => $row[$documentoColumnIdx],
+                    "correo" => $row[$correoColumnIdx]
+                ];
+        }
+
+        return $personasExcel;
+    }
 }

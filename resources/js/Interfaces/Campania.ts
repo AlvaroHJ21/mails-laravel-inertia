@@ -7,6 +7,14 @@ export interface Campania {
     link: string;
     asunto: string;
     contenido: string;
+    personas: CampaniaPersona[];
     created_at: string;
     updated_at: string;
+}
+
+export interface CampaniaPersona {
+    id: number;
+    documento: string;
+    correo: string;
+    campania_id: number;
 }
