@@ -18,6 +18,8 @@ interface Props {
 export default function Form(props: Props) {
     const { campania, onClose } = props;
 
+    const [isSaving, setIsSaving] = useState(false);
+
     const { values, handleChange } = useData({
         name: "",
         email_send: "",
@@ -87,6 +89,9 @@ export default function Form(props: Props) {
                     personas: personsFile,
                 },
                 {
+                    onStart: () => {
+                        setIsSaving(true);
+                    },
                     onError: (errors) => {
                         console.log(errors);
                         window.toast.error("Error al actualizar la campaña");
@@ -94,6 +99,9 @@ export default function Form(props: Props) {
                     onSuccess: () => {
                         window.toast.success("Campaña actualizada");
                         onClose && onClose();
+                    },
+                    onFinish: () => {
+                        setIsSaving(false);
                     },
                 }
             );
@@ -112,6 +120,9 @@ export default function Form(props: Props) {
                     personas: personsFile,
                 },
                 {
+                    onStart: () => {
+                        setIsSaving(true);
+                    },
                     onError: (errors) => {
                         console.log(errors);
                         window.toast.error("Error al guardar la campaña");
@@ -119,6 +130,9 @@ export default function Form(props: Props) {
                     onSuccess: () => {
                         window.toast.success("Campaña creada");
                         onClose && onClose();
+                    },
+                    onFinish: () => {
+                        setIsSaving(false);
                     },
                 }
             );
@@ -291,7 +305,9 @@ export default function Form(props: Props) {
                         </div>
                     </div>
 
-                    <Button onClick={handleSave}>Guardar campaña</Button>
+                    <Button onClick={handleSave} isLoading={isSaving}>
+                        Guardar campaña
+                    </Button>
                 </div>
 
                 {/* Preview */}
