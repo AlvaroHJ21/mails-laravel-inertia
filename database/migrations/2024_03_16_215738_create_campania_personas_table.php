@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("documento");
             $table->string("correo");
-            $table->foreignId("campania_id")->constrained("campanias");
+            $table->foreignId("campania_id")->constrained("campanias")->onDelete("cascade");
             $table->timestamps();
         });
     }
