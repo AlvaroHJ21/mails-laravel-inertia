@@ -19,8 +19,8 @@ export default function Editor(props: Props) {
                 onReady={(editor) => {
                     editor.editing.view.change((writer) => {
                         writer.setStyle(
-                            "min-height",
-                            "200px",
+                            "height",
+                            "210px",
                             editor.editing.view.document.getRoot()!
                         );
                         writer.setStyle(

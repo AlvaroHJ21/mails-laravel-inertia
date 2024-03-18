@@ -5,10 +5,11 @@ import useData from "@/Hooks/useData";
 import Button from "@/Components/Button";
 import ButtonUpload from "@/Components/ButtonUpload";
 import { htmlTransformInlineCss } from "@/Utils/htmlTransformInlineCss";
-import Editor from "./Editor";
 import { Campania } from "@/Interfaces/Campania";
 
 import "./Editor.css";
+import FormPartialEmail from "./FormPartialEmail";
+import FormSendMedium from "./FormSendMedium";
 
 interface Props {
     campania?: Campania;
@@ -140,14 +141,13 @@ export default function Form(props: Props) {
     }
 
     return (
-        <div className="h-screen p-12">
+        <div className="h-screen p-8">
             <div className="flex h-full gap-8">
-                {/* Form */}
-                <div className="flex-1 overflow-y-auto">
-                    <div className="grid grid-cols-2 mb-4 gap-y-4 gap-x-8">
-                        {/* Nombre de la campaña */}
+                <div className="flex flex-col flex-1 overflow-y-auto">
+
+                    <div className="grid grid-cols-2 mb-2 gap-y-2 gap-x-4">
                         <label className="field">
-                            <span className="text-lg label">
+                            <span className="label">
                                 Nombre de la campaña
                             </span>
                             <div className="input-group">
@@ -168,36 +168,9 @@ export default function Form(props: Props) {
                                 />
                             </div>
                         </label>
+
                         <label className="field">
-                            <span className="text-lg label">
-                                Correo de envío
-                            </span>
-                            <div className="input-group">
-                                <span className="input-group-icon">
-                                    <i className="fa fa-envelope"></i>
-                                </span>
-                                <select
-                                    className="input"
-                                    name="email_send"
-                                    value={values.email_send}
-                                    onChange={(e) =>
-                                        handleChange({
-                                            email_send: e.target.value,
-                                        })
-                                    }
-                                >
-                                    <option value="">Seleccionar correo</option>
-                                    <option value="correo1@email.com">
-                                        correo1@email.com
-                                    </option>
-                                    <option value="correo1@email.com">
-                                        correo2@email.com
-                                    </option>
-                                </select>
-                            </div>
-                        </label>
-                        <label className="field">
-                            <span className="text-lg label">
+                            <span className="label">
                                 Fecha y hora del envío
                             </span>
                             <div className="input-group">
@@ -218,8 +191,9 @@ export default function Form(props: Props) {
                                 />
                             </div>
                         </label>
+
                         <label className="field">
-                            <span className="text-lg label">
+                            <span className="label">
                                 Listado de datos
                             </span>
                             <ButtonUpload
@@ -228,81 +202,26 @@ export default function Form(props: Props) {
                                 setFile={setPersonsFile}
                             />
                         </label>
+                    </div>
 
-                        <label className="field">
-                            <span className="text-lg label">
-                                Medio de envío
-                            </span>
-                            <div className="input-group">
-                                <span className="input-group-icon">
-                                    <i className="fa fa-paper-plane"></i>
-                                </span>
-                                <select
-                                    className="input"
-                                    name="send_medium"
-                                    value={values.send_medium}
-                                    onChange={(e) =>
-                                        handleChange({
-                                            send_medium: +e.target.value,
-                                        })
-                                    }
-                                >
-                                    <option value="0">
-                                        Correo electrónico
-                                    </option>
-                                    <option value="1">Whatsapp</option>
-                                </select>
-                            </div>
-                        </label>
-                        <label className="field">
-                            <span className="text-lg label">Link</span>
-                            <div className="input-group">
-                                <span className="input-group-icon">
-                                    <i className="fa fa-link"></i>
-                                </span>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="https://..."
-                                    name="link"
-                                    value={values.link}
-                                    onChange={(e) =>
-                                        handleChange({
-                                            link: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
-                        </label>
-                        <label className="field">
-                            <span className="text-lg label">Subject</span>
-                            <div className="input-group">
-                                <span className="input-group-icon">
-                                    <i className="fa fa-paperclip"></i>
-                                </span>
-                                <input
-                                    type="text"
-                                    className="input"
-                                    placeholder="Escribe el asunto..."
-                                    name="subject"
-                                    value={values.subject}
-                                    onChange={(e) =>
-                                        handleChange({
-                                            subject: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
-                        </label>
+                    <FormSendMedium
+                        value={values.send_medium}
+                        setValue={(value) =>
+                            handleChange({ send_medium: value })
+                        }
+                    />
 
-                        <div className="grid col-span-2 place-content-center">
-                            <Editor
-                                value={values.content}
-                                onChange={(content) =>
-                                    handleChange({ content })
-                                }
+                    <div className="flex-1">
+                        {values.send_medium === 0 ? (
+                            <FormPartialEmail
+                                values={values}
+                                handleChange={handleChange}
                             />
-                        </div>
+                        ) : values.send_medium === 1 ? (
+                            <div>Whatssapp</div>
+                        ) : (
+                            <div>SMS</div>
+                        )}
                     </div>
 
                     <Button onClick={handleSave} isLoading={isSaving}>
@@ -310,7 +229,6 @@ export default function Form(props: Props) {
                     </Button>
                 </div>
 
-                {/* Preview */}
                 <div className="relative flex-1 overflow-y-auto rounded-lg shadow-lg">
                     <div className="h-full p-4 bg-gray-200">
                         <div className="h-full p-4 pb-12 overflow-y-auto bg-white rounded-lg">
