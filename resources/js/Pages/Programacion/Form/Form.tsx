@@ -57,7 +57,7 @@ export default function Form(props: Props) {
     /*
      * Listado de archivos adjuntos
      */
-    const [attachmentFiles, setAttachmentFiles] = useState<FileList>();
+    const [attachedFiles, setAttachedFiles] = useState<FileList>();
 
     /*
      * Hook para manejar los datos del formulario
@@ -177,7 +177,7 @@ export default function Form(props: Props) {
                     whatsapp_destino: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
                     datos: personsFile,
-                    archivos_adjuntos: Array.from(attachmentFiles ?? []),
+                    archivos_adjuntos: Array.from(attachedFiles ?? []),
                 },
                 {
                     onStart: () => {
@@ -210,7 +210,7 @@ export default function Form(props: Props) {
                     whatsapp_destino: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
                     datos: personsFile,
-                    archivos_adjuntos: Array.from(attachmentFiles ?? []),
+                    archivos_adjuntos: Array.from(attachedFiles ?? []),
                 },
                 {
                     onStart: () => {
@@ -299,8 +299,8 @@ export default function Form(props: Props) {
                         <div className="flex-1">
                             {values.send_medium === 0 ? (
                                 <FormPartialEmail
-                                    attachmentFiles={attachmentFiles}
-                                    setAttachmentFiles={setAttachmentFiles}
+                                    attachedFiles={attachedFiles}
+                                    setAttachedFiles={setAttachedFiles}
                                 />
                             ) : values.send_medium === 1 ? (
                                 <FormPartialWhatsApp />

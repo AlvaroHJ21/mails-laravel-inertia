@@ -5,12 +5,12 @@ import Editor from "@/Components/Editor";
 import ButtonUpload from "@/Components/ButtonUpload";
 
 interface Props {
-    attachmentFiles: FileList | undefined;
-    setAttachmentFiles: (files: FileList) => void;
+    attachedFiles: FileList | undefined;
+    setAttachedFiles: (files: FileList) => void;
 }
 
 export default function FormPartialEmail(props: Props) {
-    const { attachmentFiles, setAttachmentFiles } = props;
+    const { attachedFiles, setAttachedFiles } = props;
 
     const { values, handleChange } = useContext(FormContext);
 
@@ -77,8 +77,8 @@ export default function FormPartialEmail(props: Props) {
                 <span className="label">Archivo Adjunto</span>
                 <ButtonUpload
                     text="Cargar archivo adjunto"
-                    files={attachmentFiles}
-                    setFiles={setAttachmentFiles}
+                    files={attachedFiles}
+                    setFiles={setAttachedFiles}
                     multiple
                 />
             </label>
