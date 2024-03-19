@@ -10,7 +10,7 @@ import FormPartialEmail from "./FormPartialEmail";
 import FormPartialWhatsApp from "./FormPartialWhatsApp";
 import { Campania } from "@/Interfaces/Campania";
 
-import "./ckeditor.css";
+import "@/../css/ckeditor.css";
 
 interface FormDataContext {
     name: string;

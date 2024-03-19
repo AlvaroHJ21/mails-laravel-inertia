@@ -1,5 +1,4 @@
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-// import type { EditorConfig } from '@ckeditor/ckeditor5-core';
 import CustomEditor from "ckeditor5-custom-build/build/ckeditor";
 
 interface Props {
