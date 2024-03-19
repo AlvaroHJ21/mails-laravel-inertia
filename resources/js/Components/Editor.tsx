@@ -50,12 +50,22 @@ export default function Editor(props: Props) {
         language: "es",
     };
 
+    const config = isSmall ? smallConfig : fullConfig;
+
     return (
         <div className="overflow-x-auto">
             <CKEditor
                 editor={CustomEditor}
                 data={value}
-                config={isSmall ? smallConfig : fullConfig}
+                config={{
+                    ...config,
+                    simpleUpload: {
+                        uploadUrl: route("upload.image"),
+                        headers: {
+                            Accept: "application/json",
+                        },
+                    },
+                }}
                 onChange={(_, editor) => {
                     onChange(editor.getData());
                 }}

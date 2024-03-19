@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HTMLController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post("/html/inline", [HTMLController::class, "inline"])->name("inline");
+Route::post("/upload/image", [UploadController::class, "image"])->name("upload.image");
