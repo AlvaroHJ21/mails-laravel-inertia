@@ -5,7 +5,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Alert from "@/Components/Alert";
 import Button from "@/Components/Button";
 import Modal from "@/Components/Modal";
-import Form from "./Form";
+import Form from "./Form/Form";
 
 import excelSvg from "@/svg/excel.svg";
 import verSvg from "@/svg/ver.svg";

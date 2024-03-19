@@ -1,14 +1,11 @@
+import { useContext, useState } from "react";
+
+import { FormContext } from "./Form";
+import Editor from "@/Components/Editor";
 import ButtonUpload from "@/Components/ButtonUpload";
-import Editor from "./Editor";
-import { useState } from "react";
 
-interface Props {
-    values: any;
-    handleChange: any;
-}
-
-export default function FormPartialEmail(props: Props) {
-    const { values, handleChange } = props;
+export default function FormPartialEmail() {
+    const { values, handleChange } = useContext(FormContext);
 
     const [attachmentFile, setAttachmentFile] = useState<File>();
 

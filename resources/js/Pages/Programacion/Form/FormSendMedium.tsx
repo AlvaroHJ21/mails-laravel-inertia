@@ -1,18 +1,13 @@
-import React from "react";
+import { useContext } from "react";
+import { FormContext } from "./Form";
 
-interface Props {
-    value: number;
-    setValue: (value: number) => void;
-}
-
-export default function FormSendMedium(props: Props) {
-    const { value, setValue } = props;
-
+export default function FormSendMedium() {
+    const { values, handleChange } = useContext(FormContext);
+    const value = values.send_medium;
+    const setValue = (value: number) => handleChange({ send_medium: value });
     return (
         <>
-            <label className="font-bold text-azul-marino">
-                Medio de envío
-            </label>
+            <label className="font-bold text-azul-marino">Medio de envío</label>
             <div className="flex items-center gap-4 px-1 mb-4">
                 <label>
                     <input
