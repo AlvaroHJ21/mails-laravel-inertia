@@ -38,10 +38,22 @@ export default function SegmentosPage(props: Props) {
     const [openModalName, setOpenModalName] = useState("");
     const [selectedSegmento, setSelectedSegmento] = useState<Segmento>();
 
+    /*
+     * Función para eliminar un segmento
+     * @param segmento
+     */
     function handleDelete(segmento: Segmento) {
         if (confirm("¿Estás seguro de eliminar este segmento?")) {
             router.delete(route("segmentos.destroy", { segmento }));
         }
+    }
+
+    /*
+     * Función para crear una campaña a partir de un segmento
+     * @param segmento
+     */
+    function handleCreateCampania(segmento: Segmento) {
+        router.post(route("campanias.store_by_segmento", { segmento }), {}, {});
     }
 
     return (
@@ -106,10 +118,14 @@ interna de los clientes , para ello es necesario subir un listado de Documentos 
                                     </div>
                                 </td>
                                 <td>
-                                    <button>
+                                    <button
+                                        onClick={() =>
+                                            handleCreateCampania(segmento)
+                                        }
+                                    >
                                         <img
                                             src={enviarSvg}
-                                            alt="icono de ver"
+                                            alt="icono de play"
                                             width={24}
                                         />
                                     </button>

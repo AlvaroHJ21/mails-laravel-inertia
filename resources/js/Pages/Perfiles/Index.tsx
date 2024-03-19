@@ -32,12 +32,31 @@ export default function Perfiles(props: PerfilesProps) {
 
     const [openModalName, setOpenModalName] = useState("");
     const [activePerfil, setActivePerfil] = useState<Perfil>();
-    const [name, setName] = useState("Hola");
 
+    /*
+     * Función para eliminar un perfil
+     * @param perfil
+     */
     function handleDelete(perfil: Perfil) {
         if (confirm("¿Estás seguro de eliminar este perfil?")) {
             router.delete(route("perfiles.destroy", { perfil }));
         }
+    }
+
+    /*
+     * Función para crear una campaña a partir de un perfil
+     * @param perfil
+     */
+    function handleCreateCampania(perfil: Perfil) {
+        router.post(
+            route("campanias.store_by_perfil", { perfil }),
+            {},
+            {
+                onSuccess: (data) => {
+                    console.log(data);
+                },
+            }
+        );
     }
 
     return (
@@ -89,10 +108,14 @@ export default function Perfiles(props: PerfilesProps) {
                                     <div>V2: Segmento transaccional</div>
                                 </td>
                                 <td>
-                                    <button>
+                                    <button
+                                        onClick={() =>
+                                            handleCreateCampania(perfil)
+                                        }
+                                    >
                                         <img
                                             src={enviarSvg}
-                                            alt="icono de ver"
+                                            alt="icono de play"
                                             width={24}
                                         />
                                     </button>

@@ -7,6 +7,8 @@ use App\Helpers\GenerateArrayFromExcel;
 use App\Http\Requests\Campania\StoreRequest;
 use App\Http\Requests\Campania\UpdateRequest;
 use App\Models\Campania;
+use App\Models\Perfil;
+use App\Models\Segmento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +59,80 @@ class CampaniaController extends Controller
             return to_route('campanias.index');
         } catch (\Throwable $th) {
             //throw $th;
+            DB::rollBack();
+            return redirect()->back()->withErrors(
+                $th->getMessage()
+            );
+        }
+    }
+
+    public function storeByPerfil(Perfil $perfil)
+    {
+        try {
+            DB::beginTransaction();
+
+            $personas = $perfil->personas;
+            $personasWithCorreos = $personas
+                ->filter(function ($persona) {
+                    return $persona->correo;
+                })
+                ->map(function ($persona) {
+                    return [
+                        "documento" => $persona->documento,
+                        "correo" => $persona->correo
+                        //TODO: agregar mas campos
+                    ];
+                });
+
+            $campania = new Campania();
+            $campania->nombre = "Campaña por perfil: " . $perfil->nombre;
+            $campania->user_id = Auth::user()->id;
+            $campania->medio_envio = 0;
+            $campania->fecha_envio = now()->addDays(1);
+            $campania->save();
+
+            $campania->personas()->createMany($personasWithCorreos->toArray());
+
+            DB::commit();
+            return redirect()->route('campanias.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withErrors(
+                $th->getMessage()
+            );
+        }
+    }
+
+    public function storeBySegmento(Segmento $segmento)
+    {
+        try {
+            DB::beginTransaction();
+
+            $personas = $segmento->personas;
+            $personasWithCorreos = $personas
+                ->filter(function ($persona) {
+                    return $persona->correo;
+                })
+                ->map(function ($persona) {
+                    return [
+                        "documento" => $persona->documento,
+                        "correo" => $persona->correo
+                        //TODO: agregar mas campos
+                    ];
+                });
+
+            $campania = new Campania();
+            $campania->nombre = "Campaña por segmento: " . $segmento->nombre;
+            $campania->user_id = Auth::user()->id;
+            $campania->medio_envio = 0;
+            $campania->fecha_envio = now()->addDays(1);
+            $campania->save();
+
+            $campania->personas()->createMany($personasWithCorreos->toArray());
+
+            DB::commit();
+            return redirect()->route('campanias.index');
+        } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withErrors(
                 $th->getMessage()
