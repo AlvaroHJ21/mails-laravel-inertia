@@ -82,13 +82,24 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                     </a>
                                 </td>
                                 <td>
-                                    {/* TODO */}
-                                    <span className="block underline text-celeste-claro">
-                                        Banner
-                                    </span>
-                                    <span className="block underline text-celeste-claro">
-                                        Imagen
-                                    </span>
+                                    {campania.archivos_adjuntos?.map(
+                                        (path, index) => (
+                                            <a
+                                                href={route(
+                                                    "campanias.download_attached",
+                                                    {
+                                                        adjunto: path,
+                                                        campania_id:
+                                                            campania.id,
+                                                    }
+                                                )}
+                                                key={index}
+                                                className="text-celeste-claro hover:underline"
+                                            >
+                                                Archivo {index + 1}
+                                            </a>
+                                        )
+                                    )}
                                 </td>
                                 <td>
                                     <div className="flex w-20 gap-1">

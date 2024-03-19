@@ -12,7 +12,7 @@ import { Campania } from "@/Interfaces/Campania";
 
 import "./ckeditor.css";
 
-interface FormDataI {
+interface FormDataContext {
     name: string;
     send_date: string;
     send_medium: number;
@@ -24,8 +24,8 @@ interface FormDataI {
 }
 
 export const FormContext = createContext<{
-    values: FormDataI;
-    handleChange: (data: Partial<FormDataI>) => void;
+    values: FormDataContext;
+    handleChange: (data: Partial<FormDataContext>) => void;
 }>({
     values: {
         name: "",
@@ -49,9 +49,20 @@ export default function Form(props: Props) {
     const { campania, onClose } = props;
     const [isSaving, setIsSaving] = useState(false);
 
+    /*
+     * Archivo de datos
+     */
     const [personsFile, setPersonsFile] = useState<File>();
 
-    const { values, handleChange } = useData<FormDataI>({
+    /*
+     * Listado de archivos adjuntos
+     */
+    const [attachmentFiles, setAttachmentFiles] = useState<FileList>();
+
+    /*
+     * Hook para manejar los datos del formulario
+     */
+    const { values, handleChange } = useData<FormDataContext>({
         name: "",
         email_send: "",
         send_date: "",
@@ -166,6 +177,7 @@ export default function Form(props: Props) {
                     whatsapp_destino: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
                     datos: personsFile,
+                    archivos_adjuntos: Array.from(attachmentFiles ?? []),
                 },
                 {
                     onStart: () => {
@@ -198,6 +210,7 @@ export default function Form(props: Props) {
                     whatsapp_destino: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
                     datos: personsFile,
+                    archivos_adjuntos: Array.from(attachmentFiles ?? []),
                 },
                 {
                     onStart: () => {
@@ -285,7 +298,10 @@ export default function Form(props: Props) {
 
                         <div className="flex-1">
                             {values.send_medium === 0 ? (
-                                <FormPartialEmail />
+                                <FormPartialEmail
+                                    attachmentFiles={attachmentFiles}
+                                    setAttachmentFiles={setAttachmentFiles}
+                                />
                             ) : values.send_medium === 1 ? (
                                 <FormPartialWhatsApp />
                             ) : (

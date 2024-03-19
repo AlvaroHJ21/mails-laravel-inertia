@@ -4,10 +4,15 @@ import { FormContext } from "./Form";
 import Editor from "@/Components/Editor";
 import ButtonUpload from "@/Components/ButtonUpload";
 
-export default function FormPartialEmail() {
-    const { values, handleChange } = useContext(FormContext);
+interface Props {
+    attachmentFiles: FileList | undefined;
+    setAttachmentFiles: (files: FileList) => void;
+}
 
-    const [attachmentFile, setAttachmentFile] = useState<File>();
+export default function FormPartialEmail(props: Props) {
+    const { attachmentFiles, setAttachmentFiles } = props;
+
+    const { values, handleChange } = useContext(FormContext);
 
     return (
         <div className="grid grid-cols-2 mb-2 gap-y-4 gap-x-4">
@@ -62,7 +67,9 @@ export default function FormPartialEmail() {
             <div className="col-span-2">
                 <Editor
                     value={values.email_content}
-                    onChange={(content) => handleChange({ email_content: content })}
+                    onChange={(content) =>
+                        handleChange({ email_content: content })
+                    }
                 />
             </div>
 
@@ -70,8 +77,9 @@ export default function FormPartialEmail() {
                 <span className="label">Archivo Adjunto</span>
                 <ButtonUpload
                     text="Cargar archivo adjunto"
-                    file={attachmentFile}
-                    setFile={setAttachmentFile}
+                    files={attachmentFiles}
+                    setFiles={setAttachmentFiles}
+                    multiple
                 />
             </label>
         </div>

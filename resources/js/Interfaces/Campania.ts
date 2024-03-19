@@ -6,6 +6,7 @@ export interface Campania {
     correo_destino: string | null;
     correo_asunto: string | null;
     correo_contenido: string | null;
+    archivos_adjuntos: string[] | null;
     whatsapp_destino: string | null;
     whatsapp_contenido: string | null;
     personas: CampaniaPersona[];

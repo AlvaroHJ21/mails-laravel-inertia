@@ -18,6 +18,7 @@ class Campania extends Model
         "correo_destino",
         "correo_asunto",
         "correo_contenido",
+        "archivos_adjuntos",
         "whatsapp_destino",
         "whatsapp_contenido",
         "user_id",

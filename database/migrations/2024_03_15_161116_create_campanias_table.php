@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("correo_destino")->nullable();
             $table->string("correo_asunto")->nullable();
             $table->text("correo_contenido")->nullable();
+            $table->json("archivos_adjuntos")->nullable();
 
             $table->string("whatsapp_destino")->nullable();
             $table->text("whatsapp_contenido")->nullable();

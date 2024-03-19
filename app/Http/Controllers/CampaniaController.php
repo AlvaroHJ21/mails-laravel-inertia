@@ -7,8 +7,10 @@ use App\Helpers\GenerateArrayFromExcel;
 use App\Http\Requests\Campania\StoreRequest;
 use App\Http\Requests\Campania\UpdateRequest;
 use App\Models\Campania;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class CampaniaController extends Controller
@@ -16,6 +18,13 @@ class CampaniaController extends Controller
     public function index()
     {
         $campanias = Campania::with("personas")->where('user_id', Auth::user()->id)->get();
+
+        //decodificar archivos adjuntos string -> array(string)
+        $campanias->map(function ($campania) {
+            $campania->archivos_adjuntos = json_decode($campania->archivos_adjuntos);
+            return $campania;
+        });
+
         return Inertia::render('Programacion/Index', compact("campanias"));
     }
 
@@ -23,8 +32,20 @@ class CampaniaController extends Controller
     {
         try {
             DB::beginTransaction();
+
             $data = $request->validated();
             $data['user_id'] = Auth::user()->id;
+
+            //si existen archivos adjuntos
+            if ($request->hasFile('archivos_adjuntos')) {
+                //subir archivos
+                $files = $request->file('archivos_adjuntos');
+                $archivos = [];
+                foreach ($files as $file) {
+                    $archivos[] = $file->store('adjuntos');
+                }
+                $data['archivos_adjuntos'] = json_encode($archivos);
+            }
 
             $campania = Campania::create($data);
 
@@ -47,13 +68,37 @@ class CampaniaController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            $data = $request->validated();
+
             if ($request->hasFile('datos')) {
                 $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
                 $campania->personas()->delete();
                 $campania->personas()->createMany($personas);
             }
 
-            $campania->update($request->validated());
+            //si existen archivos adjuntos
+            if ($request->hasFile('archivos_adjuntos')) {
+
+                //eliminar archivos anteriores
+                if ($campania->archivos_adjuntos) {
+                    $archivos = json_decode($campania->archivos_adjuntos);
+                    foreach ($archivos as $archivo) {
+                        Storage::delete($archivo);
+                    }
+                }
+
+                //subir archivos nuevos
+                $files = $request->file('archivos_adjuntos');
+                $archivos = [];
+                foreach ($files as $file) {
+                    $archivos[] = $file->store('adjuntos');
+                }
+                $data["archivos_adjuntos"] = json_encode($archivos);
+            }
+
+            $campania->update($data);
+
             DB::commit();
             return redirect()->route('campanias.index');
         } catch (\Throwable $th) {
@@ -74,5 +119,28 @@ class CampaniaController extends Controller
     public function download(Campania $campania)
     {
         return (new CampaniaPersonaExport($campania->id))->download($campania->nombre . '.xlsx');
+    }
+
+    public function downloadAttached(Request $request)
+    {
+
+        // dd($request->all());
+
+        $request->validate([
+            "adjunto" => "required|string",
+            "campania_id" => "required|integer"
+        ]);
+
+        $campania = Campania::find($request->campania_id);
+
+        //si se encuentra el archivo en la campania y el usuario es el dueño
+        if ($campania && $campania->user_id == Auth::user()->id) {
+            $archivos = json_decode($campania->archivos_adjuntos);
+            if (in_array($request->adjunto, $archivos)) {
+                return Storage::download($request->adjunto);
+            }
+        } else {
+            return redirect()->back()->withErrors("No se encontró el archivo");
+        }
     }
 }

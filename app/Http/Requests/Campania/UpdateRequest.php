@@ -30,7 +30,11 @@ class UpdateRequest extends FormRequest
             "correo_contenido" => ["nullable", "string"],
             "whatsapp_destino" => ["nullable", "string"],
             "whatsapp_contenido" => ["nullable", "string"],
+
+            //
             "datos" => ["nullable", "file", "mimes:xlsx,xls"],
+            "archivos_adjuntos" => ["nullable", "array"],
+            "archivos_adjuntos.*" => ["file", "mimes:pdf,docx,doc,txt"],
         ];
     }
 }
