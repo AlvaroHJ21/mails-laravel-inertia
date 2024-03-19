@@ -12,7 +12,7 @@ interface Props {
 export default function FormPartialEmail(props: Props) {
     const { attachedFiles, setAttachedFiles } = props;
 
-    const { values, handleChange } = useContext(FormContext);
+    const { values, handleChange, campania } = useContext(FormContext);
 
     return (
         <div className="grid grid-cols-2 mb-2 gap-y-4 gap-x-4">
@@ -76,7 +76,12 @@ export default function FormPartialEmail(props: Props) {
             <label className="field">
                 <span className="label">Archivo Adjunto</span>
                 <ButtonUpload
-                    text="Cargar archivo adjunto"
+                    text={
+                        campania?.archivos_adjuntos &&
+                        campania.archivos_adjuntos?.length > 0
+                            ? `Reemplazar adjuntos`
+                            : "Cargar archivo adjunto"
+                    }
                     files={attachedFiles}
                     setFiles={setAttachedFiles}
                     multiple

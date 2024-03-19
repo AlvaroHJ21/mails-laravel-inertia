@@ -26,6 +26,7 @@ interface FormDataContext {
 export const FormContext = createContext<{
     values: FormDataContext;
     handleChange: (data: Partial<FormDataContext>) => void;
+    campania?: Campania;
 }>({
     values: {
         name: "",
@@ -233,7 +234,7 @@ export default function Form(props: Props) {
     }
 
     return (
-        <FormContext.Provider value={{ values, handleChange }}>
+        <FormContext.Provider value={{ values, handleChange, campania }}>
             <div className="h-screen p-8">
                 <div className="flex h-full gap-8">
                     <div className="flex flex-col flex-1 overflow-y-auto">
@@ -287,7 +288,11 @@ export default function Form(props: Props) {
                             <label className="field">
                                 <span className="label">Listado de datos</span>
                                 <ButtonUpload
-                                    text="Cargar archivo"
+                                    text={
+                                        campania && campania.personas.length > 0
+                                            ? "Reemplazar datos"
+                                            : "Cargar archivo"
+                                    }
                                     file={personsFile}
                                     setFile={setPersonsFile}
                                 />
