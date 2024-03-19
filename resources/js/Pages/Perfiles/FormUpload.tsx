@@ -87,7 +87,7 @@ export default function FormUpload(props: Props) {
                         </div>
                     </div>
 
-                    <label className="text-center field">
+                    <label className="mb-4 text-center field">
                         Nombre (opcional)
                         <input type="text" name="nombre" className="input" />
                     </label>
