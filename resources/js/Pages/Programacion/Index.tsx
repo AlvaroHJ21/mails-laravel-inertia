@@ -94,7 +94,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                     }
                                                 )}
                                                 key={index}
-                                                className="text-celeste-claro hover:underline"
+                                                className="block text-celeste-claro hover:underline"
                                             >
                                                 Archivo {index + 1}
                                             </a>

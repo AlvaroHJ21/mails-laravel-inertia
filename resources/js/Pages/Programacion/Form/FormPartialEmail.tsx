@@ -74,7 +74,7 @@ export default function FormPartialEmail(props: Props) {
             </div>
 
             <label className="field">
-                <span className="label">Archivo Adjunto</span>
+                <span className="label">Archivos Adjuntos</span>
                 <ButtonUpload
                     text={
                         campania?.archivos_adjuntos &&

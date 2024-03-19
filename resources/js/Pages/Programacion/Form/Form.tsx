@@ -310,7 +310,7 @@ export default function Form(props: Props) {
                             ) : values.send_medium === 1 ? (
                                 <FormPartialWhatsApp />
                             ) : (
-                                <div>SMS</div>
+                                <div>🚧 En construcción</div>
                             )}
                         </div>
 
