@@ -23,13 +23,14 @@ class StoreRequest extends FormRequest
     {
         return [
             "nombre" => ["required", "string"],
-            "correo_envio" => ["required", "email"],
             "fecha_envio" => ["required", "date"],
             "medio_envio" => ["required", "numeric"],
-            "link" => ["required", "url"],
-            "asunto" => ["required", "string"],
-            "contenido" => ["required", "string"],
-            "personas" => ["required", "file", "mimes:xlsx,xls"],
+            "correo_destino" => ["nullable", "email"],
+            "correo_asunto" => ["nullable", "string"],
+            "correo_contenido" => ["nullable", "string"],
+            "whatsapp_destino" => ["nullable", "string"],
+            "whatsapp_contenido" => ["nullable", "string"],
+            "datos" => ["required", "file", "mimes:xlsx,xls"],
         ];
     }
 }

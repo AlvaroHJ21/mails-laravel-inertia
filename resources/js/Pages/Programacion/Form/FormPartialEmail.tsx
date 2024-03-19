@@ -49,27 +49,27 @@ export default function FormPartialEmail() {
                         className="input"
                         placeholder="Escribe el asunto..."
                         name="subject"
-                        value={values.subject}
+                        value={values.email_subject}
                         onChange={(e) =>
                             handleChange({
-                                subject: e.target.value,
+                                email_subject: e.target.value,
                             })
                         }
                     />
                 </div>
             </label>
 
-            <div className="grid col-span-2 place-content-center">
+            <div className="col-span-2">
                 <Editor
-                    value={values.content}
-                    onChange={(content) => handleChange({ content })}
+                    value={values.email_content}
+                    onChange={(content) => handleChange({ email_content: content })}
                 />
             </div>
 
             <label className="field">
-                <span className="label">Adjunto</span>
+                <span className="label">Archivo Adjunto</span>
                 <ButtonUpload
-                    text="Cargar archivos adjuntos"
+                    text="Cargar archivo adjunto"
                     file={attachmentFile}
                     setFile={setAttachmentFile}
                 />

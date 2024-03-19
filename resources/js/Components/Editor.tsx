@@ -1,18 +1,61 @@
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+// import type { EditorConfig } from '@ckeditor/ckeditor5-core';
 import CustomEditor from "ckeditor5-custom-build/build/ckeditor";
 
 interface Props {
     value: string;
     onChange: (value: string) => void;
+    isSmall?: boolean;
 }
 
 export default function Editor(props: Props) {
-    const { value, onChange } = props;
+    const { value, onChange, isSmall = false } = props;
+
+    const fullConfig = {
+        toolbar: {
+            items: [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "link",
+                "bulletedList",
+                "numberedList",
+                "alignment",
+                "|",
+                "imageInsert",
+                "blockQuote",
+                "sourceEditing",
+                "undo",
+                "redo",
+            ],
+        },
+        language: "es",
+        image: {
+            toolbar: [
+                "imageTextAlternative",
+                "toggleImageCaption",
+                "imageStyle:inline",
+                "imageStyle:block",
+                "imageStyle:side",
+                "linkImage",
+            ],
+        },
+    };
+
+    const smallConfig = {
+        toolbar: {
+            items: ["bold", "italic", "|", "undo", "redo"],
+        },
+        language: "es",
+    };
+
     return (
         <div className="overflow-x-auto">
             <CKEditor
                 editor={CustomEditor}
                 data={value}
+                config={isSmall ? smallConfig : fullConfig}
                 onChange={(_, editor) => {
                     onChange(editor.getData());
                 }}

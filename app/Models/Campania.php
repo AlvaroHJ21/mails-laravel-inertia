@@ -13,12 +13,13 @@ class Campania extends Model
 
     protected $fillable = [
         "nombre",
-        "correo_envio",
         "fecha_envio",
         "medio_envio",
-        "link",
-        "asunto",
-        "contenido",
+        "correo_destino",
+        "correo_asunto",
+        "correo_contenido",
+        "whatsapp_destino",
+        "whatsapp_contenido",
         "user_id",
     ];
 

@@ -1,12 +1,13 @@
 export interface Campania {
     id: number;
     nombre: string;
-    correo_envio: string;
     fecha_envio: string;
     medio_envio: number;
-    link: string;
-    asunto: string;
-    contenido: string;
+    correo_destino: string | null;
+    correo_asunto: string | null;
+    correo_contenido: string | null;
+    whatsapp_destino: string | null;
+    whatsapp_contenido: string | null;
     personas: CampaniaPersona[];
     created_at: string;
     updated_at: string;

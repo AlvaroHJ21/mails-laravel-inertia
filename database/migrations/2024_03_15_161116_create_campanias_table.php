@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('campanias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string("correo_envio");
             $table->dateTime('fecha_envio');
+
             $table->unsignedSmallInteger("medio_envio");
-            $table->string("link");
-            $table->string("asunto");
-            $table->text("contenido");
+
+            $table->string("correo_destino")->nullable();
+            $table->string("correo_asunto")->nullable();
+            $table->text("correo_contenido")->nullable();
+
+            $table->string("whatsapp_destino")->nullable();
+            $table->text("whatsapp_contenido")->nullable();
+
             $table->foreignId('user_id')->constrained("users");
             $table->timestamps();
         });

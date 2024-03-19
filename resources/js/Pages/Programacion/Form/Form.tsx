@@ -5,20 +5,22 @@ import useData from "@/Hooks/useData";
 import { htmlTransformInlineCss } from "@/Utils/htmlTransformInlineCss";
 import ButtonUpload from "@/Components/ButtonUpload";
 import Button from "@/Components/Button";
-import FormPartialEmail from "./FormPartialEmail";
 import FormSendMedium from "./FormSendMedium";
+import FormPartialEmail from "./FormPartialEmail";
+import FormPartialWhatsApp from "./FormPartialWhatsApp";
 import { Campania } from "@/Interfaces/Campania";
 
 import "./ckeditor.css";
 
 interface FormDataI {
     name: string;
-    email_send: string;
     send_date: string;
     send_medium: number;
-    link: string;
-    subject: string;
-    content: string;
+    email_send: string;
+    email_subject: string;
+    email_content: string;
+    whatsapp_phone_send: string;
+    whatsapp_content: string;
 }
 
 export const FormContext = createContext<{
@@ -30,9 +32,10 @@ export const FormContext = createContext<{
         email_send: "",
         send_date: "",
         send_medium: 0,
-        link: "",
-        subject: "",
-        content: "",
+        email_subject: "",
+        email_content: "",
+        whatsapp_phone_send: "",
+        whatsapp_content: "",
     },
     handleChange: () => {},
 });
@@ -53,10 +56,18 @@ export default function Form(props: Props) {
         email_send: "",
         send_date: "",
         send_medium: 0,
-        link: "",
-        subject: "",
-        content: "",
+        email_subject: "",
+        email_content: "",
+        whatsapp_phone_send: "",
+        whatsapp_content: "",
     });
+
+    const htmlContentPreview =
+        values.send_medium == 0
+            ? values.email_content
+            : values.send_medium == 1
+            ? values.whatsapp_content
+            : "";
 
     /*
      * Cargar datos de la campaña
@@ -65,12 +76,15 @@ export default function Form(props: Props) {
         if (campania) {
             handleChange({
                 name: campania.nombre,
-                email_send: campania.correo_envio,
                 send_date: campania.fecha_envio,
                 send_medium: campania.medio_envio,
-                link: campania.link,
-                subject: campania.asunto,
-                content: campania.contenido,
+
+                email_send: campania.correo_destino ?? "",
+                email_subject: campania.correo_asunto ?? "",
+                email_content: campania.correo_contenido ?? "",
+
+                whatsapp_phone_send: campania.whatsapp_destino ?? "",
+                whatsapp_content: campania.whatsapp_contenido ?? "",
             });
         }
 
@@ -81,7 +95,7 @@ export default function Form(props: Props) {
      * Generar HTML y copiar al portapapeles
      */
     async function copyHtml() {
-        const resp = await htmlTransformInlineCss(values.content);
+        const resp = await htmlTransformInlineCss(values.email_content ?? "");
 
         if (resp.ok) {
             navigator.clipboard.writeText(resp.html);
@@ -99,6 +113,44 @@ export default function Form(props: Props) {
      * Crear o actualizar una campaña
      */
     async function handleSave() {
+        // Validar campos
+        if (!values.name) {
+            window.toast.error("El nombre de la campaña es obligatorio");
+            return;
+        }
+        if (!values.send_date) {
+            window.toast.error("La fecha de envío es obligatoria");
+            return;
+        }
+        if (!campania && !personsFile) {
+            window.toast.error("El archivo de datos es obligatorio");
+            return;
+        }
+        if (values.send_medium === 0) {
+            if (!values.email_send) {
+                window.toast.error("El correo de destino es obligatorio");
+                return;
+            }
+            if (!values.email_subject) {
+                window.toast.error("El asunto del correo es obligatorio");
+                return;
+            }
+            if (!values.email_content) {
+                window.toast.error("El contenido del correo es obligatorio");
+                return;
+            }
+        }
+        if (values.send_medium === 1) {
+            if (!values.whatsapp_phone_send) {
+                window.toast.error("El teléfono de destino es obligatorio");
+                return;
+            }
+            if (!values.whatsapp_content) {
+                window.toast.error("El contenido de WhatsApp es obligatorio");
+                return;
+            }
+        }
+
         if (campania) {
             // Update
             router.post(
@@ -106,13 +158,14 @@ export default function Form(props: Props) {
                 {
                     _method: "put",
                     nombre: values.name,
-                    correo_envio: values.email_send,
                     fecha_envio: values.send_date,
                     medio_envio: values.send_medium,
-                    link: values.link,
-                    asunto: values.subject,
-                    contenido: values.content,
-                    personas: personsFile,
+                    correo_destino: values.email_send,
+                    correo_asunto: values.email_subject,
+                    correo_contenido: values.email_content,
+                    whatsapp_destino: values.whatsapp_phone_send,
+                    whatsapp_contenido: values.whatsapp_content,
+                    datos: personsFile,
                 },
                 {
                     onStart: () => {
@@ -137,13 +190,14 @@ export default function Form(props: Props) {
                 route("campanias.store"),
                 {
                     nombre: values.name,
-                    correo_envio: values.email_send,
                     fecha_envio: values.send_date,
                     medio_envio: values.send_medium,
-                    link: values.link,
-                    asunto: values.subject,
-                    contenido: values.content,
-                    personas: personsFile,
+                    correo_destino: values.email_send,
+                    correo_asunto: values.email_subject,
+                    correo_contenido: values.email_content,
+                    whatsapp_destino: values.whatsapp_phone_send,
+                    whatsapp_contenido: values.whatsapp_content,
+                    datos: personsFile,
                 },
                 {
                     onStart: () => {
@@ -170,7 +224,7 @@ export default function Form(props: Props) {
             <div className="h-screen p-8">
                 <div className="flex h-full gap-8">
                     <div className="flex flex-col flex-1 overflow-y-auto">
-                        <div className="grid grid-cols-2 mb-2 gap-y-2 gap-x-4">
+                        <div className="grid grid-cols-2 mb-4 gap-y-2 gap-x-4">
                             <label className="field">
                                 <span className="label">
                                     Nombre de la campaña
@@ -220,7 +274,7 @@ export default function Form(props: Props) {
                             <label className="field">
                                 <span className="label">Listado de datos</span>
                                 <ButtonUpload
-                                    text="Cargar archivo..."
+                                    text="Cargar archivo"
                                     file={personsFile}
                                     setFile={setPersonsFile}
                                 />
@@ -233,7 +287,7 @@ export default function Form(props: Props) {
                             {values.send_medium === 0 ? (
                                 <FormPartialEmail />
                             ) : values.send_medium === 1 ? (
-                                <div>Whatssapp</div>
+                                <FormPartialWhatsApp />
                             ) : (
                                 <div>SMS</div>
                             )}
@@ -247,13 +301,15 @@ export default function Form(props: Props) {
                     <div className="relative flex-1 overflow-y-auto rounded-lg shadow-lg">
                         <div className="h-full p-4 bg-gray-200">
                             <div className="h-full p-4 pb-12 overflow-y-auto bg-white rounded-lg">
-                                <h2 className="mb-2 text-3xl font-bold">
-                                    {values.subject}
-                                </h2>
+                                {values.send_medium == 0 && (
+                                    <h2 className="mb-2 text-3xl font-bold">
+                                        {values.email_subject}
+                                    </h2>
+                                )}
                                 <div
                                     className="ck-content"
                                     dangerouslySetInnerHTML={{
-                                        __html: values.content,
+                                        __html: htmlContentPreview,
                                     }}
                                 ></div>
                             </div>

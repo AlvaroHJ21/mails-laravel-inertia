@@ -23,18 +23,18 @@ export default function ButtonUpload(props: Props) {
 
     return (
         <div className="relative">
-            <label className="font-bold btn btn-secondary">
+            <label className="w-full font-bold btn btn-secondary">
                 {text ?? "Subir archivo"}
                 <input
                     id="file"
                     type="file"
-                    className="input"
+                    className=""
                     name="perfilamiento"
                     hidden
                     onChange={handleInputFileChange}
                 />
             </label>
-            <div className="absolute left-0 right-0 w-fit">
+            <div className="absolute left-0 right-0 m-auto -mt-2 w-fit">
                 <label className="text-xs italic text-nowrap">{fileName}</label>
             </div>
         </div>

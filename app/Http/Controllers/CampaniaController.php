@@ -28,7 +28,7 @@ class CampaniaController extends Controller
 
             $campania = Campania::create($data);
 
-            $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('personas'));
+            $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
 
             $campania->personas()->createMany($personas);
 
@@ -47,8 +47,8 @@ class CampaniaController extends Controller
     {
         try {
             DB::beginTransaction();
-            if ($request->hasFile('personas')) {
-                $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('personas'));
+            if ($request->hasFile('datos')) {
+                $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
                 $campania->personas()->delete();
                 $campania->personas()->createMany($personas);
             }
