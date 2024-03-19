@@ -18,12 +18,12 @@ return new class extends Migration
 
             $table->unsignedSmallInteger("medio_envio");
 
-            $table->string("correo_destino")->nullable();
+            $table->string("correo_envio")->nullable();
             $table->string("correo_asunto")->nullable();
             $table->text("correo_contenido")->nullable();
             $table->json("archivos_adjuntos")->nullable();
 
-            $table->string("whatsapp_destino")->nullable();
+            $table->string("whatsapp_envio")->nullable();
             $table->text("whatsapp_contenido")->nullable();
 
             $table->foreignId('user_id')->constrained("users");

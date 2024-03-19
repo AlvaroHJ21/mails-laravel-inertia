@@ -25,10 +25,10 @@ class StoreRequest extends FormRequest
             "nombre" => ["required", "string"],
             "fecha_envio" => ["required", "date"],
             "medio_envio" => ["required", "numeric"],
-            "correo_destino" => ["nullable", "email"],
+            "correo_envio" => ["nullable", "email"],
             "correo_asunto" => ["nullable", "string"],
             "correo_contenido" => ["nullable", "string"],
-            "whatsapp_destino" => ["nullable", "string"],
+            "whatsapp_envio" => ["nullable", "string"],
             "whatsapp_contenido" => ["nullable", "string"],
 
             //

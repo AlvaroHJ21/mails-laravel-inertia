@@ -15,11 +15,11 @@ class Campania extends Model
         "nombre",
         "fecha_envio",
         "medio_envio",
-        "correo_destino",
+        "correo_envio",
         "correo_asunto",
         "correo_contenido",
         "archivos_adjuntos",
-        "whatsapp_destino",
+        "whatsapp_envio",
         "whatsapp_contenido",
         "user_id",
     ];
