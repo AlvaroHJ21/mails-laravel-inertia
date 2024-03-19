@@ -94,7 +94,8 @@ class CampaniaController extends Controller
             $campania->personas()->createMany($personasWithCorreos->toArray());
 
             DB::commit();
-            return redirect()->route('campanias.index');
+
+            return redirect()->route('campanias.index')->with('message', 'Campaña creada con éxito');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withErrors(
@@ -131,7 +132,7 @@ class CampaniaController extends Controller
             $campania->personas()->createMany($personasWithCorreos->toArray());
 
             DB::commit();
-            return redirect()->route('campanias.index');
+            return redirect()->route('campanias.index')->with('message', 'Campaña creada con éxito');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->withErrors(

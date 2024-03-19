@@ -55,6 +55,7 @@ export default function Perfiles(props: PerfilesProps) {
                 onSuccess: (data) => {
                     console.log(data);
                 },
+
             }
         );
     }

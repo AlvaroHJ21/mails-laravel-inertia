@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Head, router } from "@inertiajs/react";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
@@ -21,6 +21,9 @@ type modalName = "" | "Form";
 
 type Props = PageProps & {
     campanias: Campania[];
+    flash: {
+        message: string | null;
+    };
 };
 
 export default function Programacion(props: Props) {
@@ -34,6 +37,18 @@ export default function Programacion(props: Props) {
             router.delete(route("campanias.destroy", campania.id));
         }
     }
+
+    /*
+     * Si se recibe un mensaje flash, se abre el modal
+     * de form con la última campaña creada
+     */
+    useEffect(() => {
+        if (props.flash.message) {
+            setOpenModalName("Form");
+            setActiveCampania(campanias[campanias.length - 1]);
+        }
+        return () => {};
+    }, []);
 
     return (
         <AuthenticatedLayout user={auth.user}>
