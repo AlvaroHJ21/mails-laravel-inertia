@@ -1,1 +1,0 @@
-import{j as t}from"./app--DFruKpD.js";import{A as r}from"./AuthenticatedLayout-BlcIg1dP.js";function u(s){const{auth:e}=s;return t.jsx(r,{user:e.user,children:t.jsx("h1",{className:"title",children:"Resultados"})})}export{u as default};
