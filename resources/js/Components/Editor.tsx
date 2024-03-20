@@ -52,7 +52,7 @@ export default function Editor(props: Props) {
     const config = isSmall ? smallConfig : fullConfig;
 
     return (
-        <div className="overflow-x-auto">
+        <div className="h-full overflow-x-auto">
             <CKEditor
                 editor={CustomEditor}
                 data={value}
@@ -67,20 +67,6 @@ export default function Editor(props: Props) {
                 }}
                 onChange={(_, editor) => {
                     onChange(editor.getData());
-                }}
-                onReady={(editor) => {
-                    editor.editing.view.change((writer) => {
-                        writer.setStyle(
-                            "height",
-                            "210px",
-                            editor.editing.view.document.getRoot()!
-                        );
-                        writer.setStyle(
-                            "border",
-                            "1px solid #4F93FE",
-                            editor.editing.view.document.getRoot()!
-                        );
-                    });
                 }}
             />
         </div>

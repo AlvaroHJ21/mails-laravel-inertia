@@ -29,6 +29,27 @@ body {
     font-size: 16px;
 }
 
+.ck-editor__main {
+    border: 1px solid #4f93fe !important;
+}
+
+.ck-content {
+    height: 160px;
+    border: none !important;
+}
+
+@media screen and (min-height: 700px) {
+    .ck-content {
+        height: 220px;
+    }
+}
+
+@media screen and (min-height: 800px) {
+    .ck-content {
+        height: 300px;
+    }
+}
+
 .ck-content a img {
     display: inline-block;
 }
