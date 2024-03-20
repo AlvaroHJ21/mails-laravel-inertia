@@ -85,6 +85,10 @@
         @apply bg-cielo-alba text-celeste-claro;
     }
 
+    .btn-error {
+        @apply bg-red-400 text-white;
+    }
+
     .btn-outline {
         @apply bg-transparent text-azul-marino border-gray-300;
     }

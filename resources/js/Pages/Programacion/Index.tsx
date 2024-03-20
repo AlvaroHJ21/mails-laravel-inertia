@@ -16,6 +16,7 @@ import { formatTime } from "@/Utils/formatTime";
 
 import { PageProps } from "@/types";
 import { Campania } from "@/Interfaces/Campania";
+import { useConfirmModal } from "@/Components/ConfirmModal";
 
 type modalName = "" | "Form";
 
@@ -32,10 +33,19 @@ export default function Programacion(props: Props) {
     const [openModalName, setOpenModalName] = useState<modalName>("");
     const [activeCampania, setActiveCampania] = useState<Campania>();
 
+    const confirmModal = useConfirmModal();
+
     function handleDelete(campania: Campania) {
-        if (confirm("¿Estás seguro de eliminar la campaña?")) {
-            router.delete(route("campanias.destroy", campania.id));
-        }
+        confirmModal.openConfirm({
+            title: "Confirmar",
+            message: "¿Estás seguro de eliminar esta campaña?",
+            buttonText: "Eliminar",
+            buttonVariant: "error",
+            onConfirm() {
+                router.delete(route("campanias.destroy", campania.id));
+                confirmModal.cancel();
+            },
+        });
     }
 
     /*

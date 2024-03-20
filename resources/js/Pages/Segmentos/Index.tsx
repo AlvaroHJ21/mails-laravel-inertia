@@ -19,6 +19,7 @@ import { Segmento } from "@/Interfaces/Segmento";
 import { PeruDepartment, PeruDistrict, PeruProvince } from "@/Interfaces/Peru";
 import { getTotalFiltered } from "@/Utils/getTotalFiltered";
 import getAllDocumentsFiltered from "@/Utils/getAllDocumentsFiltered";
+import { useConfirmModal } from "@/Components/ConfirmModal";
 
 enum ModalName {
     Form = "Form",
@@ -38,14 +39,23 @@ export default function SegmentosPage(props: Props) {
     const [openModalName, setOpenModalName] = useState("");
     const [selectedSegmento, setSelectedSegmento] = useState<Segmento>();
 
+    const confirmModal = useConfirmModal();
+
     /*
      * Función para eliminar un segmento
      * @param segmento
      */
     function handleDelete(segmento: Segmento) {
-        if (confirm("¿Estás seguro de eliminar este segmento?")) {
-            router.delete(route("segmentos.destroy", { segmento }));
-        }
+        confirmModal.openConfirm({
+            title: "Confirmar",
+            message: "¿Estás seguro de eliminar este segmento?",
+            buttonText: "Eliminar",
+            buttonVariant: "error",
+            onConfirm() {
+                router.delete(route("segmentos.destroy", { segmento }));
+                confirmModal.cancel();
+            },
+        });
     }
 
     /*
@@ -53,7 +63,21 @@ export default function SegmentosPage(props: Props) {
      * @param segmento
      */
     function handleCreateCampania(segmento: Segmento) {
-        router.post(route("campanias.store_by_segmento", { segmento }), {}, {});
+        confirmModal.openConfirm({
+            title: "Confirmar",
+            message:
+                "¿Estás seguro de crear una campaña a partir de los datos de este segmento?",
+            buttonText: "Sí, crear",
+            buttonVariant: "primary",
+            onConfirm() {
+                router.post(
+                    route("campanias.store_by_segmento", { segmento }),
+                    {},
+                    {}
+                );
+                confirmModal.cancel();
+            },
+        });
     }
 
     return (

@@ -10,13 +10,12 @@ import FormView from "./FormView";
 import { useState } from "react";
 import Alert from "@/Components/Alert";
 
-import editarSvg from "@/svg/editar.svg";
 import eliminarSvg from "@/svg/eliminar.svg";
 import verSvg from "@/svg/ver.svg";
 import enviarSvg from "@/svg/enviar.svg";
 import excelSvg from "@/svg/excel.svg";
 import { formatDate } from "@/Utils/formatDate";
-import TextEditable from "@/Components/TextEditable";
+import { useConfirmModal } from "@/Components/ConfirmModal";
 
 enum ModalName {
     Form = "Form",
@@ -33,14 +32,23 @@ export default function Perfiles(props: PerfilesProps) {
     const [openModalName, setOpenModalName] = useState("");
     const [activePerfil, setActivePerfil] = useState<Perfil>();
 
+    const confirmModal = useConfirmModal();
+
     /*
      * Función para eliminar un perfil
      * @param perfil
      */
     function handleDelete(perfil: Perfil) {
-        if (confirm("¿Estás seguro de eliminar este perfil?")) {
-            router.delete(route("perfiles.destroy", { perfil }));
-        }
+        confirmModal.openConfirm({
+            title: "Confirmar",
+            message: "¿Estás seguro de eliminar este perfil?",
+            buttonText: "Eliminar",
+            buttonVariant: "error",
+            onConfirm() {
+                router.delete(route("perfiles.destroy", { perfil }));
+                confirmModal.cancel();
+            },
+        });
     }
 
     /*
@@ -48,16 +56,21 @@ export default function Perfiles(props: PerfilesProps) {
      * @param perfil
      */
     function handleCreateCampania(perfil: Perfil) {
-        router.post(
-            route("campanias.store_by_perfil", { perfil }),
-            {},
-            {
-                onSuccess: (data) => {
-                    console.log(data);
-                },
-
-            }
-        );
+        confirmModal.openConfirm({
+            title: "Confirmar",
+            message:
+                "¿Estás seguro de crear una campaña a partir de los datos de este perfil?",
+            buttonText: "Sí, crear",
+            buttonVariant: "primary",
+            onConfirm() {
+                router.post(
+                    route("campanias.store_by_perfil", { perfil }),
+                    {},
+                    {}
+                );
+                confirmModal.cancel();
+            },
+        });
     }
 
     return (
