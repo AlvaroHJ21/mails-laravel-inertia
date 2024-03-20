@@ -16,7 +16,7 @@ export default function FormPartialEmail(props: Props) {
 
     return (
         <div className="flex flex-col gap-2 mb-2">
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-4">
                 <label className="field">
                     <span className="label">Correo de envío</span>
                     <div className="input-group">
