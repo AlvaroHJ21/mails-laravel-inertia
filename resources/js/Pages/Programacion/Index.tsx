@@ -113,7 +113,6 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                             <th>Hora de envío</th>
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
-                            <th>Documentos adjuntos</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -138,26 +137,6 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                             width={24}
                                         />
                                     </a>
-                                </td>
-                                <td>
-                                    {campania.archivos_adjuntos?.map(
-                                        (path, index) => (
-                                            <a
-                                                href={route(
-                                                    "campanias.download_attached",
-                                                    {
-                                                        adjunto: path,
-                                                        campania_id:
-                                                            campania.id,
-                                                    }
-                                                )}
-                                                key={index}
-                                                className="block text-celeste-claro hover:underline"
-                                            >
-                                                Archivo {index + 1}
-                                            </a>
-                                        )
-                                    )}
                                 </td>
                                 <td>
                                     <div className="flex w-20 gap-1">

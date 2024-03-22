@@ -303,10 +303,7 @@ export default function Form(props: Props) {
 
                         <div className="flex-1">
                             {values.send_medium === 0 ? (
-                                <FormPartialEmail
-                                    attachedFiles={attachedFiles}
-                                    setAttachedFiles={setAttachedFiles}
-                                />
+                                <FormPartialEmail />
                             ) : values.send_medium === 1 ? (
                                 <FormPartialWhatsApp />
                             ) : (

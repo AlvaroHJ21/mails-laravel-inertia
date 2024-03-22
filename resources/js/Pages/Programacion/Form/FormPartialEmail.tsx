@@ -1,18 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import { FormContext } from "./Form";
 import Editor from "@/Components/Editor";
-import ButtonUpload from "@/Components/ButtonUpload";
 
-interface Props {
-    attachedFiles: FileList | undefined;
-    setAttachedFiles: (files: FileList) => void;
-}
-
-export default function FormPartialEmail(props: Props) {
-    const { attachedFiles, setAttachedFiles } = props;
-
-    const { values, handleChange, campania } = useContext(FormContext);
+export default function FormPartialEmail() {
+    const { values, handleChange } = useContext(FormContext);
 
     return (
         <div className="flex flex-col gap-2 mb-2">
@@ -37,7 +29,7 @@ export default function FormPartialEmail(props: Props) {
                             <option value="correo1@email.com">
                                 correo1@email.com
                             </option>
-                            <option value="correo1@email.com">
+                            <option value="correo2@email.com">
                                 correo2@email.com
                             </option>
                         </select>
@@ -71,7 +63,7 @@ export default function FormPartialEmail(props: Props) {
                 onChange={(content) => handleChange({ email_content: content })}
             />
 
-            <div className="grid grid-cols-2">
+            {/* <div className="grid grid-cols-2">
                 <label className="mb-2 field">
                     <span className="label">Archivos Adjuntos</span>
                     <ButtonUpload
@@ -86,7 +78,7 @@ export default function FormPartialEmail(props: Props) {
                         multiple
                     />
                 </label>
-            </div>
+            </div> */}
         </div>
     );
 }
