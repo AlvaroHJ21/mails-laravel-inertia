@@ -59,7 +59,9 @@ export default function Editor(props: Props) {
                 config={{
                     ...config,
                     simpleUpload: {
-                        uploadUrl: route("upload.image"),
+                        uploadUrl:
+                            import.meta.env.VITE_IMAGE_UPLOAD_URL ??
+                            route("upload.image"),
                         headers: {
                             Accept: "application/json",
                         },
