@@ -22,6 +22,7 @@ class Campania extends Model
         "whatsapp_envio",
         "whatsapp_contenido",
         "enviado",
+        "codigo",
         "user_id",
     ];
 
