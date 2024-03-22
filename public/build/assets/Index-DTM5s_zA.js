@@ -1,0 +1,1 @@
+import{j as t}from"./app-B_rF6PDn.js";import{A as r}from"./AuthenticatedLayout-CXyECC_P.js";function u(s){const{auth:e}=s;return t.jsx(r,{user:e.user,children:t.jsx("h1",{className:"title",children:"Resultados"})})}export{u as default};

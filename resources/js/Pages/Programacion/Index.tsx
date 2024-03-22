@@ -7,9 +7,10 @@ import Button from "@/Components/Button";
 import Modal from "@/Components/Modal";
 import Form from "./Form/Form";
 
+import eliminarSvg from "@/svg/eliminar.svg";
+import enviarSvg from "@/svg/enviar.svg";
 import excelSvg from "@/svg/excel.svg";
 import verSvg from "@/svg/ver.svg";
-import eliminarSvg from "@/svg/eliminar.svg";
 
 import { formatDate } from "@/Utils/formatDate";
 import { formatTime } from "@/Utils/formatTime";
@@ -35,6 +36,22 @@ export default function Programacion(props: Props) {
 
     const confirmModal = useConfirmModal();
 
+    /*
+     * Si se recibe un mensaje flash, se abre el modal
+     * de form con la última campaña creada
+     */
+    useEffect(() => {
+        if (props.flash.message) {
+            setOpenModalName("Form");
+            setActiveCampania(campanias[campanias.length - 1]);
+        }
+        return () => {};
+    }, []);
+
+    /*
+     * Funcion para eliminar una campaña
+     * @param campania
+     */
     function handleDelete(campania: Campania) {
         confirmModal.openConfirm({
             title: "Confirmar",
@@ -49,16 +66,32 @@ export default function Programacion(props: Props) {
     }
 
     /*
-     * Si se recibe un mensaje flash, se abre el modal
-     * de form con la última campaña creada
+     * Funcion para enviar una campaña manualmente
+     * @param campania
      */
-    useEffect(() => {
-        if (props.flash.message) {
-            setOpenModalName("Form");
-            setActiveCampania(campanias[campanias.length - 1]);
-        }
-        return () => {};
-    }, []);
+    function handleSend(campania: Campania): void {
+        confirmModal.openConfirm({
+            title: "Confirmar",
+            message: "¿Estás seguro de enviar esta campaña?",
+            buttonText: "Sí, enviar",
+            buttonVariant: "primary",
+            onConfirm() {
+                router.post(
+                    route("campanias.send", { campania }),
+                    {},
+                    {
+                        onSuccess(data) {
+                            console.log(data);
+                        },
+                        onError(errors) {
+                            console.log(errors);
+                        },
+                    }
+                );
+                confirmModal.cancel();
+            },
+        });
+    }
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -128,6 +161,15 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                 </td>
                                 <td>
                                     <div className="flex w-20 gap-1">
+                                        <button
+                                            onClick={() => handleSend(campania)}
+                                        >
+                                            <img
+                                                src={enviarSvg}
+                                                alt="icono de play"
+                                                width={24}
+                                            />
+                                        </button>
                                         <button
                                             onClick={() => {
                                                 setOpenModalName("Form");

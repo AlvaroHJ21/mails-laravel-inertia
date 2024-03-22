@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ConvertHTML;
 use Illuminate\Http\Request;
-use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class HTMLController extends Controller
 {
@@ -16,11 +16,8 @@ class HTMLController extends Controller
         ]);
 
         $html = $request->input('html');
-        $css = file_get_contents(public_path("css/ckeditor.css"));
 
-        $cssToInline = new CssToInlineStyles();
-
-        $html = $cssToInline->convert($html,  $css);
+        $html = ConvertHTML::convertCSSInline($html);
 
         return response()->json([
             'html' => $html,

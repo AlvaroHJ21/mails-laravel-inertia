@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\CampaniaPersonaExport;
 use App\Helpers\GenerateArrayFromExcel;
+use App\Helpers\SendCampania;
 use App\Http\Requests\Campania\StoreRequest;
 use App\Http\Requests\Campania\UpdateRequest;
 use App\Models\Campania;
@@ -218,6 +219,19 @@ class CampaniaController extends Controller
             }
         } else {
             return redirect()->back()->withErrors("No se encontró el archivo");
+        }
+    }
+
+    public function send(Campania $campania)
+    {
+        $resp = SendCampania::send($campania);
+
+        if ($resp["ok"]) {
+            return redirect()->route('campanias.index')
+                ->with('message', 'Campaña enviada con éxito')
+                ->with('data', $resp["data"]);
+        } else {
+            return redirect()->back()->withErrors("Error al enviar la campaña");
         }
     }
 }

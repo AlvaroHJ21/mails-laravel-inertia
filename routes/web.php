@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/campanias/adjunto', [CampaniaController::class, "downloadAttached"])->name('campanias.download_attached');
     Route::post('/campanias/by-perfil/{perfil}', [CampaniaController::class, "storeByPerfil"])->name('campanias.store_by_perfil');
     Route::post('/campanias/by-segmento/{segmento}', [CampaniaController::class, "storeBySegmento"])->name('campanias.store_by_segmento');
+    Route::post('/campanias/{campania}/send', [CampaniaController::class, "send"])->name('campanias.send');
 
 
     Route::get('/resultados', function () {
