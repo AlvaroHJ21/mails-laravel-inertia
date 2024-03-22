@@ -1,1 +1,0 @@
-import{j as t}from"./app-BmN6emcL.js";import{A as r}from"./AuthenticatedLayout-Ctr7z-Qu.js";function u(s){const{auth:e}=s;return t.jsx(r,{user:e.user,children:t.jsx("h1",{className:"title",children:"Resultados"})})}export{u as default};

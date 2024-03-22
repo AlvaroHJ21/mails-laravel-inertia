@@ -1,0 +1,1 @@
+import{j as t}from"./app-CB3_F1-g.js";import{A as r}from"./AuthenticatedLayout-BMFi3zga.js";function u(s){const{auth:e}=s;return t.jsx(r,{user:e.user,children:t.jsx("h1",{className:"title",children:"Resultados"})})}export{u as default};
