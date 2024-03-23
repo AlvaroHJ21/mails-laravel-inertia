@@ -26,8 +26,11 @@
     "dependencies": {
         "@ckeditor/ckeditor5-build-multi-root": "^41.2.0",
         "@ckeditor/ckeditor5-react": "^6.2.0",
+        "chart.js": "^4.4.2",
+        "chartjs-plugin-datalabels": "^2.2.0",
         "ckeditor5-custom-build": "file:..\\ckeditor-5",
         "clsx": "^2.1.0",
+        "react-chartjs-2": "^5.2.0",
         "react-hot-toast": "^2.4.1",
         "tailwind-merge": "^2.2.1"
     }
