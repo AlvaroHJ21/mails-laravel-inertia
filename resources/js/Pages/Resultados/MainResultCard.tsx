@@ -25,14 +25,15 @@ ChartJS.register(
 
 interface Props {
     result: CampaniaMonthResult;
-    show?: boolean;
 }
 
 export default function MainResultCard(props: Props) {
-    const { result, show = true } = props;
+    const { result } = props;
 
     const { nCampanias, month, nTotalRecords, nValidRecords, nOpenedRecords } =
         result;
+
+    const show = nCampanias > 0;
 
     const labels = [month];
 
@@ -58,7 +59,7 @@ export default function MainResultCard(props: Props) {
     };
 
     return (
-        <div className={"transition-opacity "+(show ? "" : "opacity-40")}>
+        <div className={"transition-opacity " + (show ? "" : "opacity-50")}>
             <div className="px-8 py-1 m-auto mb-4 text-center rounded-full bg-amarillo">
                 <span className="font-bold text-azul-marino">{nCampanias}</span>
             </div>
@@ -83,10 +84,9 @@ export default function MainResultCard(props: Props) {
                                     weight: "bold",
                                 },
                                 rotation: -90,
-                                formatter: (value) => {
-                                    // min height 200px
-                                    return value + "K";
-                                },
+                                // formatter: (value) => {
+                                //     return value + "K";
+                                // },
                             },
                         },
                         onClick(event, elements, chart) {

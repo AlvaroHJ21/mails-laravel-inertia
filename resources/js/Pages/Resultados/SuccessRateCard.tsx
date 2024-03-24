@@ -1,10 +1,12 @@
 interface Props {
     value: number;
-    show?: boolean;
 }
 
 export default function SuccessRateCard(props: Props) {
-    const { value, show = true } = props;
+    const { value } = props;
+
+    const show = value > 0;
+
     return (
         <div
             className={
