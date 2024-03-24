@@ -1,8 +1,14 @@
+@import url("./fonts.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+    * {
+        @apply font-TitilliumWeb;
+    }
+
     a {
         display: inline-block;
     }
@@ -61,7 +67,7 @@
 
 @layer components {
     .title {
-        @apply text-3xl font-bold text-azul-marino mb-4 text-center;
+        @apply text-3xl font-bold text-azul-marino mb-4 text-center font-TitilliumWeb;
     }
 
     /* BUTTONS */
@@ -241,7 +247,7 @@
     }
 
     .nav-item-name {
-        @apply text-celeste-claro max-w-28 m-auto text-base mb-1 leading-5;
+        @apply text-celeste-claro max-w-28 m-auto text-base mb-1 leading-5 font-bold;
     }
 
     .nav-indicator {
