@@ -1,1 +1,0 @@
-import{j as t}from"./app-GhdVhpnC.js";import{A as r}from"./AuthenticatedLayout-gF8MTUOg.js";function u(s){const{auth:e}=s;return t.jsx(r,{user:e.user,children:t.jsx("h1",{className:"title",children:"Resultados"})})}export{u as default};

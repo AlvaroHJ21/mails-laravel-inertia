@@ -1,0 +1,1 @@
+const o="/build/assets/eliminar-6SEU7Stc.svg",r="/build/assets/ver-C5A1F2Zc.svg",i="/build/assets/enviar-BmbHHMwt.svg";function c(a){const t=new Date(a),s=t.getDate(),e=t.getMonth()+1,n=t.getFullYear();return`${s<10?"0"+s:s}-${e<10?"0"+e:e}-${n.toString().slice(-2)}`}export{o as a,i as e,c as f,r as v};
