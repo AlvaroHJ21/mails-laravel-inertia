@@ -1,6 +1,9 @@
 interface Props {
     label: string;
-    options: (string | number)[];
+    options: {
+        value: string | number;
+        text: string;
+    }[];
     value: string | number;
     onChange?: (value: string | number) => void;
 }
@@ -15,8 +18,8 @@ export default function FilterSelect(props: Props) {
                 onChange={(e) => onChange && onChange(e.target.value)}
             >
                 {options.map((option) => (
-                    <option key={option} value={option}>
-                        {option}
+                    <option key={option.value} value={option.value}>
+                        {option.text}
                     </option>
                 ))}
             </select>

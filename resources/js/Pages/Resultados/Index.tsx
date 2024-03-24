@@ -147,6 +147,41 @@ export default function Resultados(props: PageProps) {
         };
     }, []);
 
+    /*
+     * Opciones de filtros
+     */
+    const yearOptions = [2023, 2024, 2025].map((year) => ({
+        text: year.toString(),
+        value: year,
+    }));
+
+    const monthOptions = [
+        {
+            text: "Todos",
+            value: "Todos",
+        },
+        ...MONTHS.map((month) => ({
+            text: month,
+            value: month,
+        })),
+    ];
+
+    const campainOptions = [
+        {
+            text: "Todas",
+            value: 0,
+        },
+        ...campains.map((campain) => ({
+            text: "Campaña " + campain.id,
+            value: campain.id,
+        })),
+    ];
+
+    const mediumOptions = ["Email", "SMS", "WhatsApp"].map((medium) => ({
+        text: medium,
+        value: medium,
+    }));
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Resultados" />
@@ -156,7 +191,7 @@ export default function Resultados(props: PageProps) {
             <div className="flex justify-center gap-4 mb-6">
                 <FilterSelect
                     label="Año"
-                    options={[2023, 2024, 2025]}
+                    options={yearOptions}
                     value={selectedYear}
                     onChange={(value) => setSelectedYear(Number(value))}
                 />
@@ -164,18 +199,18 @@ export default function Resultados(props: PageProps) {
                     label="Mes"
                     value={selectedMonth}
                     onChange={(value) => setSelectedMonth(value.toString())}
-                    options={["Todos", ...MONTHS.map((month) => month)]}
+                    options={monthOptions}
                 />
                 <FilterSelect
                     label="Campaña"
                     value={selectedCampainId}
-                    options={[0, ...campains.map((campain) => campain.id)]}
+                    options={campainOptions}
                     onChange={(value) => setSelectedCampainId(Number(value))}
                 />
                 <FilterSelect
                     label="Medio"
                     value={"Email"}
-                    options={["Email", "SMS", "WhatsApp"]}
+                    options={mediumOptions}
                 />
             </div>
             {/* Resultados */}
@@ -232,7 +267,7 @@ export default function Resultados(props: PageProps) {
                         {results.map((item) => {
                             return (
                                 <OpenRateCard
-                                    key={item.month + item.year}
+                                    key={item.month}
                                     value={calculatePercent(
                                         item.nOpenedRecords,
                                         item.nValidRecords
