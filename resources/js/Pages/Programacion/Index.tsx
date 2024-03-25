@@ -80,8 +80,9 @@ export default function Programacion(props: Props) {
                     route("campanias.send", { campania }),
                     {},
                     {
-                        onSuccess(data) {
+                        onSuccess(data: any) {
                             console.log(data);
+                            window.toast.success(data.props.flash.message);
                         },
                         onError(errors) {
                             console.log(errors);
@@ -91,6 +92,27 @@ export default function Programacion(props: Props) {
                 confirmModal.cancel();
             },
         });
+    }
+
+    /*
+     * Funcion para sincronizar el reporte de una campaña manualmente
+     * @param campania
+     */
+    function handleReport(campania: Campania): void {
+        router.post(
+            route("campanias.report", { campania }),
+            {},
+            {
+                onSuccess(data: any) {
+                    console.log(data);
+                    window.toast.success(data.props.flash.message);
+                },
+                onError(errors) {
+                    console.log(errors);
+                },
+            }
+        );
+        confirmModal.cancel();
     }
 
     return (
@@ -113,6 +135,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                             <th>Hora de envío</th>
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
+                            <th>Acciones (Manuales)</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -149,6 +172,18 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                 width={24}
                                             />
                                         </button>
+                                        <button
+                                            onClick={() =>
+                                                handleReport(campania)
+                                            }
+                                            className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
+                                        >
+                                            <i className="fa fa-bar-chart"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="flex w-20 gap-1">
                                         <button
                                             onClick={() => {
                                                 setOpenModalName("Form");

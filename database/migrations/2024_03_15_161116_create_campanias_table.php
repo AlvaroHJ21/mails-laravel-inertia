@@ -27,7 +27,11 @@ return new class extends Migration
             $table->text("whatsapp_contenido")->nullable();
 
             $table->boolean("enviado")->default(false);
-            $table->string("codigo", 6)->nullable();
+
+            $table->string("codigo_envio", 10)->nullable();
+            $table->unsignedInteger("n_registros")->nullable();
+            $table->unsignedInteger("n_validados")->nullable();
+            $table->unsignedInteger("n_abiertos")->nullable();
 
             $table->foreignId('user_id')->constrained("users");
             $table->timestamps();

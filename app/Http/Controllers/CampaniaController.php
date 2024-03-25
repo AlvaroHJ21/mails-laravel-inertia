@@ -231,7 +231,20 @@ class CampaniaController extends Controller
                 ->with('message', 'Campaña enviada con éxito')
                 ->with('data', $resp["data"]);
         } else {
-            return redirect()->back()->withErrors("Error al enviar la campaña");
+            return redirect()->back()->withErrors($resp["message"]);
+        }
+    }
+
+    public function report(Campania $campania)
+    {
+        $resp = SendCampania::report($campania);
+
+        if ($resp["ok"]) {
+            return redirect()->route('campanias.index')
+                ->with('message', 'Reporte obtenido con éxito')
+                ->with('data', $resp["data"]);
+        } else {
+            return redirect()->back()->withErrors($resp["message"]);
         }
     }
 }

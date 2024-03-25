@@ -26,8 +26,8 @@ export default function FormPartialEmail() {
                             }
                         >
                             <option value="">Seleccionar correo</option>
-                            <option value="correo1@email.com">
-                                correo1@email.com
+                            <option value="fpinedot1953@intico.com.pe">
+                                fpinedot1953@intico.com.pe
                             </option>
                             <option value="correo2@email.com">
                                 correo2@email.com
