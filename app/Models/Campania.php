@@ -31,6 +31,12 @@ class Campania extends Model
         "user_id",
     ];
 
+    protected $casts = [
+        "n_registros" => "integer",
+        "n_validados" => "integer",
+        "n_abiertos" => "integer",
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
