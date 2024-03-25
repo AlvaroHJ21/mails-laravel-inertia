@@ -9,7 +9,15 @@ export interface Campania {
     archivos_adjuntos: string[] | null;
     whatsapp_envio: string | null;
     whatsapp_contenido: string | null;
+
+    enviado: number;
+    codigo_envio: string;
+    n_registros: number;
+    n_validados: number;
+    n_abiertos: number;
+
     personas: CampaniaPersona[];
+
     created_at: string;
     updated_at: string;
 }

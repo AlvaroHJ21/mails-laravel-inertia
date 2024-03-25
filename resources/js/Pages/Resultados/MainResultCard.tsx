@@ -89,11 +89,11 @@ export default function MainResultCard(props: Props) {
                                 // },
                             },
                         },
-                        onClick(event, elements, chart) {
-                            console.log("event", event);
-                            console.log("elements", elements);
-                            console.log("chart", chart);
-                        },
+                        // onClick(event, elements, chart) {
+                        //     console.log("event", event);
+                        //     console.log("elements", elements);
+                        //     console.log("chart", chart);
+                        // },
 
                         scales: {
                             y: {

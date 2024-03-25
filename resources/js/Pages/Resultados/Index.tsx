@@ -10,26 +10,38 @@ import MainResultCard from "./MainResultCard";
 import OpenRateCard from "./OpenRateCard";
 import SuccessRateCard from "./SuccessRateCard";
 import { CampaniaMonthResult } from "@/Interfaces/CampaniaMonthResult";
+import { Campania } from "@/Interfaces/Campania";
 import type { PageProps } from "@/types";
 
-export default function Resultados(props: PageProps) {
-    const { auth } = props;
+type Props = PageProps & {
+    campanias: Campania[];
+    flash: {
+        message: string | null;
+    };
+};
+
+export default function Resultados(props: Props) {
+    const { auth, campanias } = props;
 
     const [selectedYear, setSelectedYear] = useState(2023);
     const [selectedMonth, setSelectedMonth] = useState("Todos");
     const [selectedCampainId, setSelectedCampainId] = useState(0);
+    const [test, setTest] = useState(true);
 
     const scroll1Ref = useRef<HTMLDivElement>(null);
     const scroll2Ref = useRef<HTMLDivElement>(null);
     const scroll3Ref = useRef<HTMLDivElement>(null);
 
+    const allCampains = test ? campains : campanias;
+
     /*
      * Filtrar las campañas por el id seleccionado
      */
     const filteredCampains = useMemo(() => {
-        let filteredCampains = [...campains];
+        // let filteredCampains = [...campains];
+        let filteredCampains = [...allCampains];
 
-        filteredCampains = campains.filter(
+        filteredCampains = filteredCampains.filter(
             (campain) =>
                 new Date(campain.fecha_envio).getUTCFullYear() === selectedYear
         );
@@ -42,19 +54,19 @@ export default function Resultados(props: PageProps) {
         );
 
         if (selectedCampainId !== 0) {
-            filteredCampains = campains.filter(
+            filteredCampains = filteredCampains.filter(
                 (campain) => campain.id === selectedCampainId
             );
         }
 
         return filteredCampains;
-    }, [selectedYear, selectedCampainId, selectedMonth]);
+    }, [selectedYear, selectedCampainId, selectedMonth, allCampains]);
 
     /*
      * Actualizar el año y mes si se selecciona una campaña
      */
     useEffect(() => {
-        const campain = campains.find((c) => c.id === selectedCampainId);
+        const campain = allCampains.find((c) => c.id === selectedCampainId);
         if (campain) {
             const year = new Date(campain.fecha_envio).getUTCFullYear();
             if (year !== selectedYear) {
@@ -73,7 +85,7 @@ export default function Resultados(props: PageProps) {
      * pero solo si la campaña seleccionada no es de ese mes o año
      */
     useEffect(() => {
-        const campain = campains.find((c) => c.id === selectedCampainId);
+        const campain = allCampains.find((c) => c.id === selectedCampainId);
         if (campain) {
             const month = MONTHS[new Date(campain.fecha_envio).getUTCMonth()];
             if (month !== selectedMonth) {
@@ -93,23 +105,23 @@ export default function Resultados(props: PageProps) {
      */
     const results = useMemo(() => {
         const results: CampaniaMonthResult[] = MONTHS.map((month) => {
-            const campains = filteredCampains.filter(
+            const fCampains = filteredCampains.filter(
                 (c) =>
                     new Date(c.fecha_envio).getUTCMonth() ===
                     MONTHS.indexOf(month)
             );
 
-            const nTotalRecords = campains.reduce(
+            const nTotalRecords = fCampains.reduce(
                 (acc, campain) => acc + campain.n_registros,
                 0
             );
 
-            const nValidRecords = campains.reduce(
+            const nValidRecords = fCampains.reduce(
                 (acc, campain) => acc + campain.n_validados,
                 0
             );
 
-            const nOpenedRecords = campains.reduce(
+            const nOpenedRecords = fCampains.reduce(
                 (acc, campain) => acc + campain.n_abiertos,
                 0
             );
@@ -120,11 +132,11 @@ export default function Resultados(props: PageProps) {
                 nTotalRecords: nTotalRecords,
                 nValidRecords: nValidRecords,
                 nOpenedRecords: nOpenedRecords,
-                nCampanias: campains.length,
+                nCampanias: fCampains.length,
             };
         });
         return results;
-    }, [filteredCampains]);
+    }, [filteredCampains, allCampains]);
 
     /*
      * Sincronizacion de scroll horizontal
@@ -171,7 +183,7 @@ export default function Resultados(props: PageProps) {
             text: "Todas",
             value: 0,
         },
-        ...campains.map((campain) => ({
+        ...allCampains.map((campain) => ({
             text: "Campaña " + campain.id,
             value: campain.id,
         })),
@@ -188,7 +200,7 @@ export default function Resultados(props: PageProps) {
             <h1 className="title">Resultados de Campañas</h1>
             <Alert text="En nuestro módulo de resultados de campañas encontrarás los principales indicadores de las campañas realizadas." />
             {/* Filtros */}
-            <div className="flex justify-center gap-4 mb-6">
+            <div className="flex items-center justify-center gap-4 mb-6">
                 <FilterSelect
                     label="Año"
                     options={yearOptions}
@@ -278,6 +290,19 @@ export default function Resultados(props: PageProps) {
                     </div>
                 </div>
             </div>
+            <button
+                onClick={() => setTest(!test)}
+                className="fixed btn btn-secondary btn-sm bottom-4 right-4"
+            >
+                {test ? (
+                    <span>
+                        <i className="mr-1 fa fa-vial"></i>
+                        Datos de prueba
+                    </span>
+                ) : (
+                    <span>Datos reales</span>
+                )}
+            </button>
         </AuthenticatedLayout>
     );
 }

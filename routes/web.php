@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampaniaController;
+use App\Http\Controllers\CampaniasResultadosController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SegmentoController;
@@ -64,9 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/campanias/{campania}/report', [CampaniaController::class, "report"])->name('campanias.report');
 
 
-    Route::get('/resultados', function () {
-        return Inertia::render('Resultados/Index');
-    })->name('resultados.index');
+    Route::get('/resultados', [CampaniasResultadosController::class, "index"])->name('resultados.index');
 
     // Route::get('/test', [PerfilController::class, 'test'])->name('perfiles.test');
 });
