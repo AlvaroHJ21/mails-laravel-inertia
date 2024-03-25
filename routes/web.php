@@ -63,9 +63,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/campanias/by-segmento/{segmento}', [CampaniaController::class, "storeBySegmento"])->name('campanias.store_by_segmento');
     Route::post('/campanias/{campania}/send', [CampaniaController::class, "send"])->name('campanias.send');
     Route::post('/campanias/{campania}/report', [CampaniaController::class, "report"])->name('campanias.report');
+    Route::get("/campanias", [CampaniaController::class, "updateAndGet"])->name("campanias.update_and_get");
 
 
     Route::get('/resultados', [CampaniasResultadosController::class, "index"])->name('resultados.index');
+    Route::get("/resultados/update-and-get", [CampaniasResultadosController::class, "updateAndGet"])->name("campanias.update_and_get");
 
     // Route::get('/test', [PerfilController::class, 'test'])->name('perfiles.test');
 });

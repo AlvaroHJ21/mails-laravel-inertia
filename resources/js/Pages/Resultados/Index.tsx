@@ -12,27 +12,44 @@ import SuccessRateCard from "./SuccessRateCard";
 import { CampaniaMonthResult } from "@/Interfaces/CampaniaMonthResult";
 import { Campania } from "@/Interfaces/Campania";
 import type { PageProps } from "@/types";
+import LoadingModal from "@/Components/LoadingModal";
 
 type Props = PageProps & {
-    campanias: Campania[];
     flash: {
         message: string | null;
     };
 };
 
 export default function Resultados(props: Props) {
-    const { auth, campanias } = props;
+    const { auth } = props;
 
     const [selectedYear, setSelectedYear] = useState(2023);
     const [selectedMonth, setSelectedMonth] = useState("Todos");
     const [selectedCampainId, setSelectedCampainId] = useState(0);
     const [test, setTest] = useState(true);
+    const [isLoadingCampaigns, setIsLoadingCampaigns] = useState(true);
 
     const scroll1Ref = useRef<HTMLDivElement>(null);
     const scroll2Ref = useRef<HTMLDivElement>(null);
     const scroll3Ref = useRef<HTMLDivElement>(null);
 
-    const allCampains = test ? campains : campanias;
+    const [realCampaigns, setRealCampaigns] = useState<Campania[]>([]);
+
+    const allCampains = test ? campains : realCampaigns;
+
+    useEffect(() => {
+        async function getCampaigns() {
+            setIsLoadingCampaigns(true);
+            const resp = await fetch(route("campanias.update_and_get"));
+            const data = await resp.json();
+            setRealCampaigns(data);
+            setIsLoadingCampaigns(false);
+        }
+
+        getCampaigns();
+
+        return () => {};
+    }, []);
 
     /*
      * Filtrar las campañas por el id seleccionado
@@ -226,70 +243,74 @@ export default function Resultados(props: Props) {
                 />
             </div>
             {/* Resultados */}
-            <div className="bg-[#e3f3fb] p-8 rounded-md">
-                <h2 className="mb-4 font-bold text-azul-marino">
-                    Campañas generadas
-                </h2>
-                <div
-                    ref={scroll1Ref}
-                    className="w-full pb-2 mb-8 overflow-x-auto"
-                >
-                    <div className="flex gap-2">
-                        {results.map((item) => {
-                            return (
-                                <MainResultCard
-                                    key={item.month}
-                                    result={item}
-                                />
-                            );
-                        })}
+            {isLoadingCampaigns ? (
+                <LoadingModal text="Actualizando reporte de campañas" />
+            ) : (
+                <div className="bg-[#e3f3fb] p-8 rounded-md">
+                    <h2 className="mb-4 font-bold text-azul-marino">
+                        Campañas generadas
+                    </h2>
+                    <div
+                        ref={scroll1Ref}
+                        className="w-full pb-2 mb-8 overflow-x-auto"
+                    >
+                        <div className="flex gap-2">
+                            {results.map((item) => {
+                                return (
+                                    <MainResultCard
+                                        key={item.month}
+                                        result={item}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
 
-                <h2 className="mb-4 font-bold text-azul-marino">
-                    Tasa de éxito de envío
-                </h2>
-                <div
-                    ref={scroll2Ref}
-                    className="w-full pb-2 mb-8 overflow-x-auto"
-                >
-                    <div className="flex gap-2">
-                        {results.map((item) => {
-                            return (
-                                <SuccessRateCard
-                                    key={item.month}
-                                    value={calculatePercent(
-                                        item.nValidRecords,
-                                        item.nTotalRecords
-                                    )}
-                                />
-                            );
-                        })}
+                    <h2 className="mb-4 font-bold text-azul-marino">
+                        Tasa de éxito de envío
+                    </h2>
+                    <div
+                        ref={scroll2Ref}
+                        className="w-full pb-2 mb-8 overflow-x-auto"
+                    >
+                        <div className="flex gap-2">
+                            {results.map((item) => {
+                                return (
+                                    <SuccessRateCard
+                                        key={item.month}
+                                        value={calculatePercent(
+                                            item.nValidRecords,
+                                            item.nTotalRecords
+                                        )}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
 
-                <h2 className="mb-4 font-bold text-azul-marino">
-                    Tasa de apertura
-                </h2>
-                <div
-                    ref={scroll3Ref}
-                    className="w-full pb-2 mb-8 overflow-x-auto"
-                >
-                    <div className="flex gap-2">
-                        {results.map((item) => {
-                            return (
-                                <OpenRateCard
-                                    key={item.month}
-                                    value={calculatePercent(
-                                        item.nOpenedRecords,
-                                        item.nValidRecords
-                                    )}
-                                />
-                            );
-                        })}
+                    <h2 className="mb-4 font-bold text-azul-marino">
+                        Tasa de apertura
+                    </h2>
+                    <div
+                        ref={scroll3Ref}
+                        className="w-full pb-2 mb-8 overflow-x-auto"
+                    >
+                        <div className="flex gap-2">
+                            {results.map((item) => {
+                                return (
+                                    <OpenRateCard
+                                        key={item.month}
+                                        value={calculatePercent(
+                                            item.nOpenedRecords,
+                                            item.nValidRecords
+                                        )}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
             <button
                 onClick={() => setTest(!test)}
                 className="fixed btn btn-secondary btn-sm bottom-4 right-4"

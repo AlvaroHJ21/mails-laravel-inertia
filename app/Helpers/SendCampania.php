@@ -7,6 +7,7 @@ use App\DTO\CampainReportSyncResponse;
 use App\DTO\SendCampaniaResponse;
 use App\Models\Campania;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class SendCampania
 {
@@ -79,8 +80,8 @@ class SendCampania
             ];
 
             /*
-             * PASO 1: Sinconizar reporte
-             */
+            * PASO 1: Sinconizar reporte
+            */
             $body = [
                 "data" => [
                     "code" => $campania->codigo_envio,
@@ -88,6 +89,8 @@ class SendCampania
                     "idcampaign" => $campania->id,
                 ]
             ];
+
+
             $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "FeedbackCampaign", $body);
             $data = CampainReportSyncResponse::make($response->json());
 
@@ -120,8 +123,10 @@ class SendCampania
                 ]
             );
 
+            Log::info("Reporte de la campaña " . $campania->nombre . " actualizado");
             return ["ok" => true, "data" => $data];
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             return ["ok" => false, "message" => $th->getMessage()];
         }
     }

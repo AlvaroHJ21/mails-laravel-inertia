@@ -60,9 +60,14 @@ export default function Modal({
                     <Dialog.Panel
                         className={`relative max-h-screen bg-white rounded-lg overflow-y-auto shadow-xl transform transition-all sm:w-[90%] sm:mx-auto ${maxWidthClass}`}
                     >
-                        <button onClick={close} className="absolute top-2 right-4 text-celeste-claro">
-                            <i className="fa fa-x"></i>
-                        </button>
+                        {closeable && (
+                            <button
+                                onClick={close}
+                                className="absolute top-2 right-4 text-celeste-claro"
+                            >
+                                <i className="fa fa-x"></i>
+                            </button>
+                        )}
                         {children}
                     </Dialog.Panel>
                 </Transition.Child>

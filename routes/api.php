@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaniasResultadosController;
 use App\Http\Controllers\HTMLController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
