@@ -13,8 +13,15 @@ return new class extends Migration
     {
         Schema::create('campania_personas', function (Blueprint $table) {
             $table->id();
+
+            //from excel
             $table->string("documento");
             $table->string("correo");
+
+            //from reporte de envio
+            $table->string("id_mail")->nullable();
+            $table->string("estado_mail")->nullable();
+
             $table->foreignId("campania_id")->constrained("campanias")->onDelete("cascade");
             $table->timestamps();
         });

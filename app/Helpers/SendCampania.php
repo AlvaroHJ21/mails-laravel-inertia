@@ -6,6 +6,7 @@ use App\DTO\CampainReportResponse;
 use App\DTO\CampainReportSyncResponse;
 use App\DTO\SendCampaniaResponse;
 use App\Models\Campania;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -76,6 +77,8 @@ class SendCampania
     static function report(Campania $campania)
     {
         try {
+            DB::beginTransaction();
+
             $header = [
                 "apikey" => env("INTICO_API_KEY"),
                 "user" => env("INTICO_USER"),
@@ -96,7 +99,7 @@ class SendCampania
             $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "FeedbackCampaign", $body);
             $data = CampainReportSyncResponse::make($response->json());
 
-            if ($data->estado === "0") {
+            if ($data->estado != 1) {
                 return ["ok" => false, "message" => "Error al sincronizar el reporte"];
             }
 
@@ -113,8 +116,21 @@ class SendCampania
             $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "ReportCampaign", $body);
             $data = CampainReportResponse::make($response->json());
 
-            if ($data->estado === "0") {
+            if ($data->estado != 1) {
                 return ["ok" => false, "message" => "Error al obtener el reporte"];
+            }
+
+            //Actualizar personas de campaña
+            foreach ($data->feedback as $feedback) {
+                $persona = $campania->personas->where("correo", $feedback->email)->first();
+                if ($persona) {
+                    $persona->update(
+                        [
+                            "id_mail" => $feedback->id_mail,
+                            "estado_mail" => $feedback->estado_mail,
+                        ]
+                    );
+                }
             }
 
             $campania->update(
@@ -125,9 +141,11 @@ class SendCampania
                 ]
             );
 
+            DB::commit();
             Log::info("Reporte de la campaña " . $campania->id . " " . $campania->nombre . " actualizado");
             return ["ok" => true, "data" => $data];
         } catch (\Throwable $th) {
+            DB::rollBack();
             Log::error($th->getMessage());
             return ["ok" => false, "message" => $th->getMessage()];
         }
