@@ -19,11 +19,12 @@ import excelSvg from "@/svg/excel.svg";
 type Props = PageProps & {
     flash: {
         message: string | null;
+        data: any;
     };
 };
 
 export default function Resultados(props: Props) {
-    const { auth } = props;
+    const { auth, flash } = props;
 
     const [selectedYear, setSelectedYear] = useState(2024);
     const [selectedMonth, setSelectedMonth] = useState("Todos");
@@ -39,6 +40,19 @@ export default function Resultados(props: Props) {
 
     const allCampains = test ? campains : realCampaigns;
 
+    /*
+     * Cargar la campaña que viene de la vista de programación
+     */
+    useEffect(() => {
+        if (flash.data) {
+            setSelectedCampainId(flash.data.id);
+        }
+        return () => {};
+    }, [flash.data]);
+
+    /*
+     * Obtener las campañas con reportes actualizados
+     */
     useEffect(() => {
         async function getCampaigns() {
             setIsLoadingCampaigns(true);

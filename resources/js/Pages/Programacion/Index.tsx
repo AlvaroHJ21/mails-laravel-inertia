@@ -99,9 +99,9 @@ export default function Programacion(props: Props) {
      * Funcion para sincronizar el reporte de una campaña manualmente
      * @param campania
      */
-    function handleReport(campania: Campania): void {
+    function handleSyncReport(campania: Campania): void {
         router.post(
-            route("campanias.report", { campania }),
+            route("campanias.sync_report", { campania }),
             {},
             {
                 onSuccess(data: any) {
@@ -114,6 +114,10 @@ export default function Programacion(props: Props) {
             }
         );
         confirmModal.cancel();
+    }
+
+    function handleShowReport(campania: Campania) {
+        router.get(route("campanias.report", { campania: campania.id }));
     }
 
     return (
@@ -136,7 +140,6 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                             <th>Hora de envío</th>
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
-                            <th>Enviar ahora / Actualizar reporte</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -163,7 +166,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                     </a>
                                 </td>
                                 <td>
-                                    <div className="flex w-20 gap-1">
+                                    <div className="flex w-40 gap-1">
                                         {!campania.enviado ? (
                                             <Tooltip text="Enviar ahora">
                                                 <button
@@ -179,21 +182,33 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                 </button>
                                             </Tooltip>
                                         ) : (
-                                            <Tooltip text="Actualizar reporte de campaña">
-                                                <button
-                                                    onClick={() =>
-                                                        handleReport(campania)
-                                                    }
-                                                    className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
-                                                >
-                                                    <i className="fa fa-bar-chart"></i>
-                                                </button>
-                                            </Tooltip>
+                                            <>
+                                                <Tooltip text="Actualizar reporte de campaña">
+                                                    <button
+                                                        onClick={() =>
+                                                            handleSyncReport(
+                                                                campania
+                                                            )
+                                                        }
+                                                        className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
+                                                    >
+                                                        <i className="fa fa-refresh"></i>
+                                                    </button>
+                                                </Tooltip>
+                                                <Tooltip text="Ver reporte de campaña">
+                                                    <button
+                                                        onClick={() =>
+                                                            handleShowReport(
+                                                                campania
+                                                            )
+                                                        }
+                                                        className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
+                                                    >
+                                                        <i className="fa fa-bar-chart"></i>
+                                                    </button>
+                                                </Tooltip>
+                                            </>
                                         )}
-                                    </div>
-                                </td>
-                                <td>
-                                    <div className="flex w-20 gap-1">
                                         <button
                                             onClick={() => {
                                                 setOpenModalName("Form");
@@ -204,6 +219,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                 src={verSvg}
                                                 alt="icono de ver"
                                                 width={24}
+                                                className="w-7"
                                             />
                                         </button>
                                         <button
@@ -215,6 +231,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                 src={eliminarSvg}
                                                 alt="icono de eliminar"
                                                 width={24}
+                                                className="w-7"
                                             />
                                         </button>
                                     </div>

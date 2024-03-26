@@ -63,8 +63,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/campanias/by-perfil/{perfil}', [CampaniaController::class, "storeByPerfil"])->name('campanias.store_by_perfil');
     Route::post('/campanias/by-segmento/{segmento}', [CampaniaController::class, "storeBySegmento"])->name('campanias.store_by_segmento');
     Route::post('/campanias/{campania}/send', [CampaniaController::class, "send"])->name('campanias.send');
-    Route::post('/campanias/{campania}/report', [CampaniaController::class, "report"])->name('campanias.report');
+    Route::post('/campanias/{campania}/sync-report', [CampaniaController::class, "syncReport"])->name('campanias.sync_report');
     Route::get("/campanias", [CampaniaController::class, "updateAndGet"])->name("campanias.update_and_get");
+    Route::get("/campanias/{campania}/report", [CampaniaController::class, "report"])->name("campanias.report");
 
 
     Route::get('/resultados', [CampaniasResultadosController::class, "index"])->name('resultados.index');

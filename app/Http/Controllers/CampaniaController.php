@@ -250,7 +250,7 @@ class CampaniaController extends Controller
         }
     }
 
-    public function report(Campania $campania)
+    public function syncReport(Campania $campania)
     {
         $resp = SendCampania::report($campania);
 
@@ -261,5 +261,13 @@ class CampaniaController extends Controller
         } else {
             return redirect()->back()->withErrors($resp["message"]);
         }
+    }
+
+    public function report(Campania $campania)
+    {
+        // return redirect()->route('campanias.index')
+        //     ->with('message', 'Campaña creada con éxito');
+        return redirect()->route('resultados.index')
+            ->with('data', $campania);
     }
 }
