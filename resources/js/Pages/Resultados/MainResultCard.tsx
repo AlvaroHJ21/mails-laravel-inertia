@@ -84,9 +84,12 @@ export default function MainResultCard(props: Props) {
                                     weight: "bold",
                                 },
                                 rotation: -90,
-                                // formatter: (value) => {
-                                //     return value + "K";
-                                // },
+                                formatter: (value) => {
+                                    if (value === 0) {
+                                        return "";
+                                    }
+                                    return value;
+                                },
                             },
                         },
                         // onClick(event, elements, chart) {
