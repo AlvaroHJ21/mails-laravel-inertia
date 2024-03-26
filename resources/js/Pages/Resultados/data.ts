@@ -21,7 +21,7 @@ export const campains = [
         n_registros: 123,
         n_validados: 78,
         n_abiertos: 67,
-        fecha_envio: "2023-01-01",
+        fecha_envio: "2024-01-01",
         medio_envio: 0,
     },
     {
@@ -29,7 +29,7 @@ export const campains = [
         n_registros: 59,
         n_validados: 37,
         n_abiertos: 22,
-        fecha_envio: "2023-02-12",
+        fecha_envio: "2024-02-12",
         medio_envio: 0,
     },
     {
@@ -37,7 +37,7 @@ export const campains = [
         n_registros: 187,
         n_validados: 120,
         n_abiertos: 102,
-        fecha_envio: "2023-03-25",
+        fecha_envio: "2024-03-25",
         medio_envio: 0,
     },
     {
@@ -45,7 +45,7 @@ export const campains = [
         n_registros: 82,
         n_validados: 57,
         n_abiertos: 35,
-        fecha_envio: "2023-04-30",
+        fecha_envio: "2024-04-30",
         medio_envio: 0,
     },
     {
@@ -53,7 +53,7 @@ export const campains = [
         n_registros: 175,
         n_validados: 98,
         n_abiertos: 80,
-        fecha_envio: "2023-05-17",
+        fecha_envio: "2024-05-17",
         medio_envio: 0,
     },
     {
@@ -61,7 +61,7 @@ export const campains = [
         n_registros: 33,
         n_validados: 20,
         n_abiertos: 14,
-        fecha_envio: "2023-06-04",
+        fecha_envio: "2024-06-04",
         medio_envio: 0,
     },
     {
@@ -69,7 +69,7 @@ export const campains = [
         n_registros: 194,
         n_validados: 140,
         n_abiertos: 123,
-        fecha_envio: "2023-07-20",
+        fecha_envio: "2024-07-20",
         medio_envio: 0,
     },
     {
@@ -77,7 +77,7 @@ export const campains = [
         n_registros: 91,
         n_validados: 72,
         n_abiertos: 65,
-        fecha_envio: "2023-08-14",
+        fecha_envio: "2024-08-14",
         medio_envio: 0,
     },
     {
@@ -85,7 +85,7 @@ export const campains = [
         n_registros: 118,
         n_validados: 76,
         n_abiertos: 59,
-        fecha_envio: "2023-09-09",
+        fecha_envio: "2024-09-09",
         medio_envio: 0,
     },
     {
@@ -93,7 +93,7 @@ export const campains = [
         n_registros: 45,
         n_validados: 27,
         n_abiertos: 15,
-        fecha_envio: "2023-10-28",
+        fecha_envio: "2024-10-28",
         medio_envio: 0,
     },
     {
@@ -101,7 +101,7 @@ export const campains = [
         n_registros: 63,
         n_validados: 44,
         n_abiertos: 29,
-        fecha_envio: "2023-11-05",
+        fecha_envio: "2024-11-05",
         medio_envio: 0,
     },
     {
@@ -109,7 +109,7 @@ export const campains = [
         n_registros: 99,
         n_validados: 70,
         n_abiertos: 58,
-        fecha_envio: "2023-12-19",
+        fecha_envio: "2024-12-19",
         medio_envio: 0,
     },
     {
@@ -117,7 +117,7 @@ export const campains = [
         n_registros: 153,
         n_validados: 111,
         n_abiertos: 95,
-        fecha_envio: "2023-01-23",
+        fecha_envio: "2024-01-23",
         medio_envio: 0,
     },
     {
@@ -125,7 +125,7 @@ export const campains = [
         n_registros: 24,
         n_validados: 17,
         n_abiertos: 9,
-        fecha_envio: "2023-02-10",
+        fecha_envio: "2024-02-10",
         medio_envio: 0,
     },
     {
@@ -133,7 +133,7 @@ export const campains = [
         n_registros: 87,
         n_validados: 53,
         n_abiertos: 43,
-        fecha_envio: "2023-03-02",
+        fecha_envio: "2024-03-02",
         medio_envio: 0,
     },
     {
@@ -141,7 +141,7 @@ export const campains = [
         n_registros: 134,
         n_validados: 82,
         n_abiertos: 75,
-        fecha_envio: "2023-04-14",
+        fecha_envio: "2024-04-14",
         medio_envio: 0,
     },
     {
@@ -149,7 +149,7 @@ export const campains = [
         n_registros: 37,
         n_validados: 19,
         n_abiertos: 8,
-        fecha_envio: "2023-05-30",
+        fecha_envio: "2024-05-30",
         medio_envio: 0,
     },
     {
@@ -157,7 +157,7 @@ export const campains = [
         n_registros: 171,
         n_validados: 102,
         n_abiertos: 84,
-        fecha_envio: "2023-06-22",
+        fecha_envio: "2024-06-22",
         medio_envio: 0,
     },
     {
@@ -165,7 +165,7 @@ export const campains = [
         n_registros: 76,
         n_validados: 52,
         n_abiertos: 40,
-        fecha_envio: "2023-07-07",
+        fecha_envio: "2024-07-07",
         medio_envio: 0,
     },
     {
@@ -173,7 +173,7 @@ export const campains = [
         n_registros: 109,
         n_validados: 81,
         n_abiertos: 64,
-        fecha_envio: "2023-08-31",
+        fecha_envio: "2024-08-31",
         medio_envio: 0,
     },
     {
@@ -181,7 +181,7 @@ export const campains = [
         n_registros: 88,
         n_validados: 54,
         n_abiertos: 39,
-        fecha_envio: "2023-09-22",
+        fecha_envio: "2024-09-22",
         medio_envio: 0,
     },
     {
@@ -189,7 +189,7 @@ export const campains = [
         n_registros: 175,
         n_validados: 113,
         n_abiertos: 97,
-        fecha_envio: "2023-10-09",
+        fecha_envio: "2024-10-09",
         medio_envio: 0,
     },
     {
@@ -197,7 +197,7 @@ export const campains = [
         n_registros: 42,
         n_validados: 26,
         n_abiertos: 14,
-        fecha_envio: "2023-11-15",
+        fecha_envio: "2024-11-15",
         medio_envio: 0,
     },
     {
@@ -205,7 +205,7 @@ export const campains = [
         n_registros: 93,
         n_validados: 65,
         n_abiertos: 55,
-        fecha_envio: "2023-12-01",
+        fecha_envio: "2024-12-01",
         medio_envio: 0,
     },
     {
@@ -213,7 +213,7 @@ export const campains = [
         n_registros: 147,
         n_validados: 85,
         n_abiertos: 77,
-        fecha_envio: "2023-01-28",
+        fecha_envio: "2024-01-28",
         medio_envio: 0,
     },
     {
@@ -221,7 +221,7 @@ export const campains = [
         n_registros: 29,
         n_validados: 16,
         n_abiertos: 9,
-        fecha_envio: "2023-02-11",
+        fecha_envio: "2024-02-11",
         medio_envio: 0,
     },
     {
@@ -229,7 +229,7 @@ export const campains = [
         n_registros: 68,
         n_validados: 45,
         n_abiertos: 35,
-        fecha_envio: "2023-03-19",
+        fecha_envio: "2024-03-19",
         medio_envio: 0,
     },
     {
@@ -237,7 +237,7 @@ export const campains = [
         n_registros: 119,
         n_validados: 72,
         n_abiertos: 60,
-        fecha_envio: "2023-04-05",
+        fecha_envio: "2024-04-05",
         medio_envio: 0,
     },
     {
@@ -245,7 +245,7 @@ export const campains = [
         n_registros: 53,
         n_validados: 35,
         n_abiertos: 21,
-        fecha_envio: "2023-05-20",
+        fecha_envio: "2024-05-20",
         medio_envio: 0,
     },
     {
@@ -253,7 +253,7 @@ export const campains = [
         n_registros: 180,
         n_validados: 120,
         n_abiertos: 105,
-        fecha_envio: "2023-06-13",
+        fecha_envio: "2024-06-13",
         medio_envio: 0,
     },
     {
@@ -261,7 +261,7 @@ export const campains = [
         n_registros: 67,
         n_validados: 43,
         n_abiertos: 35,
-        fecha_envio: "2023-07-25",
+        fecha_envio: "2024-07-25",
         medio_envio: 0,
     },
     {
@@ -269,7 +269,7 @@ export const campains = [
         n_registros: 128,
         n_validados: 89,
         n_abiertos: 70,
-        fecha_envio: "2023-08-18",
+        fecha_envio: "2024-08-18",
         medio_envio: 0,
     },
     {
@@ -277,7 +277,7 @@ export const campains = [
         n_registros: 41,
         n_validados: 23,
         n_abiertos: 17,
-        fecha_envio: "2023-09-04",
+        fecha_envio: "2024-09-04",
         medio_envio: 0,
     },
     {
@@ -285,7 +285,7 @@ export const campains = [
         n_registros: 97,
         n_validados: 66,
         n_abiertos: 49,
-        fecha_envio: "2023-10-27",
+        fecha_envio: "2024-10-27",
         medio_envio: 0,
     },
     {
@@ -293,7 +293,7 @@ export const campains = [
         n_registros: 139,
         n_validados: 92,
         n_abiertos: 85,
-        fecha_envio: "2023-11-10",
+        fecha_envio: "2024-11-10",
         medio_envio: 0,
     },
     {
@@ -301,7 +301,7 @@ export const campains = [
         n_registros: 75,
         n_validados: 47,
         n_abiertos: 38,
-        fecha_envio: "2023-12-29",
+        fecha_envio: "2024-12-29",
         medio_envio: 0,
     },
     {
@@ -309,7 +309,7 @@ export const campains = [
         n_registros: 150,
         n_validados: 105,
         n_abiertos: 87,
-        fecha_envio: "2023-01-14",
+        fecha_envio: "2024-01-14",
         medio_envio: 0,
     },
     {
@@ -317,7 +317,7 @@ export const campains = [
         n_registros: 21,
         n_validados: 14,
         n_abiertos: 8,
-        fecha_envio: "2023-02-06",
+        fecha_envio: "2024-02-06",
         medio_envio: 0,
     },
     {
@@ -325,7 +325,7 @@ export const campains = [
         n_registros: 63,
         n_validados: 41,
         n_abiertos: 31,
-        fecha_envio: "2023-03-24",
+        fecha_envio: "2024-03-24",
         medio_envio: 0,
     },
     {
@@ -333,7 +333,7 @@ export const campains = [
         n_registros: 104,
         n_validados: 68,
         n_abiertos: 51,
-        fecha_envio: "2023-04-17",
+        fecha_envio: "2024-04-17",
         medio_envio: 0,
     },
 ];
