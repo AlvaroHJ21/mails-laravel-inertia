@@ -31,6 +31,21 @@ class CampaniaController extends Controller
         return Inertia::render('Programacion/Index', compact("campanias"));
     }
 
+    public function downloadTemplate()
+    {
+
+        $path = storage_path("app/excel/template-campaign.xlsx");
+
+        // Verificar si el archivo existe
+        if (file_exists($path)) {
+            // Descargar el excel
+            return response()->download($path, 'formato.xlsx');
+        } else {
+            // El archivo no existe
+            return redirect()->back()->with('error', 'El archivo no existe');
+        }
+    }
+
     public function store(StoreRequest $request)
     {
         try {

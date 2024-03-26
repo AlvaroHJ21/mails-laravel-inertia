@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/segmentos/{segmento}/destroy', [SegmentoController::class, 'destroy'])->name('segmentos.destroy');
 
     Route::get('/programacion', [CampaniaController::class, "index"])->name('campanias.index');
+    Route::get('/campanias/template/download', [CampaniaController::class, 'downloadTemplate'])->name('campanias.downloadTemplate');
     Route::post('/campanias', [CampaniaController::class, "store"])->name('campanias.store');
     Route::get('/campanias/{campania}/download', [CampaniaController::class, 'download'])->name('campanias.download');
     Route::put('/campanias/{campania}', [CampaniaController::class, "update"])->name('campanias.update');
