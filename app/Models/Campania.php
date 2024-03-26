@@ -23,6 +23,7 @@ class Campania extends Model
         "whatsapp_contenido",
 
         "enviado",
+        "sincronizado",
         "codigo_envio",
         "n_registros",
         "n_validados",

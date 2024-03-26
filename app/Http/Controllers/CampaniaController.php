@@ -241,7 +241,7 @@ class CampaniaController extends Controller
 
         if ($resp["ok"]) {
             return redirect()->route('campanias.index')
-                ->with('message', 'Reporte obtenido con éxito')
+                ->with('message', 'Reporte de campaña actualizado')
                 ->with('data', $resp["data"]);
         } else {
             return redirect()->back()->withErrors($resp["message"]);

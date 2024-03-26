@@ -84,23 +84,32 @@ class SendCampania
                 "user" => env("INTICO_USER"),
             ];
 
-            /*
-            * PASO 1: Sinconizar reporte
-            */
-            $body = [
-                "data" => [
-                    "code" => $campania->codigo_envio,
-                    "socket" => "response25812",
-                    "idcampaign" => $campania->id,
-                ]
-            ];
+            if (!$campania->sincronizado) {
+
+                /*
+                * PASO 1: Sinconizar reporte
+                */
+                $body = [
+                    "data" => [
+                        "code" => $campania->codigo_envio,
+                        "socket" => "response25812",
+                        "idcampaign" => $campania->id,
+                    ]
+                ];
 
 
-            $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "FeedbackCampaign", $body);
-            $data = CampainReportSyncResponse::make($response->json());
+                $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "FeedbackCampaign", $body);
+                $data = CampainReportSyncResponse::make($response->json());
 
-            if ($data->estado != 1) {
-                return ["ok" => false, "message" => "Error al sincronizar el reporte"];
+                if ($data->estado != 1) {
+                    throw new \Exception("Error al sincronizar el reporte de la campaña " . $campania->id);
+                }
+
+                $campania->update(
+                    [
+                        "sincronizado" => true,
+                    ]
+                );
             }
 
             /*
@@ -117,7 +126,7 @@ class SendCampania
             $data = CampainReportResponse::make($response->json());
 
             if ($data->estado != 1) {
-                return ["ok" => false, "message" => "Error al obtener el reporte"];
+                throw new \Exception("Error al obtener el reporte de la campaña " . $campania->id);
             }
 
             //Actualizar personas de campaña
