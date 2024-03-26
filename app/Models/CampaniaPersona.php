@@ -11,5 +11,10 @@ class CampaniaPersona extends Model
 
     protected $table = 'campania_personas';
 
-    protected $fillable = ['documento', 'correo'];
+    protected $fillable = [
+        'documento',
+        'correo',
+        'id_mail',
+        'estado_mail',
+    ];
 }
