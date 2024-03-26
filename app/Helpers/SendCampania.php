@@ -119,7 +119,7 @@ class SendCampania
                 "data" => [
                     "idcampaign" => $campania->codigo_envio,
                     "pag" => "1",
-                    "count" => "10",
+                    "count" => 9999, //* Número alto para obtener todos los registros de una sola vez
                 ]
             ];
             $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "ReportCampaign", $body);
