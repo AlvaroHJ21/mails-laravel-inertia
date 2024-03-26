@@ -125,7 +125,7 @@ class SendCampania
                 ]
             );
 
-            Log::info("Reporte de la campaña " . $campania->nombre . " actualizado");
+            Log::info("Reporte de la campaña " . $campania->id . " " . $campania->nombre . " actualizado");
             return ["ok" => true, "data" => $data];
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
