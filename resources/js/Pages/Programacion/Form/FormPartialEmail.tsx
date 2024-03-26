@@ -56,12 +56,16 @@ export default function FormPartialEmail() {
                         />
                     </div>
                 </label>
-            </div>
 
-            <Editor
-                value={values.email_content}
-                onChange={(content) => handleChange({ email_content: content })}
-            />
+                <div className="col-span-2">
+                    <Editor
+                        value={values.email_content}
+                        onChange={(content) =>
+                            handleChange({ email_content: content })
+                        }
+                    />
+                </div>
+            </div>
 
             {/* <div className="grid grid-cols-2">
                 <label className="mb-2 field">

@@ -319,9 +319,9 @@ export default function Form(props: Props) {
                                         href={route(
                                             "campanias.downloadTemplate"
                                         )}
-                                        className="inline-block text-sm font-normal hover:text-celeste-claro"
+                                        className="inline-block text-sm font-normal hover:text-celeste-claro hover:underline"
                                     >
-                                        (Descargar plantilla)
+                                        Descargar plantilla
                                     </a>
                                 </div>
                                 <ButtonUpload
@@ -371,10 +371,11 @@ export default function Form(props: Props) {
                         </div>
 
                         <div className="absolute left-0 right-0 flex gap-2 m-auto w-fit bottom-8">
-                            <Button>Exportar a HTML</Button>
-                            <Button onClick={copyHtml} className="bottom-8">
-                                Genererar / Copiar HTML
-                            </Button>
+                            {values.send_medium === 0 ? (
+                                <Button onClick={copyHtml} className="bottom-8">
+                                    Genererar / Copiar HTML
+                                </Button>
+                            ) : null}
                         </div>
                     </div>
                 </div>
