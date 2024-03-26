@@ -13,6 +13,7 @@ import { CampaniaMonthResult } from "@/Interfaces/CampaniaMonthResult";
 import { Campania } from "@/Interfaces/Campania";
 import type { PageProps } from "@/types";
 import LoadingModal from "@/Components/LoadingModal";
+import LoaderBounced from "@/Icons/LoaderBounced";
 
 type Props = PageProps & {
     flash: {
@@ -244,7 +245,8 @@ export default function Resultados(props: Props) {
             </div>
             {/* Resultados */}
             {isLoadingCampaigns ? (
-                <LoadingModal text="Actualizando reporte de campañas" />
+                // <LoadingModal text="Actualizando reporte de campañas" />
+                <LoaderBounced/>
             ) : (
                 <div className="bg-[#e3f3fb] p-8 rounded-md">
                     <h2 className="mb-4 font-bold text-azul-marino">
@@ -316,12 +318,12 @@ export default function Resultados(props: Props) {
                 className="fixed btn btn-secondary btn-sm bottom-4 right-4"
             >
                 {test ? (
+                    <span>Datos reales</span>
+                ) : (
                     <span>
                         <i className="mr-1 fa fa-vial"></i>
                         Datos de prueba
                     </span>
-                ) : (
-                    <span>Datos reales</span>
                 )}
             </button>
         </AuthenticatedLayout>
