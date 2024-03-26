@@ -19,7 +19,7 @@ export default function FormView(props: Props) {
     }
 
     return (
-        <div>
+        <div className="">
             <div className="flex items-center justify-center gap-2 p-4 text-white bg-azul-marino">
                 <TextEditable
                     value={nombre}
@@ -34,7 +34,7 @@ export default function FormView(props: Props) {
                     <iframe
                         title="dashboard perfilamiento"
                         width="1350"
-                        height="550"
+                        height="680"
                         src="https://app.powerbi.com/view?r=eyJrIjoiN2MxYjU0ZmItNTg2YS00M2FiLWEyYjUtNjE4NjkzZGMzMmMyIiwidCI6IjBmYjBkZjA5LTc0MGYtNDFmZS1hODNmLTVhOWVjZjcwMmRhYiIsImMiOjR9"
                         frameBorder="0"
                         allowFullScreen
