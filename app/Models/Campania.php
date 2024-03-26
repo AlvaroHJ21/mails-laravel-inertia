@@ -18,9 +18,10 @@ class Campania extends Model
         "correo_envio",
         "correo_asunto",
         "correo_contenido",
-        "archivos_adjuntos",
         "whatsapp_envio",
         "whatsapp_contenido",
+        "sms_telefono_envio",
+        "sms_contenido",
 
         "enviado",
         "sincronizado",

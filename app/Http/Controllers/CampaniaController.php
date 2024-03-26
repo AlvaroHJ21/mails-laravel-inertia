@@ -54,17 +54,6 @@ class CampaniaController extends Controller
             $data = $request->validated();
             $data['user_id'] = Auth::user()->id;
 
-            //si existen archivos adjuntos
-            if ($request->hasFile('archivos_adjuntos')) {
-                //subir archivos
-                $files = $request->file('archivos_adjuntos');
-                $archivos = [];
-                foreach ($files as $file) {
-                    $archivos[] = $file->store('adjuntos');
-                }
-                $data['archivos_adjuntos'] = json_encode($archivos);
-            }
-
             $campania = Campania::create($data);
 
             $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
@@ -168,26 +157,6 @@ class CampaniaController extends Controller
                 $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
                 $campania->personas()->delete();
                 $campania->personas()->createMany($personas);
-            }
-
-            //si existen archivos adjuntos
-            if ($request->hasFile('archivos_adjuntos')) {
-
-                //eliminar archivos anteriores
-                if ($campania->archivos_adjuntos) {
-                    $archivos = json_decode($campania->archivos_adjuntos);
-                    foreach ($archivos as $archivo) {
-                        Storage::delete($archivo);
-                    }
-                }
-
-                //subir archivos nuevos
-                $files = $request->file('archivos_adjuntos');
-                $archivos = [];
-                foreach ($files as $file) {
-                    $archivos[] = $file->store('adjuntos');
-                }
-                $data["archivos_adjuntos"] = json_encode($archivos);
             }
 
             $campania->update($data);

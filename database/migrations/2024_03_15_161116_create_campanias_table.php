@@ -21,10 +21,12 @@ return new class extends Migration
             $table->string("correo_envio")->nullable();
             $table->string("correo_asunto")->nullable();
             $table->text("correo_contenido")->nullable();
-            $table->json("archivos_adjuntos")->nullable();
 
             $table->string("whatsapp_envio")->nullable();
             $table->text("whatsapp_contenido")->nullable();
+
+            $table->string("sms_telefono_envio")->nullable();
+            $table->text("sms_contenido")->nullable();
 
             $table->boolean("enviado")->default(false);
             $table->boolean("sincronizado")->default(false);

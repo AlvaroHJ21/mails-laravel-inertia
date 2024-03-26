@@ -23,15 +23,15 @@ export default function FormPartialSMS() {
                         </span>
                         <select
                             className="input"
-                            name="email_send"
-                            value={values.email_send}
+                            name="sms_phone_send"
+                            value={values.sms_phone_send}
                             onChange={(e) =>
                                 handleChange({
-                                    email_send: e.target.value,
+                                    sms_phone_send: e.target.value,
                                 })
                             }
                         >
-                            <option value="">Seleccionar teléfono</option>
+                            <option>Seleccionar teléfono</option>
                             {phones.map((phone, index) => (
                                 <option key={index} value={phone}>
                                     {phone}
@@ -43,8 +43,10 @@ export default function FormPartialSMS() {
 
                 <div className="col-span-2">
                     <textarea
-                        name=""
-                        id=""
+                        value={values.sms_content}
+                        onChange={(e) =>
+                            handleChange({ sms_content: e.target.value })
+                        }
                         className="w-full bg-transparent border-gray-300 resize-none input"
                         rows={10}
                     ></textarea>

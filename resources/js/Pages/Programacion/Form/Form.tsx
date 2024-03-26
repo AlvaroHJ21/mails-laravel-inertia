@@ -23,6 +23,8 @@ interface FormDataContext {
     email_content: string;
     whatsapp_phone_send: string;
     whatsapp_content: string;
+    sms_phone_send: string;
+    sms_content: string;
 }
 
 export const FormContext = createContext<{
@@ -39,6 +41,8 @@ export const FormContext = createContext<{
         email_content: "",
         whatsapp_phone_send: "",
         whatsapp_content: "",
+        sms_phone_send: "",
+        sms_content: "",
     },
     handleChange: () => {},
 });
@@ -58,11 +62,6 @@ export default function Form(props: Props) {
     const [personsFile, setPersonsFile] = useState<File>();
 
     /*
-     * Listado de archivos adjuntos
-     */
-    const [attachedFiles, setAttachedFiles] = useState<FileList>();
-
-    /*
      * Hook para manejar los datos del formulario
      */
     const { values, handleChange } = useData<FormDataContext>({
@@ -74,6 +73,8 @@ export default function Form(props: Props) {
         email_content: "",
         whatsapp_phone_send: "",
         whatsapp_content: "",
+        sms_phone_send: "",
+        sms_content: "",
     });
 
     const htmlContentPreview =
@@ -81,6 +82,8 @@ export default function Form(props: Props) {
             ? values.email_content
             : values.send_medium == 1
             ? values.whatsapp_content
+            : values.send_medium == 2
+            ? values.sms_content
             : "";
 
     /*
@@ -99,6 +102,9 @@ export default function Form(props: Props) {
 
                 whatsapp_phone_send: campania.whatsapp_envio ?? "",
                 whatsapp_content: campania.whatsapp_contenido ?? "",
+
+                sms_phone_send: campania.sms_telefono_envio ?? "",
+                sms_content: campania.sms_contenido ?? "",
             });
         }
 
@@ -154,6 +160,7 @@ export default function Form(props: Props) {
                 return;
             }
         }
+
         if (values.send_medium === 1) {
             if (!values.whatsapp_phone_send) {
                 window.toast.error("El teléfono de destino es obligatorio");
@@ -161,6 +168,17 @@ export default function Form(props: Props) {
             }
             if (!values.whatsapp_content) {
                 window.toast.error("El contenido de WhatsApp es obligatorio");
+                return;
+            }
+        }
+
+        if (values.send_medium === 2) {
+            if (!values.sms_phone_send) {
+                window.toast.error("El teléfono de destino es obligatorio");
+                return;
+            }
+            if (!values.sms_content) {
+                window.toast.error("El contenido de SMS es obligatorio");
                 return;
             }
         }
@@ -179,8 +197,9 @@ export default function Form(props: Props) {
                     correo_contenido: values.email_content,
                     whatsapp_envio: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
+                    sms_telefono_envio: values.sms_phone_send,
+                    sms_contenido: values.sms_content,
                     datos: personsFile,
-                    archivos_adjuntos: Array.from(attachedFiles ?? []),
                 },
                 {
                     onStart: () => {
@@ -213,7 +232,6 @@ export default function Form(props: Props) {
                     whatsapp_envio: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
                     datos: personsFile,
-                    archivos_adjuntos: Array.from(attachedFiles ?? []),
                 },
                 {
                     onStart: () => {

@@ -166,7 +166,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                     </a>
                                 </td>
                                 <td>
-                                    <div className="flex w-40 gap-2">
+                                    <div className="flex justify-end w-40 gap-2">
                                         {!campania.enviado ? (
                                             <Tooltip
                                                 text="Enviar ahora"
