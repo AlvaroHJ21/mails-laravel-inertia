@@ -23,10 +23,10 @@ type Props = PageProps & {
 export default function Resultados(props: Props) {
     const { auth } = props;
 
-    const [selectedYear, setSelectedYear] = useState(2023);
+    const [selectedYear, setSelectedYear] = useState(2024);
     const [selectedMonth, setSelectedMonth] = useState("Todos");
     const [selectedCampainId, setSelectedCampainId] = useState(0);
-    const [test, setTest] = useState(true);
+    const [test, setTest] = useState(false);
     const [isLoadingCampaigns, setIsLoadingCampaigns] = useState(true);
 
     const scroll1Ref = useRef<HTMLDivElement>(null);
@@ -174,7 +174,7 @@ export default function Resultados(props: Props) {
         return () => {
             scroll1Ref.current?.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, [isLoadingCampaigns]);
 
     /*
      * Opciones de filtros

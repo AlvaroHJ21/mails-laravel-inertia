@@ -119,7 +119,7 @@ export default function Programacion(props: Props) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Programación de campañas" />
 
-            <h1 className="title">Programación de Cámpañas</h1>
+            <h1 className="title">Programación de Campañas</h1>
 
             <Alert
                 text="Nuestro módulo de perfilamiento de clientes permite conocer el perfil demográfico de los clientes, para ello es necesario

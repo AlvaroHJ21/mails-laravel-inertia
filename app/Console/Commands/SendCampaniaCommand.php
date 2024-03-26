@@ -35,8 +35,8 @@ class SendCampaniaCommand extends Command
             ->where('fecha_envio', '<=', now())
             ->get()
             ->each(function ($campania) {
+                Log::info('Enviando campaña: ' . $campania->id . ' ' . $campania->nombre . '...');
                 SendCampania::send($campania);
-                Log::info('Enviando campaña: ' . $campania->id);
             });
     }
 }
