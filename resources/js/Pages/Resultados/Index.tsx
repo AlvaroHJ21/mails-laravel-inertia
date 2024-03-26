@@ -15,6 +15,8 @@ import type { PageProps } from "@/types";
 import LoadingModal from "@/Components/LoadingModal";
 import LoaderBounced from "@/Icons/LoaderBounced";
 import Tooltip from "@/Components/Tooltip";
+import Button from "@/Components/Button";
+import excelSvg from "@/svg/excel.svg";
 
 type Props = PageProps & {
     flash: {
@@ -213,6 +215,33 @@ export default function Resultados(props: Props) {
         value: medium,
     }));
 
+    /*
+     * Obtener las campañas filtradas
+     * @returns
+     */
+    function getCampainsByFilters() {
+        if (selectedCampainId != 0) {
+            const campain = allCampains.find((c) => c.id === selectedCampainId);
+            return [campain];
+        }
+
+        let campaigns = [...allCampains];
+
+        campaigns = campaigns.filter(
+            (campain) =>
+                new Date(campain.fecha_envio).getUTCFullYear() === selectedYear
+        );
+
+        campaigns = campaigns.filter(
+            (campain) =>
+                selectedMonth === "Todos" ||
+                MONTHS[new Date(campain.fecha_envio).getUTCMonth()] ===
+                    selectedMonth
+        );
+
+        return campaigns;
+    }
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Resultados" />
@@ -332,6 +361,16 @@ export default function Resultados(props: Props) {
                             })}
                         </div>
                     </div>
+
+                    <a
+                        href={route("resultados.download", {
+                            campanias: getCampainsByFilters(),
+                        })}
+                        className="btn btn-sm btn-primary"
+                    >
+                        Descargar reporte{" "}
+                        <img src={excelSvg} alt="icono de excel" width={24} />
+                    </a>
                 </div>
             )}
             <button

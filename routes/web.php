@@ -68,6 +68,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/resultados', [CampaniasResultadosController::class, "index"])->name('resultados.index');
     Route::get("/resultados/update-and-get", [CampaniasResultadosController::class, "updateAndGet"])->name("campanias.update_and_get");
+    Route::get('/resultados/download', [CampaniasResultadosController::class, 'download'])->name('resultados.download');
 
     // Route::get('/test', [PerfilController::class, 'test'])->name('perfiles.test');
 });
