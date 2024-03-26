@@ -12,10 +12,8 @@ import SuccessRateCard from "./SuccessRateCard";
 import { CampaniaMonthResult } from "@/Interfaces/CampaniaMonthResult";
 import { Campania } from "@/Interfaces/Campania";
 import type { PageProps } from "@/types";
-import LoadingModal from "@/Components/LoadingModal";
 import LoaderBounced from "@/Icons/LoaderBounced";
 import Tooltip from "@/Components/Tooltip";
-import Button from "@/Components/Button";
 import excelSvg from "@/svg/excel.svg";
 
 type Props = PageProps & {
@@ -219,27 +217,28 @@ export default function Resultados(props: Props) {
      * Obtener las campañas filtradas
      * @returns
      */
-    function getCampainsByFilters() {
-        if (selectedCampainId != 0) {
-            const campain = allCampains.find((c) => c.id === selectedCampainId);
-            return [campain];
-        }
-
+    function getCampainsIdsByFilters() {
         let campaigns = [...allCampains];
 
-        campaigns = campaigns.filter(
-            (campain) =>
-                new Date(campain.fecha_envio).getUTCFullYear() === selectedYear
-        );
+        if (selectedCampainId != 0) {
+            const campain = allCampains.find((c) => c.id === selectedCampainId);
+            if (campain) campaigns = [campain];
+        } else {
+            campaigns = campaigns.filter(
+                (campain) =>
+                    new Date(campain.fecha_envio).getUTCFullYear() ===
+                    selectedYear
+            );
 
-        campaigns = campaigns.filter(
-            (campain) =>
-                selectedMonth === "Todos" ||
-                MONTHS[new Date(campain.fecha_envio).getUTCMonth()] ===
-                    selectedMonth
-        );
+            campaigns = campaigns.filter(
+                (campain) =>
+                    selectedMonth === "Todos" ||
+                    MONTHS[new Date(campain.fecha_envio).getUTCMonth()] ===
+                        selectedMonth
+            );
+        }
 
-        return campaigns;
+        return campaigns.map((c) => c.id);
     }
 
     return (
@@ -364,7 +363,7 @@ export default function Resultados(props: Props) {
 
                     <a
                         href={route("resultados.download", {
-                            campanias: getCampainsByFilters(),
+                            campanias: getCampainsIdsByFilters(),
                         })}
                         className="btn btn-sm btn-primary"
                     >

@@ -41,10 +41,6 @@ class CampaniasResultadosController extends Controller
             'campanias' => 'required|array'
         ]);
 
-        $ids = array_map(function ($campania) {
-            return $campania['id'];
-        }, $request->campanias);
-
-        return (new CampaniaReporteExport($ids))->download('Reporte_' . now() . '.xlsx');
+        return (new CampaniaReporteExport($request->campanias))->download('Reporte_' . now() . '.xlsx');
     }
 }
