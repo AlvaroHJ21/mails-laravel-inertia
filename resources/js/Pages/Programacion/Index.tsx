@@ -18,6 +18,7 @@ import { formatTime } from "@/Utils/formatTime";
 import { PageProps } from "@/types";
 import { Campania } from "@/Interfaces/Campania";
 import { useConfirmModal } from "@/Components/ConfirmModal";
+import Tooltip from "@/Components/Tooltip";
 
 type modalName = "" | "Form";
 
@@ -164,26 +165,30 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                 <td>
                                     <div className="flex w-20 gap-1">
                                         {!campania.enviado ? (
-                                            <button
-                                                onClick={() =>
-                                                    handleSend(campania)
-                                                }
-                                            >
-                                                <img
-                                                    src={enviarSvg}
-                                                    alt="icono de play"
-                                                    width={24}
-                                                />
-                                            </button>
+                                            <Tooltip text="Enviar ahora">
+                                                <button
+                                                    onClick={() =>
+                                                        handleSend(campania)
+                                                    }
+                                                >
+                                                    <img
+                                                        src={enviarSvg}
+                                                        alt="icono de play"
+                                                        width={24}
+                                                    />
+                                                </button>
+                                            </Tooltip>
                                         ) : (
-                                            <button
-                                                onClick={() =>
-                                                    handleReport(campania)
-                                                }
-                                                className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
-                                            >
-                                                <i className="fa fa-bar-chart"></i>
-                                            </button>
+                                            <Tooltip text="Actualizar reporte de campaña">
+                                                <button
+                                                    onClick={() =>
+                                                        handleReport(campania)
+                                                    }
+                                                    className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
+                                                >
+                                                    <i className="fa fa-bar-chart"></i>
+                                                </button>
+                                            </Tooltip>
                                         )}
                                     </div>
                                 </td>
