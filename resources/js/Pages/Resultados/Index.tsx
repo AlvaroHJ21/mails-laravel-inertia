@@ -203,7 +203,7 @@ export default function Resultados(props: Props) {
             value: 0,
         },
         ...allCampains.map((campain) => ({
-            text: "Campaña " + campain.id,
+            text: campain.nombre,
             value: campain.id,
         })),
     ];

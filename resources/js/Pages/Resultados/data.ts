@@ -18,6 +18,7 @@ export const MONTHS = [
 export const campains = [
     {
         id: 1,
+        nombre: "Campaña de prueba 1",
         n_registros: 123,
         n_validados: 78,
         n_abiertos: 67,
@@ -26,6 +27,7 @@ export const campains = [
     },
     {
         id: 2,
+        nombre: "Campaña de prueba 2",
         n_registros: 59,
         n_validados: 37,
         n_abiertos: 22,
@@ -34,6 +36,7 @@ export const campains = [
     },
     {
         id: 3,
+        nombre: "Campaña de prueba 3",
         n_registros: 187,
         n_validados: 120,
         n_abiertos: 102,
@@ -42,6 +45,7 @@ export const campains = [
     },
     {
         id: 4,
+        nombre: "Campaña de prueba 4",
         n_registros: 82,
         n_validados: 57,
         n_abiertos: 35,
@@ -50,6 +54,7 @@ export const campains = [
     },
     {
         id: 5,
+        nombre: "Campaña de prueba 5",
         n_registros: 175,
         n_validados: 98,
         n_abiertos: 80,
@@ -58,6 +63,7 @@ export const campains = [
     },
     {
         id: 6,
+        nombre: "Campaña de prueba 6",
         n_registros: 33,
         n_validados: 20,
         n_abiertos: 14,
@@ -66,6 +72,7 @@ export const campains = [
     },
     {
         id: 7,
+        nombre: "Campaña de prueba 7",
         n_registros: 194,
         n_validados: 140,
         n_abiertos: 123,
@@ -74,6 +81,7 @@ export const campains = [
     },
     {
         id: 8,
+        nombre: "Campaña de prueba 8",
         n_registros: 91,
         n_validados: 72,
         n_abiertos: 65,
@@ -82,6 +90,7 @@ export const campains = [
     },
     {
         id: 9,
+        nombre: "Campaña de prueba 9",
         n_registros: 118,
         n_validados: 76,
         n_abiertos: 59,
@@ -90,6 +99,7 @@ export const campains = [
     },
     {
         id: 10,
+        nombre: "Campaña de prueba 10",
         n_registros: 45,
         n_validados: 27,
         n_abiertos: 15,
@@ -98,6 +108,7 @@ export const campains = [
     },
     {
         id: 11,
+        nombre: "Campaña de prueba 11",
         n_registros: 63,
         n_validados: 44,
         n_abiertos: 29,
@@ -106,6 +117,7 @@ export const campains = [
     },
     {
         id: 12,
+        nombre: "Campaña de prueba 12",
         n_registros: 99,
         n_validados: 70,
         n_abiertos: 58,
@@ -114,6 +126,7 @@ export const campains = [
     },
     {
         id: 13,
+        nombre: "Campaña de prueba 13",
         n_registros: 153,
         n_validados: 111,
         n_abiertos: 95,
@@ -122,6 +135,7 @@ export const campains = [
     },
     {
         id: 14,
+        nombre: "Campaña de prueba 14",
         n_registros: 24,
         n_validados: 17,
         n_abiertos: 9,
@@ -130,6 +144,7 @@ export const campains = [
     },
     {
         id: 15,
+        nombre: "Campaña de prueba 15",
         n_registros: 87,
         n_validados: 53,
         n_abiertos: 43,
@@ -138,6 +153,7 @@ export const campains = [
     },
     {
         id: 16,
+        nombre: "Campaña de prueba 16",
         n_registros: 134,
         n_validados: 82,
         n_abiertos: 75,
@@ -146,6 +162,7 @@ export const campains = [
     },
     {
         id: 17,
+        nombre: "Campaña de prueba 17",
         n_registros: 37,
         n_validados: 19,
         n_abiertos: 8,
@@ -154,6 +171,7 @@ export const campains = [
     },
     {
         id: 18,
+        nombre: "Campaña de prueba 18",
         n_registros: 171,
         n_validados: 102,
         n_abiertos: 84,
@@ -162,6 +180,7 @@ export const campains = [
     },
     {
         id: 19,
+        nombre: "Campaña de prueba 19",
         n_registros: 76,
         n_validados: 52,
         n_abiertos: 40,
@@ -170,6 +189,7 @@ export const campains = [
     },
     {
         id: 20,
+        nombre: "Campaña de prueba 20",
         n_registros: 109,
         n_validados: 81,
         n_abiertos: 64,
@@ -178,6 +198,7 @@ export const campains = [
     },
     {
         id: 21,
+        nombre: "Campaña de prueba 21",
         n_registros: 88,
         n_validados: 54,
         n_abiertos: 39,
@@ -186,6 +207,7 @@ export const campains = [
     },
     {
         id: 22,
+        nombre: "Campaña de prueba 22",
         n_registros: 175,
         n_validados: 113,
         n_abiertos: 97,
@@ -194,6 +216,7 @@ export const campains = [
     },
     {
         id: 23,
+        nombre: "Campaña de prueba 23",
         n_registros: 42,
         n_validados: 26,
         n_abiertos: 14,
@@ -202,6 +225,7 @@ export const campains = [
     },
     {
         id: 24,
+        nombre: "Campaña de prueba 24",
         n_registros: 93,
         n_validados: 65,
         n_abiertos: 55,
@@ -210,6 +234,7 @@ export const campains = [
     },
     {
         id: 25,
+        nombre: "Campaña de prueba 25",
         n_registros: 147,
         n_validados: 85,
         n_abiertos: 77,
@@ -218,6 +243,7 @@ export const campains = [
     },
     {
         id: 26,
+        nombre: "Campaña de prueba 26",
         n_registros: 29,
         n_validados: 16,
         n_abiertos: 9,
@@ -226,6 +252,7 @@ export const campains = [
     },
     {
         id: 27,
+        nombre: "Campaña de prueba 27",
         n_registros: 68,
         n_validados: 45,
         n_abiertos: 35,
@@ -234,6 +261,7 @@ export const campains = [
     },
     {
         id: 28,
+        nombre: "Campaña de prueba 28",
         n_registros: 119,
         n_validados: 72,
         n_abiertos: 60,
@@ -242,6 +270,7 @@ export const campains = [
     },
     {
         id: 29,
+        nombre: "Campaña de prueba 29",
         n_registros: 53,
         n_validados: 35,
         n_abiertos: 21,
@@ -250,6 +279,7 @@ export const campains = [
     },
     {
         id: 30,
+        nombre: "Campaña de prueba 30",
         n_registros: 180,
         n_validados: 120,
         n_abiertos: 105,
@@ -258,6 +288,7 @@ export const campains = [
     },
     {
         id: 31,
+        nombre: "Campaña de prueba 31",
         n_registros: 67,
         n_validados: 43,
         n_abiertos: 35,
@@ -266,6 +297,7 @@ export const campains = [
     },
     {
         id: 32,
+        nombre: "Campaña de prueba 32",
         n_registros: 128,
         n_validados: 89,
         n_abiertos: 70,
@@ -274,6 +306,7 @@ export const campains = [
     },
     {
         id: 33,
+        nombre: "Campaña de prueba 33",
         n_registros: 41,
         n_validados: 23,
         n_abiertos: 17,
@@ -282,6 +315,7 @@ export const campains = [
     },
     {
         id: 34,
+        nombre: "Campaña de prueba 34",
         n_registros: 97,
         n_validados: 66,
         n_abiertos: 49,
@@ -290,6 +324,7 @@ export const campains = [
     },
     {
         id: 35,
+        nombre: "Campaña de prueba 35",
         n_registros: 139,
         n_validados: 92,
         n_abiertos: 85,
@@ -298,6 +333,7 @@ export const campains = [
     },
     {
         id: 36,
+        nombre: "Campaña de prueba 36",
         n_registros: 75,
         n_validados: 47,
         n_abiertos: 38,
@@ -306,6 +342,7 @@ export const campains = [
     },
     {
         id: 37,
+        nombre: "Campaña de prueba 37",
         n_registros: 150,
         n_validados: 105,
         n_abiertos: 87,
@@ -314,6 +351,7 @@ export const campains = [
     },
     {
         id: 38,
+        nombre: "Campaña de prueba 38",
         n_registros: 21,
         n_validados: 14,
         n_abiertos: 8,
@@ -322,6 +360,7 @@ export const campains = [
     },
     {
         id: 39,
+        nombre: "Campaña de prueba 39",
         n_registros: 63,
         n_validados: 41,
         n_abiertos: 31,
@@ -330,6 +369,7 @@ export const campains = [
     },
     {
         id: 40,
+        nombre: "Campaña de prueba 40",
         n_registros: 104,
         n_validados: 68,
         n_abiertos: 51,
