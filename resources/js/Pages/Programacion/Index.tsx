@@ -166,9 +166,12 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                     </a>
                                 </td>
                                 <td>
-                                    <div className="flex w-40 gap-1">
+                                    <div className="flex w-40 gap-2">
                                         {!campania.enviado ? (
-                                            <Tooltip text="Enviar ahora">
+                                            <Tooltip
+                                                text="Enviar ahora"
+                                                direction="left"
+                                            >
                                                 <button
                                                     onClick={() =>
                                                         handleSend(campania)
@@ -183,7 +186,10 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                             </Tooltip>
                                         ) : (
                                             <>
-                                                <Tooltip text="Actualizar reporte de campaña">
+                                                <Tooltip
+                                                    text="Actualizar reporte de campaña"
+                                                    direction="left"
+                                                >
                                                     <button
                                                         onClick={() =>
                                                             handleSyncReport(
@@ -195,7 +201,10 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                         <i className="fa fa-refresh"></i>
                                                     </button>
                                                 </Tooltip>
-                                                <Tooltip text="Ver reporte de campaña">
+                                                <Tooltip
+                                                    text="Ver reporte de campaña"
+                                                    direction="left"
+                                                >
                                                     <button
                                                         onClick={() =>
                                                             handleShowReport(
@@ -209,31 +218,41 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                                 </Tooltip>
                                             </>
                                         )}
-                                        <button
-                                            onClick={() => {
-                                                setOpenModalName("Form");
-                                                setActiveCampania(campania);
-                                            }}
+                                        <Tooltip
+                                            text="Ver/Editar campaña"
+                                            direction="left"
                                         >
-                                            <img
-                                                src={verSvg}
-                                                alt="icono de ver"
-                                                width={24}
-                                                className="w-7"
-                                            />
-                                        </button>
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(campania)
-                                            }
+                                            <button
+                                                onClick={() => {
+                                                    setOpenModalName("Form");
+                                                    setActiveCampania(campania);
+                                                }}
+                                            >
+                                                <img
+                                                    src={verSvg}
+                                                    alt="icono de ver"
+                                                    width={24}
+                                                    className="w-7"
+                                                />
+                                            </button>
+                                        </Tooltip>
+                                        <Tooltip
+                                            text="Eliminar campaña"
+                                            direction="left"
                                         >
-                                            <img
-                                                src={eliminarSvg}
-                                                alt="icono de eliminar"
-                                                width={24}
-                                                className="w-7"
-                                            />
-                                        </button>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(campania)
+                                                }
+                                            >
+                                                <img
+                                                    src={eliminarSvg}
+                                                    alt="icono de eliminar"
+                                                    width={24}
+                                                    className="w-7"
+                                                />
+                                            </button>
+                                        </Tooltip>
                                     </div>
                                 </td>
                             </tr>

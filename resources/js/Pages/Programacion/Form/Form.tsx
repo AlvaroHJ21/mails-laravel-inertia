@@ -12,6 +12,7 @@ import { Campania } from "@/Interfaces/Campania";
 
 import "@/../css/ckeditor.css";
 import excelSvg from "@/svg/excel.svg";
+import FormPartialSMS from "./FormPartialSMS";
 
 interface FormDataContext {
     name: string;
@@ -313,20 +314,6 @@ export default function Form(props: Props) {
                                     setFile={setPersonsFile}
                                 />
                             </label>
-                            {/* <label className="field">
-                                <span className="label">Formato</span>
-                                <a
-                                    href={route("campanias.downloadTemplate")}
-                                    className="w-full mb-4 font-bold btn btn-secondary"
-                                >
-                                    Descargar formato
-                                    <img
-                                        src={excelSvg}
-                                        alt="icono de excel"
-                                        width={24}
-                                    />
-                                </a>
-                            </label> */}
                         </div>
 
                         <FormSendMedium />
@@ -337,7 +324,7 @@ export default function Form(props: Props) {
                             ) : values.send_medium === 1 ? (
                                 <FormPartialWhatsApp />
                             ) : (
-                                <div>🚧 En construcción</div>
+                                <FormPartialSMS />
                             )}
                         </div>
 
