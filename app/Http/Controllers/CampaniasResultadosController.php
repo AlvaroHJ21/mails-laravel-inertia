@@ -16,7 +16,10 @@ class CampaniasResultadosController extends Controller
 
     public function updateAndGet()
     {
-        $campanias = Campania::where('user_id', Auth::user()->id)->get();
+        $campanias = Campania::where('user_id', Auth::user()->id)
+            ->where('enviado', true)
+            ->whereDate('fecha_envio', now())
+            ->get();
 
         foreach ($campanias as $campania) {
             SendCampania::report($campania);
