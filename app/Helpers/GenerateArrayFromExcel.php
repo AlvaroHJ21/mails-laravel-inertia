@@ -56,15 +56,15 @@ class GenerateArrayFromExcel
 
         //2. Extraer array de DNI's
         //2.1 buscar en la primera fila el titulo de la columna dni
-        $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
+        // $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
         $correoColumnIdx = array_search('correo', array_map('strtolower', $array[0][0]));
 
         //2.2 si no se encuentran los titulos de las columnas se retorna un error
         if (
-            $documentoColumnIdx === false ||
+            // $documentoColumnIdx === false ||
             $correoColumnIdx === false
         ) {
-            throw new \Exception("No se encontraron las columnas necesarias en el archivo excel");
+            throw new \Exception("Formato de archivo incorrecto, no se encontraron las columnas necesarias");
         }
 
         //2.4 extraer los datos del excel
@@ -75,7 +75,7 @@ class GenerateArrayFromExcel
             //si tiene un correo se agrega al array
             if (!empty($row[$correoColumnIdx]))
                 $personasExcel[] = [
-                    "documento" => $row[$documentoColumnIdx],
+                    // "documento" => $row[$documentoColumnIdx],
                     "correo" => $row[$correoColumnIdx]
                 ];
         }

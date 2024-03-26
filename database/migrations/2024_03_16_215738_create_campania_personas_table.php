@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             //from excel
-            $table->string("documento");
+            $table->string("documento")->nullable();
             $table->string("correo");
 
             //from reporte de envio

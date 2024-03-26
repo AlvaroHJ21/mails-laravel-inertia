@@ -219,7 +219,10 @@ export default function Form(props: Props) {
                     },
                     onError: (errors) => {
                         console.log(errors);
-                        window.toast.error("Error al guardar la campaña");
+                        const error = errors[0];
+                        window.toast.error(
+                            error ?? "Error al guardar la campaña"
+                        );
                     },
                     onSuccess: () => {
                         window.toast.success("Campaña creada");
