@@ -50,7 +50,7 @@ class SendCampania
             $data = SendCampaniaResponse::make($response->json());
 
             if ($data->estado === "0") {
-                return ["ok" => false, "message" => "Error al enviar la campaña"];
+                throw new \Exception("Error al enviar la campaña");
             }
 
             //* 6. Actualizar codigo de campania
@@ -65,8 +65,10 @@ class SendCampania
             );
 
             //TODO: 6. Tratar respuesta
+            Log::info("Campaña " . $campania->nombre . " enviada");
             return ["ok" => true, "data" => $data];
         } catch (\Throwable $th) {
+            Log::error($th->getMessage());
             return ["ok" => false, "message" => $th->getMessage()];
         }
     }

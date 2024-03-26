@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\SendCampania;
 use App\Models\Campania;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -34,10 +35,8 @@ class SendCampaniaCommand extends Command
             ->where('fecha_envio', '<=', now())
             ->get()
             ->each(function ($campania) {
-                //TODO: Enviar la campaña
+                SendCampania::send($campania);
                 Log::info('Enviando campaña: ' . $campania->id);
-                $campania->enviado = true;
-                $campania->save();
             });
     }
 }
