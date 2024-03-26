@@ -14,6 +14,7 @@ import { Campania } from "@/Interfaces/Campania";
 import type { PageProps } from "@/types";
 import LoadingModal from "@/Components/LoadingModal";
 import LoaderBounced from "@/Icons/LoaderBounced";
+import Tooltip from "@/Components/Tooltip";
 
 type Props = PageProps & {
     flash: {
@@ -246,7 +247,7 @@ export default function Resultados(props: Props) {
             {/* Resultados */}
             {isLoadingCampaigns ? (
                 // <LoadingModal text="Actualizando reporte de campañas" />
-                <LoaderBounced/>
+                <LoaderBounced />
             ) : (
                 <div className="bg-[#e3f3fb] p-8 rounded-md">
                     <h2 className="mb-4 font-bold text-azul-marino">
@@ -268,9 +269,19 @@ export default function Resultados(props: Props) {
                         </div>
                     </div>
 
-                    <h2 className="mb-4 font-bold text-azul-marino">
-                        Tasa de éxito de envío
-                    </h2>
+                    <div className="flex items-center gap-2 mb-4">
+                        <h2 className="font-bold text-azul-marino">
+                            Tasa de entrega
+                        </h2>
+                        <Tooltip
+                            text="Se calcula con"
+                            subtext="TOTAL ENTREGADOS / TOTAL"
+                        >
+                            <div className="grid w-4 h-4 rounded-full bg-azul-marino text-amarillo place-content-center">
+                                <i className="text-xs fa fa-question"></i>
+                            </div>
+                        </Tooltip>
+                    </div>
                     <div
                         ref={scroll2Ref}
                         className="w-full pb-2 mb-8 overflow-x-auto"
@@ -290,9 +301,19 @@ export default function Resultados(props: Props) {
                         </div>
                     </div>
 
-                    <h2 className="mb-4 font-bold text-azul-marino">
-                        Tasa de apertura
-                    </h2>
+                    <div className="flex items-center gap-2 mb-4">
+                        <h2 className="font-bold text-azul-marino">
+                            Tasa de apertura
+                        </h2>
+                        <Tooltip
+                            text="Se calcula con"
+                            subtext="TOTAL ABIERTOS / TOTAL ENTREGADOS"
+                        >
+                            <div className="grid w-4 h-4 rounded-full bg-azul-marino text-amarillo place-content-center">
+                                <i className="text-xs fa fa-question"></i>
+                            </div>
+                        </Tooltip>
+                    </div>
                     <div
                         ref={scroll3Ref}
                         className="w-full pb-2 mb-8 overflow-x-auto"
