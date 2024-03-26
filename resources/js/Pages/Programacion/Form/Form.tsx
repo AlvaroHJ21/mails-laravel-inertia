@@ -231,6 +231,8 @@ export default function Form(props: Props) {
                     correo_contenido: values.email_content,
                     whatsapp_envio: values.whatsapp_phone_send,
                     whatsapp_contenido: values.whatsapp_content,
+                    sms_telefono_envio: values.sms_phone_send,
+                    sms_contenido: values.sms_content,
                     datos: personsFile,
                 },
                 {

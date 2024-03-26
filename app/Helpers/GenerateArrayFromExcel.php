@@ -55,16 +55,15 @@ class GenerateArrayFromExcel
         $array = (new ExcelImport)->toArray($file);
 
         //2. Extraer array de DNI's
-        //2.1 buscar en la primera fila el titulo de la columna dni
+        //2.1 buscar en la primera fila
         // $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
         $correoColumnIdx = array_search('correo', array_map('strtolower', $array[0][0]));
 
         //2.2 si no se encuentran los titulos de las columnas se retorna un error
         if (
-            // $documentoColumnIdx === false ||
             $correoColumnIdx === false
         ) {
-            throw new \Exception("Formato de archivo incorrecto, no se encontraron las columnas necesarias");
+            throw new \Exception("Formato de archivo incorrecto, columna de correo no encontrada");
         }
 
         //2.4 extraer los datos del excel
@@ -72,11 +71,41 @@ class GenerateArrayFromExcel
         foreach ($array[0] as $key => $row) {
             if ($key == 0) continue;
 
-            //si tiene un correo se agrega al array
+            //si tiene un correo o un teléfono se agrega al array
             if (!empty($row[$correoColumnIdx]))
                 $personasExcel[] = [
-                    // "documento" => $row[$documentoColumnIdx],
-                    "correo" => $row[$correoColumnIdx]
+                    "correo" => $row[$correoColumnIdx],
+                ];
+        }
+
+        return $personasExcel;
+    }
+
+    static function generateOnlyPhones($file)
+    {
+        $array = (new ExcelImport)->toArray($file);
+
+        //2. Extraer array de DNI's
+        //2.1 buscar en la primera fila
+        // $documentoColumnIdx = array_search('documento', array_map('strtolower', $array[0][0]));
+        $telefonoColumnIdx = array_search('telefono', array_map('strtolower', $array[0][0]));
+
+        //2.2 si no se encuentran los titulos de las columnas se retorna un error
+        if (
+            $telefonoColumnIdx === false
+        ) {
+            throw new \Exception("Formato de archivo incorrecto, columna de telefono no encontrada");
+        }
+
+        //2.4 extraer los datos del excel
+        $personasExcel = [];
+        foreach ($array[0] as $key => $row) {
+            if ($key == 0) continue;
+
+            //si tiene un correo o un teléfono se agrega al array
+            if (!empty($row[$telefonoColumnIdx]))
+                $personasExcel[] = [
+                    "telefono" => $row[$telefonoColumnIdx],
                 ];
         }
 

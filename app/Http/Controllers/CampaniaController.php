@@ -56,7 +56,13 @@ class CampaniaController extends Controller
 
             $campania = Campania::create($data);
 
-            $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
+            $personas = [];
+
+            if ($request->medio_envio == 0) {
+                $personas = GenerateArrayFromExcel::generateOnlyMails($request->file('datos'));
+            } else {
+                $personas = GenerateArrayFromExcel::generateOnlyPhones($request->file('datos'));
+            }
 
             $campania->personas()->createMany($personas);
 

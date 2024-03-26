@@ -16,7 +16,8 @@ return new class extends Migration
 
             //from excel
             $table->string("documento")->nullable();
-            $table->string("correo");
+            $table->string("correo")->nullable();
+            $table->string("telefono")->nullable();
 
             //from reporte de envio
             $table->string("id_mail")->nullable();

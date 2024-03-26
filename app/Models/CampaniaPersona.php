@@ -14,6 +14,7 @@ class CampaniaPersona extends Model
     protected $fillable = [
         'documento',
         'correo',
+        'telefono',
         'id_mail',
         'estado_mail',
     ];
