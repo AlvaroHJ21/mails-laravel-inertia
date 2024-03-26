@@ -242,7 +242,7 @@ export default function Form(props: Props) {
             <div className="h-screen p-8">
                 <div className="flex h-full gap-8">
                     <div className="flex flex-col flex-1 overflow-y-auto">
-                        <div className="grid grid-cols-2 mb-4 gap-y-2 gap-x-4">
+                        <div className="grid grid-cols-2 mb-4 gap-y-4 gap-x-4">
                             <label className="field">
                                 <span className="label">
                                     Nombre de la campaña
@@ -290,7 +290,19 @@ export default function Form(props: Props) {
                             </label>
 
                             <label className="field">
-                                <span className="label">Listado de datos</span>
+                                <div className="flex justify-between">
+                                    <span className="label">
+                                        Listado de datos
+                                    </span>
+                                    <a
+                                        href={route(
+                                            "campanias.downloadTemplate"
+                                        )}
+                                        className="inline-block text-sm font-normal hover:text-celeste-claro"
+                                    >
+                                        (Descargar plantilla)
+                                    </a>
+                                </div>
                                 <ButtonUpload
                                     text={
                                         campania && campania.personas.length > 0
@@ -301,7 +313,7 @@ export default function Form(props: Props) {
                                     setFile={setPersonsFile}
                                 />
                             </label>
-                            <label className="field">
+                            {/* <label className="field">
                                 <span className="label">Formato</span>
                                 <a
                                     href={route("campanias.downloadTemplate")}
@@ -314,7 +326,7 @@ export default function Form(props: Props) {
                                         width={24}
                                     />
                                 </a>
-                            </label>
+                            </label> */}
                         </div>
 
                         <FormSendMedium />
