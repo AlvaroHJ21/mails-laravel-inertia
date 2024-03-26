@@ -135,7 +135,7 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                             <th>Hora de envío</th>
                             <th>Cantidad de registros</th>
                             <th>Listado de ingreso</th>
-                            <th>Acciones (Manuales)</th>
+                            <th>Enviar ahora / Actualizar reporte</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -163,23 +163,28 @@ subir un listado de Documentos de Identidad (DNI), con un formato prestablecido 
                                 </td>
                                 <td>
                                     <div className="flex w-20 gap-1">
-                                        <button
-                                            onClick={() => handleSend(campania)}
-                                        >
-                                            <img
-                                                src={enviarSvg}
-                                                alt="icono de play"
-                                                width={24}
-                                            />
-                                        </button>
-                                        <button
-                                            onClick={() =>
-                                                handleReport(campania)
-                                            }
-                                            className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
-                                        >
-                                            <i className="fa fa-bar-chart"></i>
-                                        </button>
+                                        {!campania.enviado ? (
+                                            <button
+                                                onClick={() =>
+                                                    handleSend(campania)
+                                                }
+                                            >
+                                                <img
+                                                    src={enviarSvg}
+                                                    alt="icono de play"
+                                                    width={24}
+                                                />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() =>
+                                                    handleReport(campania)
+                                                }
+                                                className="rounded-full w-7 h-7 bg-amarillo text-azul-marino"
+                                            >
+                                                <i className="fa fa-bar-chart"></i>
+                                            </button>
+                                        )}
                                     </div>
                                 </td>
                                 <td>
