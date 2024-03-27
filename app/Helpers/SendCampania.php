@@ -84,33 +84,33 @@ class SendCampania
                 "user" => env("INTICO_USER"),
             ];
 
-            if (!$campania->sincronizado) {
+            // if (!$campania->sincronizado) {
 
-                /*
-                * PASO 1: Sinconizar reporte
-                */
-                $body = [
-                    "data" => [
-                        "code" => $campania->codigo_envio,
-                        "socket" => "response25812",
-                        "idcampaign" => $campania->id,
-                    ]
-                ];
+            /*
+            * PASO 1: Sinconizar reporte
+            */
+            $body = [
+                "data" => [
+                    "code" => $campania->codigo_envio,
+                    "socket" => "response25812",
+                    "idcampaign" => $campania->id,
+                ]
+            ];
 
 
-                $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "FeedbackCampaign", $body);
-                $data = CampainReportSyncResponse::make($response->json());
+            $response = Http::withHeaders($header)->post(env("INTICO_MAILING_API") . "FeedbackCampaign", $body);
+            $data = CampainReportSyncResponse::make($response->json());
 
-                if ($data->estado != 1) {
-                    throw new \Exception("Error al sincronizar el reporte de la campaña " . $campania->id);
-                }
-
-                $campania->update(
-                    [
-                        "sincronizado" => true,
-                    ]
-                );
+            if ($data->estado != 1) {
+                throw new \Exception("Error al sincronizar el reporte de la campaña " . $campania->id);
             }
+
+            $campania->update(
+                [
+                    "sincronizado" => true,
+                ]
+            );
+            // }
 
             /*
              * PASO 2: Obtener reporte
@@ -142,11 +142,22 @@ class SendCampania
                 }
             }
 
+            /*
+             * Se contabiliza de esta forma (usando los datos de feedback) por que hay un incoherencia en
+             * n_cant_visu y n_cant_clic en el reporte de la campaña
+             */
+            $nVisualizadosOAbiertos = 0;
+            foreach ($data->feedback as $feedback) {
+                if ($feedback->estado_mail == "7" || $feedback->estado_mail == "8") {
+                    $nVisualizadosOAbiertos++;
+                }
+            }
+
             $campania->update(
                 [
                     "n_registros" => $data->n_cant,
                     "n_validados" => $data->n_cant_entr,
-                    "n_abiertos" => $data->n_cant_visu,
+                    "n_abiertos" => $nVisualizadosOAbiertos,
                 ]
             );
 

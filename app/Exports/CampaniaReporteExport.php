@@ -73,7 +73,7 @@ class CampaniaReporteExport implements FromCollection, WithHeadings
             case "3":
                 return 'Ignorado';
             case "4":
-                return 'Rebotado soft';
+                return 'Rebotado Soft';
             case "5":
                 return 'Entregado';
             case "6":
@@ -81,11 +81,11 @@ class CampaniaReporteExport implements FromCollection, WithHeadings
             case "7":
                 return 'Entregado Visualizo';
             case "8":
-                return 'Entregado clicks';
+                return 'Entregado Clicks';
             case "9":
-                return 'Rebotado invalida';
+                return 'Rebotado Invalida';
             case "10":
-                return 'Rebotado saturado';
+                return 'Rebotado Saturado';
             case "11":
                 return 'Fallado';
             case "12":
