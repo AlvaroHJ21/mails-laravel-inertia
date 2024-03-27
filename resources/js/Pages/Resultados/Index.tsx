@@ -384,8 +384,10 @@ export default function Resultados(props: Props) {
             </div>
 
             {isSyncReports && (
-                <div className="fixed flex items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md right-4 bottom-16">
-                    <span className="text-sm font-normal">Sincronizando reportes</span>
+                <div className="fixed flex items-center gap-2 px-3 py-1 bg-white rounded-md shadow-md right-4 top-16">
+                    <span className="text-sm font-normal">
+                        Sincronizando reportes
+                    </span>
                     <LoaderBounced width={20} />
                 </div>
             )}

@@ -146,10 +146,10 @@ class SendCampania
              * Se contabiliza de esta forma (usando los datos de feedback) por que hay un incoherencia en
              * n_cant_visu y n_cant_clic en el reporte de la campaña
              */
-            $nVisualizadosOAbiertos = 0;
+            $nVisualizados = 0;
             foreach ($data->feedback as $feedback) {
                 if ($feedback->estado_mail == "7" || $feedback->estado_mail == "8") {
-                    $nVisualizadosOAbiertos++;
+                    $nVisualizados++;
                 }
             }
 
@@ -157,7 +157,7 @@ class SendCampania
                 [
                     "n_registros" => $data->n_cant,
                     "n_validados" => $data->n_cant_entr,
-                    "n_abiertos" => $nVisualizadosOAbiertos,
+                    "n_abiertos" => $nVisualizados,
                 ]
             );
 
