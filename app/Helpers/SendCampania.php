@@ -92,7 +92,7 @@ class SendCampania
             $body = [
                 "data" => [
                     "code" => $campania->codigo_envio,
-                    "socket" => "response25812",
+                    "socket" => "response25812" . $campania->id,
                     "idcampaign" => $campania->id,
                 ]
             ];
@@ -129,9 +129,17 @@ class SendCampania
                 throw new \Exception("Error al obtener el reporte de la campaña " . $campania->id);
             }
 
+            /*
+             * Se contabiliza de esta forma (usando los datos de feedback) por que hay un incoherencia en
+             * n_cant_visu y n_cant_clic en el reporte de la campaña
+             */
+            $nVisualizados = 0;
+
             //Actualizar personas de campaña
             foreach ($data->feedback as $feedback) {
+
                 $persona = $campania->personas->where("correo", $feedback->email)->first();
+
                 if ($persona) {
                     $persona->update(
                         [
@@ -140,14 +148,7 @@ class SendCampania
                         ]
                     );
                 }
-            }
 
-            /*
-             * Se contabiliza de esta forma (usando los datos de feedback) por que hay un incoherencia en
-             * n_cant_visu y n_cant_clic en el reporte de la campaña
-             */
-            $nVisualizados = 0;
-            foreach ($data->feedback as $feedback) {
                 if ($feedback->estado_mail == "7" || $feedback->estado_mail == "8") {
                     $nVisualizados++;
                 }
