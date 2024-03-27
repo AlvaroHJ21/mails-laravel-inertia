@@ -14,7 +14,10 @@ class CampaniasResultadosController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Resultados/Index');
+        $campanias = Campania::where('user_id', Auth::user()->id)
+            ->where('enviado', true)
+            ->get();
+        return Inertia::render('Resultados/Index', compact("campanias"));
     }
 
     public function updateAndGet()

@@ -11,32 +11,33 @@ import OpenRateCard from "./OpenRateCard";
 import SuccessRateCard from "./SuccessRateCard";
 import { CampaniaMonthResult } from "@/Interfaces/CampaniaMonthResult";
 import { Campania } from "@/Interfaces/Campania";
-import type { PageProps } from "@/types";
 import LoaderBounced from "@/Icons/LoaderBounced";
 import Tooltip from "@/Components/Tooltip";
 import excelSvg from "@/svg/excel.svg";
+import type { PageProps } from "@/types";
 
 type Props = PageProps & {
     flash: {
         message: string | null;
         data: any;
     };
+    campanias: Campania[];
 };
 
 export default function Resultados(props: Props) {
-    const { auth, flash } = props;
+    const { auth, flash, campanias } = props;
 
     const [selectedYear, setSelectedYear] = useState(2024);
     const [selectedMonth, setSelectedMonth] = useState("Todos");
     const [selectedCampainId, setSelectedCampainId] = useState(0);
     const [test, setTest] = useState(false);
-    const [isLoadingCampaigns, setIsLoadingCampaigns] = useState(true);
+    const [isSyncReports, setIsSyncReports] = useState(true);
 
     const scroll1Ref = useRef<HTMLDivElement>(null);
     const scroll2Ref = useRef<HTMLDivElement>(null);
     const scroll3Ref = useRef<HTMLDivElement>(null);
 
-    const [realCampaigns, setRealCampaigns] = useState<Campania[]>([]);
+    const [realCampaigns, setRealCampaigns] = useState<Campania[]>(campanias);
 
     const allCampains = test ? campains : realCampaigns;
 
@@ -55,11 +56,11 @@ export default function Resultados(props: Props) {
      */
     useEffect(() => {
         async function getCampaigns() {
-            setIsLoadingCampaigns(true);
+            setIsSyncReports(true);
             const resp = await fetch(route("campanias.update_and_get"));
             const data = await resp.json();
             setRealCampaigns(data);
-            setIsLoadingCampaigns(false);
+            setIsSyncReports(false);
         }
 
         getCampaigns();
@@ -190,7 +191,7 @@ export default function Resultados(props: Props) {
         return () => {
             scroll1Ref.current?.removeEventListener("scroll", handleScroll);
         };
-    }, [isLoadingCampaigns]);
+    }, [isSyncReports]);
 
     /*
      * Opciones de filtros
@@ -287,105 +288,108 @@ export default function Resultados(props: Props) {
                 />
             </div>
             {/* Resultados */}
-            {isLoadingCampaigns ? (
-                // <LoadingModal text="Actualizando reporte de campañas" />
-                <LoaderBounced />
-            ) : (
-                <div className="bg-[#e3f3fb] p-8 rounded-md">
-                    <h2 className="mb-4 font-bold text-azul-marino">
-                        Campañas generadas
-                    </h2>
-                    <div
-                        ref={scroll1Ref}
-                        className="w-full pb-2 mb-8 overflow-x-auto"
-                    >
-                        <div className="flex gap-2">
-                            {results.map((item) => {
-                                return (
-                                    <MainResultCard
-                                        key={item.month}
-                                        result={item}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 mb-4">
-                        <h2 className="font-bold text-azul-marino">
-                            Tasa de entrega
-                        </h2>
-                        <Tooltip
-                            text="Se calcula con"
-                            subtext="TOTAL ENTREGADOS / TOTAL"
-                        >
-                            <div className="grid w-4 h-4 rounded-full bg-azul-marino text-amarillo place-content-center">
-                                <i className="text-xs fa fa-question"></i>
-                            </div>
-                        </Tooltip>
-                    </div>
-                    <div
-                        ref={scroll2Ref}
-                        className="w-full pb-2 mb-8 overflow-x-auto"
-                    >
-                        <div className="flex gap-2">
-                            {results.map((item) => {
-                                return (
-                                    <SuccessRateCard
-                                        key={item.month}
-                                        value={calculatePercent(
-                                            item.nValidRecords,
-                                            item.nTotalRecords
-                                        )}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 mb-4">
-                        <h2 className="font-bold text-azul-marino">
-                            Tasa de apertura
-                        </h2>
-                        <Tooltip
-                            text="Se calcula con"
-                            subtext="TOTAL ABIERTOS / TOTAL ENTREGADOS"
-                        >
-                            <div className="grid w-4 h-4 rounded-full bg-azul-marino text-amarillo place-content-center">
-                                <i className="text-xs fa fa-question"></i>
-                            </div>
-                        </Tooltip>
-                    </div>
-                    <div
-                        ref={scroll3Ref}
-                        className="w-full pb-2 mb-8 overflow-x-auto"
-                    >
-                        <div className="flex gap-2">
-                            {results.map((item) => {
-                                return (
-                                    <OpenRateCard
-                                        key={item.month}
-                                        value={calculatePercent(
-                                            item.nOpenedRecords,
-                                            item.nValidRecords
-                                        )}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <a
-                        href={route("resultados.download", {
-                            campanias: getCampainsIdsByFilters(),
+            <div className="bg-[#e3f3fb] p-8 rounded-md">
+                <h2 className="mb-4 font-bold text-azul-marino">
+                    Campañas generadas
+                </h2>
+                <div
+                    ref={scroll1Ref}
+                    className="w-full pb-2 mb-8 overflow-x-auto"
+                >
+                    <div className="flex gap-2">
+                        {results.map((item) => {
+                            return (
+                                <MainResultCard
+                                    key={item.month}
+                                    result={item}
+                                />
+                            );
                         })}
-                        className="btn btn-sm btn-primary"
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-2 mb-4">
+                    <h2 className="font-bold text-azul-marino">
+                        Tasa de entrega
+                    </h2>
+                    <Tooltip
+                        text="Se calcula con"
+                        subtext="TOTAL ENTREGADOS / TOTAL"
                     >
-                        Descargar reporte{" "}
-                        <img src={excelSvg} alt="icono de excel" width={24} />
-                    </a>
+                        <div className="grid w-4 h-4 rounded-full bg-azul-marino text-amarillo place-content-center">
+                            <i className="text-xs fa fa-question"></i>
+                        </div>
+                    </Tooltip>
+                </div>
+                <div
+                    ref={scroll2Ref}
+                    className="w-full pb-2 mb-8 overflow-x-auto"
+                >
+                    <div className="flex gap-2">
+                        {results.map((item) => {
+                            return (
+                                <SuccessRateCard
+                                    key={item.month}
+                                    value={calculatePercent(
+                                        item.nValidRecords,
+                                        item.nTotalRecords
+                                    )}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-2 mb-4">
+                    <h2 className="font-bold text-azul-marino">
+                        Tasa de apertura
+                    </h2>
+                    <Tooltip
+                        text="Se calcula con"
+                        subtext="TOTAL ABIERTOS / TOTAL ENTREGADOS"
+                    >
+                        <div className="grid w-4 h-4 rounded-full bg-azul-marino text-amarillo place-content-center">
+                            <i className="text-xs fa fa-question"></i>
+                        </div>
+                    </Tooltip>
+                </div>
+                <div
+                    ref={scroll3Ref}
+                    className="w-full pb-2 mb-8 overflow-x-auto"
+                >
+                    <div className="flex gap-2">
+                        {results.map((item) => {
+                            return (
+                                <OpenRateCard
+                                    key={item.month}
+                                    value={calculatePercent(
+                                        item.nOpenedRecords,
+                                        item.nValidRecords
+                                    )}
+                                />
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <a
+                    href={route("resultados.download", {
+                        campanias: getCampainsIdsByFilters(),
+                    })}
+                    className="btn btn-sm btn-primary"
+                >
+                    Descargar reporte{" "}
+                    <img src={excelSvg} alt="icono de excel" width={24} />
+                </a>
+            </div>
+
+            {isSyncReports && (
+                <div className="fixed flex items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md right-4 bottom-16">
+                    <span className="text-sm font-normal">Sincronizando reportes</span>
+                    <LoaderBounced width={20} />
                 </div>
             )}
+
             <button
                 onClick={() => setTest(!test)}
                 className="fixed btn btn-secondary btn-sm bottom-4 right-4"

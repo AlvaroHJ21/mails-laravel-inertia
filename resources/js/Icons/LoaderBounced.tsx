@@ -1,5 +1,11 @@
 import bouncingSquares from "@/svg/bouncing-squares.svg";
 
-export default function LoaderBounced() {
-    return <img src={bouncingSquares} alt="" width={80} className="m-auto" />;
+interface Props {
+    width?: number;
+}
+
+export default function LoaderBounced({ width = 60 }: Props) {
+    return (
+        <img src={bouncingSquares} alt="" width={width} className="m-auto" />
+    );
 }
